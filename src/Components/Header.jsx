@@ -12,9 +12,9 @@ const Header = () => {
     "px-4 py-2 rounded-md text-rose-400 hover:text-rose-600 hover:decoration-rose-500 transition-colors duration-150 underline decoration-rose-400 decoration-2 underline-offset-4";
   
   return (
-    <div className="relative w-screen bg-base-200 p-2 text-gray-800 font-bold flex flex-row justify-around items-center drop-shadow-md px-4">
+    <div className="w-full bg-base-200 p-3 md:p-4 text-gray-800 font-bold flex flex-row justify-between md:justify-around items-center drop-shadow-md px-4 md:px-6">
       <div className="cursor-pointer">
-        <h1 className="font-bold text-2xl bg-linear-to-r from-rose-600 to-rose-400 text-transparent bg-clip-text hover:from-rose-700 hover:to-rose-500 transition-colors duration-100">Yalina</h1>
+        <h1 className="font-bold text-4xl bg-linear-to-r from-rose-600 to-rose-400 text-transparent bg-clip-text hover:from-rose-700 hover:to-rose-500 transition-colors duration-100">Yalina</h1>
       </div>
 
       <div className="hidden lg:flex lg:justify-around w-2/5 gap-4 text-rose-400">
@@ -78,46 +78,48 @@ const Header = () => {
       )}
 
       {/* Menu Sidebar */}
-      <div className={`fixed top-0 right-0 min-h-screen w-64 bg-rose-50 shadow-lg z-40 transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} lg:hidden`}>
-        <div className="p-6">
-          <button 
-            onClick={() => setIsMenuOpen(false)}
-            className="btn btn-sm btn-ghost mb-6"
-          >
-            ✕
-          </button>
-          
-          <nav className="flex flex-col gap-4">
-            <NavLink
-              to="/"
+      { isMenuOpen && (
+        <div className={`fixed top-0 right-0 min-h-screen w-64 bg-rose-50 shadow-lg z-40 transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} lg:hidden`}>
+          <div className="p-6">
+            <button 
               onClick={() => setIsMenuOpen(false)}
-              className={({ isActive }) => `px-4 py-2 rounded-md transition-colors duration-150 ${isActive ? 'bg-rose-400 text-white' : 'text-gray-800 hover:bg-rose-100'}`}
+              className="btn btn-sm btn-ghost mb-6"
             >
-              Home
-            </NavLink>
-            <NavLink
-              to="/aboutus"
-              onClick={() => setIsMenuOpen(false)}
-              className={({ isActive }) => `px-4 py-2 rounded-md transition-colors duration-150 ${isActive ? 'bg-rose-400 text-white' : 'text-gray-800 hover:bg-rose-100'}`}
-            >
-              About Us
-            </NavLink>
-            <NavLink
-              to="/contact"
-              onClick={() => setIsMenuOpen(false)}
-              className={({ isActive }) => `px-4 py-2 rounded-md transition-colors duration-150 ${isActive ? 'bg-rose-400 text-white' : 'text-gray-800 hover:bg-rose-100'}`}
-            >
-              Contact
-            </NavLink>
-            
-            <div className="divider my-4"></div>
-            
-            <button className="btn btn-outline border-rose-400 text-rose-400 hover:bg-rose-400 hover:text-white">
-              Login
+              ✕
             </button>
-          </nav>
+            
+            <nav className="flex flex-col gap-4">
+              <NavLink
+                to="/"
+                onClick={() => setIsMenuOpen(false)}
+                className={({ isActive }) => `px-4 py-2 rounded-md transition-colors duration-150 ${isActive ? 'bg-rose-400 text-white' : 'text-gray-800 hover:bg-rose-100'}`}
+              >
+                Home
+              </NavLink>
+              <NavLink
+                to="/aboutus"
+                onClick={() => setIsMenuOpen(false)}
+                className={({ isActive }) => `px-4 py-2 rounded-md transition-colors duration-150 ${isActive ? 'bg-rose-400 text-white' : 'text-gray-800 hover:bg-rose-100'}`}
+              >
+                About Us
+              </NavLink>
+              <NavLink
+                to="/contact"
+                onClick={() => setIsMenuOpen(false)}
+                className={({ isActive }) => `px-4 py-2 rounded-md transition-colors duration-150 ${isActive ? 'bg-rose-400 text-white' : 'text-gray-800 hover:bg-rose-100'}`}
+              >
+                Contact
+              </NavLink>
+              
+              <div className="divider my-4"></div>
+              
+              <button className="btn btn-outline border-rose-400 text-rose-400 hover:bg-rose-400 hover:text-white">
+                Login
+              </button>
+            </nav>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

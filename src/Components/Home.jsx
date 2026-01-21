@@ -14,15 +14,17 @@ const Home = () => {
       <Header />
 
       {/* Banner */}
-      <div className="absolute top-0 -z-10 px-42 min-h-screen bg-linear-to-b from-pink-100 to-pink-50 grid grid-cols-12 items-center rounded-b-4xl text-center text-base-100 mb-8 gap-12 user-select-none">
-        <div className="col-span-6 flex flex-col items-start justify-center text-left">
-          <button className="py-2 px-4 bg-base-100 text-pink-700 font-bold rounded select-none mb-6 mx-auto shadow-2xl">Welcome to Yalina</button>
-          <p className="text-6xl font-bold text-start text-gray-900 capitalize select-none mb-4 text-shadow-md">An efficient and productivity management with <span className="inline-block text-rose-600">Minimum Cost.</span></p>
-          <button className="mt-4 py-2 px-6 bg-rose-500 text-gray-100 drop-shadow rounded-md hover:bg-rose-700 hover:shadow-lg transition-all duration-300 text-md font-bold cursor-pointer">Let's Try</button>
+      <div className="absolute top-0 -z-10 w-full min-h-screen px-4 sm:px-8 md:px-12 lg:px-40 bg-linear-to-b from-pink-100 to-white grid grid-cols-1 lg:grid-cols-12 items-center justify-items-center lg:justify-items-start rounded-b-4xl text-center lg:text-left text-base-100 mb-8 gap-8 lg:gap-12 user-select-none pt-16 md:pt-24 lg:pt-0 pb-8">
+        <div className="col-span-1 lg:col-span-6 flex flex-col items-center lg:items-start justify-center text-center lg:text-left w-full px-4 sm:px-6 md:px-8">
+          <button className="py-2 px-4 md:py-3 md:px-6 bg-base-100 text-pink-700 font-bold rounded select-none mb-4 md:mb-6 shadow-lg hover:shadow-xl transition-shadow">Welcome to Yalina</button>
+          <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 capitalize select-none mb-3 md:mb-4 leading-tight text-shadow-md">An efficient and productivity management with <span className="inline-block text-rose-600">Minimum Cost.</span></p>
+          <button className="mt-4 md:mt-6 py-2 px-6 md:py-3 md:px-8 bg-rose-500 text-gray-100 drop-shadow rounded-md hover:bg-rose-700 hover:shadow-lg transition-all duration-300 text-sm md:text-md font-bold cursor-pointer">Let's Try</button>
         </div>
 
-        <div className="col-span-6 flex justify-center bg-pink-200 rounded-full shadow-xl">
-          <img src={banner} alt="banner" className="object-contain" />
+        <div className="col-span-1 lg:col-span-6 w-full flex justify-center px-4 sm:px-6 md:px-8">
+          <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-full bg-pink-200 rounded-full shadow-lg md:shadow-xl flex items-center justify-center p-4 md:p-8 hover:shadow-2xl transition-all duration-300">
+            <img src={banner} alt="banner"/>
+          </div>
         </div>
       </div>
     </div>
