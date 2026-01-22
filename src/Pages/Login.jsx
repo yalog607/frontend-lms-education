@@ -1,11 +1,17 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet";
+import { useNavigate } from "react-router-dom";
 import avatarImg from "../assets/images/icon.png";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isHide, setIsHide] = useState(true);
+  const navigate = useNavigate();
+
+  const handleLogoClick = () => {
+    navigate('/');
+  }
 
   const haveValue = (content) => {
     return content && content.trim().length > 0;
@@ -17,7 +23,7 @@ const Login = () => {
       </Helmet>
 
       <div className="min-h-screen w-full flex flex-col items-center justify-center bg-zinc-50 px-4 sm:px-8 lg:px-16">
-        <div className="avatar">
+        <div className="avatar cursor-pointer" onClick={handleLogoClick}>
           <div className="ring-primary ring-offset-base-100 w-18 rounded-full ring-2 ring-offset-2">
             <img src={avatarImg} />
           </div>

@@ -1,8 +1,12 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate  } from "react-router-dom";
 
 const Header = () => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);    
+    const [isMenuOpen, setIsMenuOpen] = useState(false);  
+    const navigate = useNavigate();
+    const handleLoginClick = () => {
+      navigate('/login'); // Chuyển hướng đến URL '/login'
+    };
 
   let cssText =
     "px-4 py-2 rounded-md text-rose-400 hover:text-rose-600 transition-colors duration-150";
@@ -25,22 +29,22 @@ const Header = () => {
         </NavLink>
         <NavLink
           exact
-          to="/aboutus"
+          to="/login"
           className={({ isActive }) => (isActive ? activeLink : cssText)}
         >
           About Us
         </NavLink>
         <NavLink
           exact
-          to="/contact"
+          to="/login"
           className={({ isActive }) => (isActive ? activeLink : cssText)}
         >
           Contact
         </NavLink>
       </div>
 
-      <div className="lg:justify-between hidden lg:flex gap-4">
-        <button className="btn px-12 py-1 rounded-lg bg-rose-500 text-base-100 hover:bg-rose-600 transition-colors duration-300">
+      <div className="lg:justify-between hidden lg:flex gap-4" >
+        <button onClick={handleLoginClick} className="btn px-12 py-1 rounded-lg bg-rose-500 text-base-100 hover:bg-rose-600 transition-colors duration-300">
           Login
         </button>
       </div>
@@ -94,14 +98,14 @@ const Header = () => {
                 Home
               </NavLink>
               <NavLink
-                to="/aboutus"
+                to="/"
                 onClick={() => setIsMenuOpen(false)}
                 className={({ isActive }) => `px-4 py-2 rounded-md transition-colors duration-150 ${isActive ? 'bg-rose-400 text-white' : 'text-gray-800 hover:bg-rose-100'}`}
               >
                 About Us
               </NavLink>
               <NavLink
-                to="/contact"
+                to="/"
                 onClick={() => setIsMenuOpen(false)}
                 className={({ isActive }) => `px-4 py-2 rounded-md transition-colors duration-150 ${isActive ? 'bg-rose-400 text-white' : 'text-gray-800 hover:bg-rose-100'}`}
               >
@@ -110,7 +114,7 @@ const Header = () => {
               
               <div className="divider my-4"></div>
               
-              <button className="btn btn-outline border-rose-400 text-rose-400 hover:bg-rose-400 hover:text-white">
+              <button onClick={handleLoginClick} className="btn btn-outline border-rose-400 text-rose-400 hover:bg-rose-400 hover:text-white">
                 Login
               </button>
             </nav>

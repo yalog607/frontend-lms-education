@@ -1,9 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import Header from "../Components/Header.jsx";
 import banner from "../assets/images/banner.png";
 
 const Home = () => {
+  const navigate = useNavigate();
+    const handleLoginClick = () => {
+      navigate('/login');
+    };
   return (
     <div className="relative">
       <Helmet>
@@ -18,7 +23,7 @@ const Home = () => {
         <div className="col-span-1 lg:col-span-6 flex flex-col items-center lg:items-start justify-center text-center lg:text-left w-full px-4 sm:px-6 md:px-8">
           <button className="py-2 px-4 md:py-3 md:px-6 bg-base-100 text-pink-700 font-bold rounded select-none mb-4 md:mb-6 shadow-lg hover:shadow-xl transition-shadow">Welcome to Yalina</button>
           <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 capitalize select-none mb-3 md:mb-4 leading-tight text-shadow-md">An efficient and productivity management with <span className="inline-block text-rose-600">Minimum Cost.</span></p>
-          <button className="mt-4 md:mt-6 py-2 px-6 md:py-3 md:px-8 bg-rose-500 text-gray-100 drop-shadow rounded-md hover:bg-rose-700 hover:shadow-lg transition-all duration-300 text-sm md:text-md font-bold cursor-pointer">Let's Try</button>
+          <button className="mt-4 md:mt-6 py-2 px-6 md:py-3 md:px-8 bg-rose-500 text-gray-100 drop-shadow rounded-md hover:bg-rose-700 hover:shadow-lg transition-all duration-300 text-sm md:text-md font-bold cursor-pointer" onClick={handleLoginClick}>Let's Try</button>
         </div>
 
         <div className="col-span-1 lg:col-span-6 w-full flex justify-center px-4 sm:px-6 md:px-8">
