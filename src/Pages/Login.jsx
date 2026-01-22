@@ -45,6 +45,7 @@ const Login = () => {
                   Username:
                 </label>
                 <input
+                  placeholder="Type your username"
                   type="text"
                   id="username"
                   onChange={(e) => setUsername(e.target.value)}
@@ -66,10 +67,12 @@ const Login = () => {
                       className="checkbox checkbox-xs sm:checkbox-sm"
                       checked={!isHide}
                       onChange={() => setIsHide(!isHide)}
+                      placeholder=""
                     />
                   </label>
                 </div>
                 <input
+                  placeholder="Type your password"
                   type={isHide ? "password" : "text"}
                   id="password"
                   onChange={(e) => setPassword(e.target.value)}
@@ -77,7 +80,7 @@ const Login = () => {
                 />
               </div>
               <div className="w-full">
-                <button className="btn w-full mt-3 sm:mt-4 bg-indigo-500 text-white font-bold py-2 px-4 rounded-xl hover:bg-indigo-600 transition-colors duration-250 text-sm sm:text-base">
+                <button className="btn drop-shadow-md w-full mt-3 sm:mt-4 bg-indigo-500 text-white font-bold py-2 px-4 rounded-xl hover:bg-indigo-600 transition-colors duration-250 text-sm sm:text-base">
                   Log in
                 </button>
               </div>
