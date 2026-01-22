@@ -1,6 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import Header from "./Header.jsx";
+import Header from "../Components/Header.jsx";
 import banner from "../assets/images/banner.png";
 
 const Home = () => {

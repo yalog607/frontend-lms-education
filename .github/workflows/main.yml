@@ -16,7 +16,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: 22
         script: |
-          cd /home/employee-management
+          cd home/ubuntu/employee-management
           git fetch origin
           git checkout production
           git pull
