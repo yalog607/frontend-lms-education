@@ -19,6 +19,8 @@ jobs:
           cd home/ubuntu/employee-management
           git fetch origin
           git checkout production
+          eval $(ssh-agent -s)
+          ssh-add ~/.ssh/yalog
           git pull
           npm install
           npm run build
