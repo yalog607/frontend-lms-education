@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
 import avatarImg from "../assets/images/icon.png";
+import Footer from "../Components/Footer";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -22,7 +23,7 @@ const Login = () => {
         <title>Login | Yalina</title>
       </Helmet>
 
-      <div className="min-h-screen w-full flex flex-col items-center justify-center bg-zinc-50 px-3 sm:px-6 lg:px-8">
+      <div className="h-screen w-full flex flex-col items-center justify-center bg-zinc-50 px-3 sm:px-6 lg:px-8">
         <div className="avatar cursor-pointer" onClick={handleLogoClick}>
           <div className="ring-primary ring-offset-base-100 w-16 sm:w-18 rounded-full ring-2 ring-offset-2">
             <img src={avatarImg} />
@@ -30,7 +31,7 @@ const Login = () => {
         </div>
 
         <h1 className="font-bold text-xl sm:text-2xl md:text-3xl my-3 sm:my-4 text-indigo-700 text-shadow-md">
-          Login
+          Welcome to <span className="bg-linear-to-r from-rose-600 to-rose-400 text-transparent bg-clip-text hover:from-rose-700 hover:to-rose-500 transition-colors duration-100">Yalina</span>
         </h1>
 
         <div className="bg-base-200 p-4 sm:p-6 md:p-8 rounded-lg shadow-lg shadow-indigo-300 border border-indigo-200 w-full max-w-full sm:max-w-2xl md:max-w-4xl mt-4 sm:mt-6">
@@ -186,6 +187,9 @@ const Login = () => {
           </div>
         </div>
       </div>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

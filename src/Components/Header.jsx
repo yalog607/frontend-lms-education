@@ -114,7 +114,7 @@ const Header = () => {
               Home
             </NavLink>
             <NavLink
-              to="/"
+              to="/login"
               onClick={() => setIsMenuOpen(false)}
               className={({ isActive }) =>
                 `px-4 py-2 rounded-md transition-colors duration-150 ${isActive ? "bg-rose-400 text-white" : "text-gray-800 hover:bg-rose-100"}`
@@ -123,7 +123,7 @@ const Header = () => {
               About Us
             </NavLink>
             <NavLink
-              to="/"
+              to="/login"
               onClick={() => setIsMenuOpen(false)}
               className={({ isActive }) =>
                 `px-4 py-2 rounded-md transition-colors duration-150 ${isActive ? "bg-rose-400 text-white" : "text-gray-800 hover:bg-rose-100"}`
