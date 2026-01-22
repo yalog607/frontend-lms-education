@@ -7,6 +7,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: /home/ubuntu/employee-management
     steps:
     - name: Deploy using ssh
       uses: appleboy/ssh-action@master
@@ -16,8 +19,6 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: 22
         script: |
-          pwd
-          cd /home/employee-management
           git fetch origin
           git checkout production
           eval $(ssh-agent -s)
