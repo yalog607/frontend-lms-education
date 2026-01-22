@@ -16,8 +16,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: 22
         script: |
-          cd /
-          cd home/ubuntu/employee-management
+          cd /home/employee-management
           git fetch origin
           git checkout production
           eval $(ssh-agent -s)
