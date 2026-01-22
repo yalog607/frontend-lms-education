@@ -1,6 +1,4 @@
-import React from "react";
 import { useState } from "react";
-import Logo from "../assets/images/icon.png";
 import { NavLink } from "react-router-dom";
 
 const Header = () => {
@@ -12,7 +10,7 @@ const Header = () => {
     "px-4 py-2 rounded-md text-rose-400 hover:text-rose-600 hover:decoration-rose-500 transition-colors duration-150 underline decoration-rose-400 decoration-2 underline-offset-4";
   
   return (
-    <div className="w-full bg-base-200 p-3 md:p-4 text-gray-800 font-bold flex flex-row justify-between md:justify-around items-center drop-shadow-md px-4 md:px-6">
+    <div className="w-full bg-base-200 p-3 md:p-4 text-gray-800 font-bold flex flex-row justify-between md:justify-around items-center shadow-md px-4 md:px-6">
       <div className="cursor-pointer">
         <h1 className="font-bold text-4xl bg-linear-to-r from-rose-600 to-rose-400 text-transparent bg-clip-text hover:from-rose-700 hover:to-rose-500 transition-colors duration-100">Yalina</h1>
       </div>
@@ -78,8 +76,7 @@ const Header = () => {
       )}
 
       {/* Menu Sidebar */}
-      { isMenuOpen && (
-        <div className={`fixed top-0 right-0 min-h-screen w-64 bg-rose-50 shadow-lg z-40 transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} lg:hidden`}>
+      <div className={`fixed top-0 right-0 min-h-screen w-64 bg-rose-50 shadow-lg z-40 transform transition-all duration-300 ease-out ${isMenuOpen ? 'translate-x-0 opacity-100 pointer-events-auto' : 'translate-x-full opacity-0'} lg:hidden`}>
           <div className="p-6">
             <button 
               onClick={() => setIsMenuOpen(false)}
@@ -119,8 +116,7 @@ const Header = () => {
             </nav>
           </div>
         </div>
-      )}
-    </div>
+      </div>
   );
 };
 

@@ -1,8 +1,8 @@
 import React from "react";
 import { Route, Routes, Link, NavLink } from "react-router-dom";
-import Home from "./Components/Home.jsx";
+import Home from "./Pages/Home.jsx";
 import Aboutus from "./Components/Aboutus.jsx";
-import Login from "./Components/Login.jsx";
+import Login from "./Pages/Login.jsx";
 import Contact from "./Components/Contact.jsx";
 
 function App() {
