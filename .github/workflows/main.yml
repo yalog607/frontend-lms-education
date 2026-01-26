@@ -2,28 +2,29 @@ name: Auto Deployment
 
 on:
   push:
-    branches: [production]
+    branches:
+      - production
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: /home/ubuntu/employee-management
+
     steps:
-    - name: Deploy using ssh
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH_KEY }}
-        port: 22
-        script: |
-          git fetch origin
-          git checkout production
-          eval $(ssh-agent -s)
-          ssh-add ~/.ssh/yalog
-          git pull
-          npm install
-          npm run build
-          pm2 reload em
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /home/ubuntu/employee-management
+            git fetch origin
+            git checkout production
+            eval $(ssh-agent -s)
+            ssh-add ~/.ssh/yalog
+            git pull
+            npm install
+            pm2 reload all
