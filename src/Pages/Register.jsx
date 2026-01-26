@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import avatarImg from "../assets/images/icon.png";
 import Footer from "../Components/Footer";
 
-const Login = () => {
+const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [isHide, setIsHide] = useState(true);
   const navigate = useNavigate();
 
@@ -18,7 +19,7 @@ const Login = () => {
   };
   return (
     <div>
-      <title>Login Page | Yalina</title>
+        <title>Register Page | Yalina</title>
 
       <div className="h-screen w-full flex flex-col items-center justify-center bg-zinc-50 px-3 sm:px-6 lg:px-8">
         <div className="avatar cursor-pointer" onClick={handleLogoClick}>
@@ -77,19 +78,36 @@ const Login = () => {
                   className={`px-3 sm:px-4 py-2 border border-gray-300 rounded-lg w-full font-semibold text-sm sm:text-md focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition ${hasValue(password) ? "border-green-500 outline-green-500" : "border-gray-300"}`}
                 />
               </div>
+              <div className="w-full flex flex-col relative">
+                <div className="w-full flex justify-between items-center mb-2">
+                  <label
+                    className="block font-bold text-xs sm:text-sm text-gray-500"
+                    htmlFor="confirmPassword"
+                  >
+                    Confirm Password:
+                  </label>
+                </div>
+                <input
+                  placeholder="Enter your password again"
+                  type={isHide ? "password" : "text"}
+                  id="confirmPassword"
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className={`px-3 sm:px-4 py-2 border border-gray-300 rounded-lg w-full font-semibold text-sm sm:text-md focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition ${hasValue(confirmPassword) ? "border-green-500 outline-green-500" : "border-gray-300"}`}
+                />
+              </div>
               <div className="w-full">
                 <button className="btn drop-shadow-md w-full mt-3 sm:mt-4 bg-indigo-500 text-white font-bold py-2 px-4 rounded-xl hover:bg-indigo-600 transition-colors duration-250 text-sm sm:text-base">
-                  Log in
+                    Register
                 </button>
               </div>
 
               <p className="text-center text-sm mt-2">
-                Don't have an account?{" "}
+                Already have an account?{" "}
                 <button
-                  onClick={() => navigate("/register")}
+                  onClick={() => navigate("/login")}
                   className="text-indigo-500 hover:text-indigo-700 font-semibold cursor-pointer"
                 >
-                  Sign up
+                  Log in
                 </button>
               </p>
             </div>
@@ -201,4 +219,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

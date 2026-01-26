@@ -7,6 +7,9 @@ const Header = () => {
   const handleLoginClick = () => {
     navigate("/login");
   };
+  const handleRegisterClick = () => {
+    navigate("/register");
+  };
 
   const handleLogoClick = () => {
     navigate("/");
@@ -55,9 +58,15 @@ const Header = () => {
       <div className="lg:justify-between hidden lg:flex gap-4">
         <button
           onClick={handleLoginClick}
-          className="btn px-12 py-1 rounded-lg bg-rose-500 text-base-100 hover:bg-rose-600 transition-colors duration-300"
+          className="btn px-12 py-1 rounded-lg border-rose-500 bg-rose-50 text-rose-500 hover:bg-rose-600 hover:text-base-100 transition-colors duration-300"
         >
           Login
+        </button>
+        <button
+          onClick={handleRegisterClick}
+          className="btn px-12 py-1 rounded-lg bg-rose-500 text-base-100 hover:bg-rose-600 transition-colors duration-300"
+        >
+          Sign up
         </button>
       </div>
 
@@ -139,6 +148,12 @@ const Header = () => {
               className="btn btn-outline border-rose-400 text-rose-400 hover:bg-rose-400 hover:text-white"
             >
               Login
+            </button>
+            <button
+              onClick={handleRegisterClick}
+              className="btn btn-outline border-rose-400 text-rose-400 hover:bg-rose-400 hover:text-white"
+            >
+              Sign up
             </button>
           </nav>
         </div>
