@@ -2,9 +2,16 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import avatarImg from "../assets/images/icon.png";
 import Footer from "../Components/Footer";
+import { useAuth } from "../hooks/useAuth";
+import toast from "react-hot-toast";
+import { FaEye, FaEyeSlash  } from "react-icons/fa";
+
+const hasValue = (content) => {
+  return content && content.trim().length > 0;
+};
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isHide, setIsHide] = useState(true);
   const navigate = useNavigate();
@@ -13,9 +20,17 @@ const Login = () => {
     navigate("/");
   };
 
-  const hasValue = (content) => {
-    return content && content.trim().length > 0;
+  const { login, isLoggingIn } = useAuth();
+
+  const handleLoginButtonClick = () => {
+    if (!email || !password){
+      toast.error('Vui lòng nhập đầy đủ thông tin');
+      return;
+    }
+    const data = { email: email, password };
+    login(data);
   };
+
   return (
     <div>
       <title>Login Page | Yalina</title>
@@ -28,7 +43,10 @@ const Login = () => {
         </div>
 
         <h1 className="font-bold text-xl sm:text-2xl md:text-3xl my-3 sm:my-4 text-indigo-700 text-shadow-md">
-          Welcome to <span className="bg-linear-to-r from-rose-600 to-rose-400 text-transparent bg-clip-text hover:from-rose-700 hover:to-rose-500 transition-colors duration-100">Yalina</span>
+          Welcome to{" "}
+          <span className="bg-linear-to-r from-rose-600 to-rose-400 text-transparent bg-clip-text hover:from-rose-700 hover:to-rose-500 transition-colors duration-100">
+            Yalina
+          </span>
         </h1>
 
         <div className="bg-base-200 p-4 sm:p-6 md:p-8 rounded-lg shadow-lg shadow-indigo-300 border border-indigo-200 w-full max-w-full sm:max-w-2xl md:max-w-4xl mt-4 sm:mt-6">
@@ -38,16 +56,17 @@ const Login = () => {
               <div className="w-full flex flex-col mb-2 sm:mb-4">
                 <label
                   className="block font-bold text-xs sm:text-sm text-gray-500 mb-2"
-                  htmlFor="username"
+                  htmlFor="email"
                 >
-                  Username:
+                  Email:
                 </label>
                 <input
-                  placeholder="Enter your username"
-                  type="text"
-                  id="username"
-                  onChange={(e) => setUsername(e.target.value)}
-                  className={`px-3 sm:px-4 py-2 border border-gray-300 rounded-lg w-full font-semibold text-sm sm:text-md focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition ${hasValue(username) ? "border-green-500 outline-green-500" : "border-gray-300"}`}
+                  placeholder="Enter your email"
+                  type="email"
+                  required
+                  id="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                  className={`px-3 sm:px-4 py-2 border border-gray-300 rounded-lg w-full font-semibold text-sm sm:text-md focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition ${hasValue(email) ? "border-green-500 outline-green-500" : "border-gray-300"}`}
                 />
               </div>
               <div className="w-full flex flex-col relative">
@@ -58,16 +77,9 @@ const Login = () => {
                   >
                     Password:
                   </label>
-                  <label className="label label-text-alt gap-2 cursor-pointer">
-                    <span className="text-xs sm:text-sm">{isHide ? "Show" : "Hide"}</span>
-                    <input
-                      type="checkbox"
-                      className="checkbox checkbox-xs sm:checkbox-sm"
-                      checked={!isHide}
-                      onChange={() => setIsHide(!isHide)}
-                      placeholder=""
-                    />
-                  </label>
+                  <button className="cursor-pointer text-lg hover:text-indigo-800 duration-300" onClick={() => setIsHide(!isHide)}>
+                    {isHide ? <FaEyeSlash /> : <FaEye />}
+                  </button>
                 </div>
                 <input
                   placeholder="Enter your password"
@@ -78,8 +90,12 @@ const Login = () => {
                 />
               </div>
               <div className="w-full">
-                <button className="btn drop-shadow-md w-full mt-3 sm:mt-4 bg-indigo-500 text-white font-bold py-2 px-4 rounded-xl hover:bg-indigo-600 transition-colors duration-250 text-sm sm:text-base">
-                  Log in
+                <button
+                  onClick={handleLoginButtonClick}
+                  className={`outline-none btn drop-shadow-md w-full mt-3 sm:mt-4  text-white font-bold py-2 px-4 rounded-xl hover:bg-indigo-600 transition-colors duration-250 text-sm sm:text-base bg-indigo-500`}
+                  disabled = {isLoggingIn}
+                >
+                  {!isLoggingIn ? "Log in" : <span className="loading loading-spinner loading-md"></span>}
                 </button>
               </div>
 

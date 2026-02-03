@@ -33,21 +33,21 @@ const Header = () => {
 
       <div className="hidden lg:flex lg:justify-around w-2/5 gap-4 text-rose-400">
         <NavLink
-          exact
+          end
           to="/"
           className={({ isActive }) => (isActive ? activeLink : cssText)}
         >
           Home
         </NavLink>
         <NavLink
-          exact
+          end
           to="/login"
           className={({ isActive }) => (isActive ? activeLink : cssText)}
         >
           About Us
         </NavLink>
         <NavLink
-          exact
+          end
           to="/login"
           className={({ isActive }) => (isActive ? activeLink : cssText)}
         >
