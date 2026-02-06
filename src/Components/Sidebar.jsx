@@ -94,7 +94,7 @@ export default function Sidebar() {
         <div className="p-4 flex items-center justify-between">
           {isOpen && (
             <div className="flex items-center gap-3 flex-1">
-              <div className="w-full bg-gradient-to-r from-rose-500 to-rose-400 bg-clip-text text-transparent flex items-center justify-center font-bold text-3xl cursor-pointer select-none">
+              <div className="w-full bg-linear-to-r from-rose-500 to-rose-400 bg-clip-text text-transparent flex items-center justify-center font-bold text-3xl cursor-pointer select-none">
                 Yalina
               </div>
             </div>

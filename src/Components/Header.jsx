@@ -16,13 +16,13 @@ const Header = () => {
   };
 
   let cssText =
-    "px-4 py-2 text-gray-700 hover:bg-white rounded-md hover:text-rose-600 transition-colors duration-150";
+    "px-4 py-2 text-gray-800 hover:bg-white rounded-md hover:text-rose-600 transition-colors duration-150";
   let activeLink =
-    "px-4 py-2 hover:bg-white rounded-md font-extrabold text-gray-900 hover:text-rose-500 transition-colors duration-150";
+    "px-4 py-2 hover:bg-white rounded-md font-bold text-gray-900 hover:text-rose-500 transition-colors duration-150";
 
   return (
-    <div className="w-full bg-pink-50 py-2 md:py-4 px-6 sm:px-8 md:px-12 lg:px-20 text-gray-800 font-bold flex flex-row justify-between md:justify-around items-center shadow-md">
-      <div className="cursor-pointer">
+    <div className="w-full bg-pink-50 py-2 md:py-4 px-4 sm:px-8 md:px-12 lg:px-40 text-gray-800 font-bold flex flex-row items-center shadow-md">
+      <div className="cursor-pointer px-4 sm:px-6 md:px-8">
         <h1
           className="font-bold text-4xl bg-linear-to-r from-rose-600 to-rose-400 text-transparent bg-clip-text hover:from-rose-700 hover:to-rose-500 transition-colors duration-100"
           onClick={handleLogoClick}
@@ -31,7 +31,7 @@ const Header = () => {
         </h1>
       </div>
 
-      <div className="hidden lg:flex lg:justify-center lg:flex-1 gap-10">
+      <div className="hidden lg:flex flex-1 justify-end gap-10">
         <NavLink
           end
           to="/"
@@ -53,9 +53,6 @@ const Header = () => {
         >
           Contact
         </NavLink>
-      </div>
-
-      <div className="lg:justify-around hidden lg:flex gap-4">
         <Link
           to={"/login"}
           className="btn px-8 py-1 rounded-lg border-2 border-rose-500 bg-transparent text-rose-500 hover:bg-rose-600 hover:text-base-100 transition-colors duration-300 font-bold"
@@ -65,7 +62,7 @@ const Header = () => {
         
       </div>
 
-      <div className="lg:hidden">
+      <div className="lg:hidden flex-1 flex justify-end">
         <button
           className="btn btn-square btn-ghost"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
