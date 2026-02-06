@@ -1,5 +1,5 @@
 import React from 'react'
-import Sidebar from '../Components/Sidebar.jsx';
+import Sidebar from '../Components/admin/SidebarAdmin.jsx';
 import toast from 'react-hot-toast';
 
 const AdminPage = () => {

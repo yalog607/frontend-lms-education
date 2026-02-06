@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, Link } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,12 +16,12 @@ const Header = () => {
   };
 
   let cssText =
-    "px-4 py-2 rounded-md text-rose-400 hover:text-rose-600 transition-colors duration-150";
+    "px-4 py-2 text-gray-700 hover:bg-white rounded-md hover:text-rose-600 transition-colors duration-150";
   let activeLink =
-    "px-4 py-2 rounded-md text-rose-400 hover:text-rose-600 hover:decoration-rose-500 transition-colors duration-150 underline decoration-rose-400 decoration-2 underline-offset-4";
+    "px-4 py-2 hover:bg-white rounded-md font-extrabold text-gray-900 hover:text-rose-500 transition-colors duration-150";
 
   return (
-    <div className="w-full bg-base-200 p-3 md:p-4 text-gray-800 font-bold flex flex-row justify-between md:justify-around items-center shadow-md px-4 md:px-6">
+    <div className="w-full bg-pink-50 py-2 md:py-4 px-6 sm:px-8 md:px-12 lg:px-20 text-gray-800 font-bold flex flex-row justify-between md:justify-around items-center shadow-md">
       <div className="cursor-pointer">
         <h1
           className="font-bold text-4xl bg-linear-to-r from-rose-600 to-rose-400 text-transparent bg-clip-text hover:from-rose-700 hover:to-rose-500 transition-colors duration-100"
@@ -31,7 +31,7 @@ const Header = () => {
         </h1>
       </div>
 
-      <div className="hidden lg:flex lg:justify-around w-2/5 gap-4 text-rose-400">
+      <div className="hidden lg:flex lg:justify-center lg:flex-1 gap-10">
         <NavLink
           end
           to="/"
@@ -55,19 +55,14 @@ const Header = () => {
         </NavLink>
       </div>
 
-      <div className="lg:justify-between hidden lg:flex gap-4">
-        <button
-          onClick={handleLoginClick}
-          className="btn px-12 py-1 rounded-lg border-rose-500 bg-rose-50 text-rose-500 hover:bg-rose-600 hover:text-base-100 transition-colors duration-300"
+      <div className="lg:justify-around hidden lg:flex gap-4">
+        <Link
+          to={"/login"}
+          className="btn px-8 py-1 rounded-lg border-2 border-rose-500 bg-transparent text-rose-500 hover:bg-rose-600 hover:text-base-100 transition-colors duration-300 font-bold"
         >
           Login
-        </button>
-        <button
-          onClick={handleRegisterClick}
-          className="btn px-12 py-1 rounded-lg bg-rose-500 text-base-100 hover:bg-rose-600 transition-colors duration-300"
-        >
-          Sign up
-        </button>
+        </Link>
+        
       </div>
 
       <div className="lg:hidden">

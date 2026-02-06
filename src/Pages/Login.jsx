@@ -32,10 +32,10 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-screen bg-zinc-50 flex flex-col justify-between">
       <title>Login Page | Yalina</title>
 
-      <div className="h-screen w-full flex flex-col items-center justify-center bg-zinc-50 px-3 sm:px-6 lg:px-8">
+      <div className="grow flex flex-col items-center justify-center px-3 sm:px-6 lg:px-8">
         <div className="avatar cursor-pointer" onClick={handleLogoClick}>
           <div className="ring-primary ring-offset-base-100 w-16 sm:w-18 rounded-full ring-2 ring-offset-2">
             <img src={avatarImg} />

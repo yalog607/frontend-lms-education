@@ -1,33 +1,53 @@
-import { useState } from 'react';
-import { FaBars, FaTimes, FaChartLine, FaBook, FaComments, FaMoneyBillWave, FaCog, FaSignOutAlt, FaChevronLeft } from 'react-icons/fa';
+import { useState } from "react";
+import { NavLink, Link } from "react-router-dom";
+import {
+  FaBars,
+  FaTimes,
+  FaChartLine,
+  FaBook,
+  FaComments,
+  FaMoneyBillWave,
+  FaCog,
+  FaSignOutAlt,
+  FaChevronLeft,
+} from "react-icons/fa";
+import useAuthStore from "../store/useAuthStore";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
+  const { logout } = useAuth();
+  const {user} = useAuthStore();
+  if (!user) return null;
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
+  
+  const handleLogoutClick = () => {
+    logout();
+  }
 
   const menuItems = [
-    { name: 'Dashboard', icon: FaChartLine, color: 'text-blue-500' },
-    { name: 'Course', icon: FaBook, color: 'text-green-500' },
-    { name: 'Communication', icon: FaComments, color: 'text-purple-500' },
-    { name: 'Revenue', icon: FaMoneyBillWave, color: 'text-yellow-500' },
-    { name: 'Setting', icon: FaCog, color: 'text-base-100' },
+    { name: "Dashboard", icon: FaChartLine, path: "/home" },
+    { name: "Course", icon: FaBook, path: "/home/courses" },
+    { name: "Communication", icon: FaComments, path: "/home/communication" },
+    { name: "Revenue", icon: FaMoneyBillWave, path: "/Revenue" },
+    { name: "Setting", icon: FaCog, path: "/setting" },
   ];
 
   return (
     <>
       {/* Mobile Navbar */}
-      <div className="md:hidden bg-gradient-to-r from-gray-900 to-gray-800 text-white p-4 flex items-center justify-between sticky top-0 z-50">
+      <div className="md:hidden p-4 flex items-center justify-between sticky top-0 z-50 shadow">
         <div className="flex items-center gap-3">
-          <div className="w-full rounded-full bg-gradient-to-r from-indigo-600 bg-clip-text text-transparent to-indigo-400 flex items-center justify-center font-bold text-3xl">
+          <div className="w-full rounded-full bg-gradient-to-r from-rose-500 bg-clip-text text-transparent to-rose-400 flex items-center justify-center font-bold text-3xl">
             Yalina
           </div>
         </div>
         <button
           onClick={toggleSidebar}
-          className="p-2 hover:bg-gray-700 rounded-lg transition-colors cursor-pointer"
+          className="p-2 hover:bg-rose-50 text-rose-500 rounded-lg transition-colors cursor-pointer"
         >
           {isOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
         </button>
@@ -35,14 +55,14 @@ export default function Sidebar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-gray-900 border-b border-gray-700 max-h-96 overflow-y-auto">
+        <div className="md:hidden max-h-96 overflow-y-auto">
           <nav className="flex flex-col p-4 space-y-2">
             {menuItems.map((item) => {
               const IconComponent = item.icon;
               return (
                 <button
                   key={item.name}
-                  className="w-full cursor-pointer flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors group text-white"
+                  className="w-full cursor-pointer flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-rose-50 hover:text-rose-500 transition-colors group text-gray-600"
                 >
                   <IconComponent className={`${item.color} text-lg`} />
                   <span className="text-sm font-medium">{item.name}</span>
@@ -50,16 +70,13 @@ export default function Sidebar() {
               );
             })}
           </nav>
-          <div className="p-4 border-t border-gray-700">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center font-bold text-sm flex-shrink-0">
-                M
-              </div>
+          <div className="p-4 border-t border-gray-500">
+            <div className="flex items-center">
               <div>
-                <p className="text-sm font-semibold text-white">Manager</p>
-                <p className="text-xs text-gray-400">Admin</p>
+                <Link className="text-sm font-semibold truncate hover:underline" to={"/setting"}>{user.first_name} {user.last_name}</Link>
+                {user.role === 'admin' ? <Link to={'/admin'} className="text-xs truncate block">{user.role}</Link> : <p className="text-xs truncate">{user.role}</p>}
               </div>
-              <button className="ml-auto p-2 hover:bg-gray-700 rounded-lg transition-colors cursor-pointer">
+              <button onClick={handleLogoutClick} className="ml-auto p-2 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer">
                 <FaSignOutAlt className="text-red-500" />
               </button>
             </div>
@@ -68,67 +85,79 @@ export default function Sidebar() {
       )}
 
       {/* Desktop Sidebar */}
-      <div className={`hidden md:flex h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white transition-all duration-300 flex-col ${
-        isOpen ? 'w-64' : 'w-20'
-      }`}>
+      <div
+        className={`hidden md:flex h-screen text-gray-800 transition-all duration-300 flex-col ${
+          isOpen ? "w-64" : "w-20"
+        }`}
+      >
         {/* Header - Avatar và tên Yalina */}
-        <div className="p-4 border-b border-gray-700 flex items-center justify-between">
+        <div className="p-4 flex items-center justify-between">
           {isOpen && (
             <div className="flex items-center gap-3 flex-1">
-              <div className="w-full bg-gradient-to-r from-indigo-600 to-indigo-400 bg-clip-text text-transparent flex items-center justify-center font-bold text-3xl cursor-pointer select-none">
+              <div className="w-full bg-gradient-to-r from-rose-500 to-rose-400 bg-clip-text text-transparent flex items-center justify-center font-bold text-3xl cursor-pointer select-none">
                 Yalina
               </div>
             </div>
           )}
-          
+
           {/* Nút toggle */}
           <button
             onClick={toggleSidebar}
-            className="mx-auto p-1 hover:bg-gray-700 rounded-lg transition-all duration-300 ml-auto cursor-pointer"
-            title={isOpen ? 'Thu nhỏ' : 'Mở rộng'}
+            className="mx-auto p-1 hover:bg-rose-50 rounded-lg transition-all duration-300 ml-auto cursor-pointer"
+            title={isOpen ? "Thu nhỏ" : "Mở rộng"}
           >
             <FaChevronLeft
-              size={18} 
-              className={`text-rose-50 transition-transform duration-300 ${!isOpen ? 'rotate-180' : 'rotate-0'}`}
+              size={18}
+              className={`text-rose-500 transition-transform duration-300 ${!isOpen ? "rotate-180" : "rotate-0"}`}
             />
           </button>
         </div>
 
         {/* Menu Items */}
-        <nav className="flex-1 px-3 py-6 space-y-2 overflow-y-auto">
+        <nav className="flex-1 px-3 py-6 space-y-4 overflow-y-auto">
           {menuItems.map((item) => {
             const IconComponent = item.icon;
             return (
-              <button
+              <NavLink
                 key={item.name}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors group cursor-pointer"
+                to={item.path} 
+                end={item.path === "/"}
+                className={({ isActive }) =>
+                  `w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors group cursor-pointer
+        ${
+          isActive
+            ? "bg-rose-50 text-rose-500" // Khi đang Active: Nền hồng nhạt, Chữ đỏ
+            : "text-gray-600 hover:bg-rose-50 hover:text-rose-500" // Khi bình thường: Chữ xám, Hover mới đỏ
+        }`
+                }
               >
-                <IconComponent className={`${item.color} text-lg flex-shrink-0`} />
+                <IconComponent className="text-lg flex-shrink-0 transition-colors" />
+
                 {isOpen && (
-                  <span className="text-sm font-medium group-hover:text-white">{item.name}</span>
+                  <span className="text-sm font-medium transition-colors">
+                    {item.name}
+                  </span>
                 )}
-              </button>
+              </NavLink>
             );
           })}
         </nav>
 
         {/* Footer - Avatar Manager và nút đăng xuất */}
-        <div className="p-4 border-t border-gray-700">
-          <div className="flex items-center justify-between gap-2">
-              {isOpen && (
-            <div className="flex items-center gap-3 flex-1 min-w-0">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center font-bold text-sm flex-shrink-0">
-                M
-              </div>
+        <div className="p-4">
+          <div className="flex items-center justify-between">
+            {isOpen && (
+              <div className="flex items-center gap-3 flex-1 min-w-0">
                 <div className="min-w-0">
-                  <p className="text-sm font-semibold truncate">Manager</p>
-                  <p className="text-xs text-gray-400 truncate">Admin</p>
+                  <Link to='/setting' className="text-sm font-semibold truncate hover:underline">{user.first_name} {user.last_name}</Link>
+                  {user.role ? <Link to={"/admin"} className="text-xs text-gray-400 truncate block">{user.role}</Link> : <p className="text-xs text-gray-400 truncate">{user.role}</p>}
                 </div>
-            </div>
-              )}
-            
+              </div>
+            )}
+
             <button
-              className="flex-1 md:flex-0 p-2 mx-auto hover:bg-gray-700 rounded-lg transition-colors flex-shrink-0 cursor-pointer"
+                onClick={handleLogoutClick}
+              className="flex-1 md:flex-0 p-2 mx-auto hover:bg-rose-50 rounded-lg transition-colors flex-shrink-0 cursor-pointer"
               title="Đăng xuất"
             >
               <FaSignOutAlt className="text-rose-500" />
@@ -139,4 +168,3 @@ export default function Sidebar() {
     </>
   );
 }
-

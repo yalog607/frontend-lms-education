@@ -1,26 +1,13 @@
 import React, {  } from 'react'
-import { useAuth } from '../hooks/useAuth'
+import Sidebar from "../Components/Sidebar"
 
 const Home = () => {
-  const {logout, isLoggingOut} = useAuth();
-
-  const handleLogOut = () => {
-    logout();
-  }
-
-  if (isLoggingOut) {
-    return (
-      <div className="flex justify-center items-center">
-        <span className="loading loading-dots loading-lg"></span>
-      </div>
-    )
-  }
-
   return (
-    <div className='flex flex-col justify-center items-center h-screen gap-6'>
-      <p className='font-bold text-3xl text-pink-500'>Yêu bé Nhiiiiiiiiiiiiiiiiiiii 💝💖</p>
-      <p className='font-bold text-2xl text-rose-500'>Vợ iu ngủ ngonnnn</p>
-      <button onClick={handleLogOut} className='btn btn-accent font-md text-md text-white'>Logout</button>
+    <div className='flex flex-col md:flex-row h-screen gap-0 justify-between'>
+      <Sidebar />
+      <div className='flex grow bg-base-300 p-4'>
+        <h1>Yeu nhi</h1>
+      </div>
     </div>
   )
 }
