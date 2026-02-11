@@ -7,7 +7,7 @@ export const ProtectedRoute = ({ user, redirectPath = "/login", children }) => {
   return children ? children : <Outlet />;
 };
 
-export const AdminRoute = ({ user, redirectPath = "/", children }) => {
+export const AdminRoute = ({ user, redirectPath = "/home", children }) => {
   if (!user) {
     return <Navigate to="/login" replace />;
   }

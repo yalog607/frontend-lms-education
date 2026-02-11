@@ -1,14 +1,17 @@
 import React, {useEffect} from "react";
 import { Route, Routes, Link, NavLink } from "react-router-dom";
-import LandingPage from "./Pages/LandingPage.jsx";
-import AdminPage from "./Pages/AdminPage.jsx";
-import Login from "./Pages/Login.jsx";
-import Register from "./Pages/Register.jsx";
 import { Toaster } from "react-hot-toast";
+import axiosClient from "./lib/axiosClient.js";
 import useAuthStore from "./store/useAuthStore.js";
 import { useQuery } from "@tanstack/react-query";
-import axiosClient from "./lib/axiosClient.js";
+
+import LandingPage from "./Pages/LandingPage.jsx";
+import AdminPage from "./Pages/AdminPage.jsx";
 import Home from "./Pages/Home.jsx"
+import NotFound from "./Pages/NotFound.jsx";
+
+import Login from "./Pages/Login.jsx";
+import Register from "./Pages/Register.jsx";
 
 import { AdminRoute, GuestRoute, ProtectedRoute } from "./Components/ProtectedRoutes.jsx";
 
@@ -30,7 +33,6 @@ function App() {
       }
     },
     retry: false,
-    staleTime: 1000 * 60 * 10,
     refetchOnWindowFocus: false,
   });
 
@@ -88,7 +90,7 @@ function App() {
           }
         />
         
-        <Route path="*" element={<div>Trang không tồn tại</div>} />
+        <Route path="*" element={<NotFound/>} />
       </Routes>
       <Toaster position="top-center" reverseOrder={true} />
     </>

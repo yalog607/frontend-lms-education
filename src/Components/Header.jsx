@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { NavLink, useNavigate, Link } from "react-router-dom";
+import useAuthStore from "../store/useAuthStore";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user } = useAuthStore();
   const navigate = useNavigate();
+  
   const handleLoginClick = () => {
     navigate("/login");
   };
@@ -57,7 +60,7 @@ const Header = () => {
           to={"/login"}
           className="btn px-8 py-1 rounded-lg border-2 border-rose-500 bg-transparent text-rose-500 hover:bg-rose-600 hover:text-base-100 transition-colors duration-300 font-bold"
         >
-          Login
+          {user ? "Continue" : "Login"}
         </Link>
         
       </div>

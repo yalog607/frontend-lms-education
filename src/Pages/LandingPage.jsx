@@ -44,7 +44,7 @@ const LandingPage = () => {
                 E-Learning
               </span>
             </p>
-            <p className="text-gray-800 font-semibold text-xl">
+            <p className="text-gray-950/70 font-light text-lg">
               Unlock your potential with our extensive library of courses. From
               technical skills to creative arts, we provide the tools you need to
               advance your career and achieve your personal goals, no matter where
