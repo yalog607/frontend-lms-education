@@ -8,6 +8,10 @@ export const getAllCoursesAPI = async() => {
     return await axiosClient.get('/course/get-all-courses');
 }
 
+export const getUserCourseAPI = async() => {
+    return await axiosClient.get('/course/get-user-courses');
+}
+
 export const createCoursesAPI = async(data) => {
     if (!data) return null;
     return await axiosClient.post('/course/create-course', data);

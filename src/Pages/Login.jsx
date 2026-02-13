@@ -4,7 +4,7 @@ import avatarImg from "../assets/images/icon.png";
 import Footer from "../Components/Footer";
 import { useAuth } from "../hooks/useAuth";
 import toast from "react-hot-toast";
-import { FaEye, FaEyeSlash  } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const hasValue = (content) => {
   return content && content.trim().length > 0;
@@ -22,9 +22,11 @@ const Login = () => {
 
   const { login, isLoggingIn } = useAuth();
 
-  const handleLoginButtonClick = () => {
-    if (!email || !password){
-      toast.error('Vui lòng nhập đầy đủ thông tin');
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    if (!email || !password) {
+      toast.error("Please enter complete information");
       return;
     }
     const data = { email: email, password };
@@ -52,7 +54,10 @@ const Login = () => {
         <div className="bg-base-200 p-4 sm:p-6 md:p-8 rounded-lg shadow-lg shadow-indigo-300 border border-indigo-200 w-full max-w-full sm:max-w-2xl md:max-w-4xl mt-4 sm:mt-6">
           <div className="flex flex-col md:flex-row w-full gap-4 md:gap-0">
             {/* Left Side - Login Form */}
-            <div className="w-full md:w-1/2 flex flex-col gap-3 sm:gap-4 px-4 sm:px-6 md:px-8">
+            <form
+              onSubmit={handleFormSubmit}
+              className="w-full md:w-1/2 flex flex-col gap-3 sm:gap-4 px-4 sm:px-6 md:px-8"
+            >
               <div className="w-full flex flex-col mb-2 sm:mb-4">
                 <label
                   className="block font-bold text-xs sm:text-sm text-gray-500 mb-2"
@@ -63,7 +68,6 @@ const Login = () => {
                 <input
                   placeholder="Enter your email"
                   type="email"
-                  required
                   id="email"
                   onChange={(e) => setEmail(e.target.value)}
                   className={`px-3 sm:px-4 py-2 border border-gray-300 rounded-lg w-full font-semibold text-sm sm:text-md focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition ${hasValue(email) ? "border-green-500 outline-green-500" : "border-gray-300"}`}
@@ -77,7 +81,11 @@ const Login = () => {
                   >
                     Password:
                   </label>
-                  <button className="cursor-pointer text-lg hover:text-indigo-800 duration-300" onClick={() => setIsHide(!isHide)}>
+                  <button
+                    type="button"
+                    className="cursor-pointer text-lg hover:text-indigo-800 duration-300"
+                    onClick={() => setIsHide(!isHide)}
+                  >
                     {isHide ? <FaEyeSlash /> : <FaEye />}
                   </button>
                 </div>
@@ -91,24 +99,29 @@ const Login = () => {
               </div>
               <div className="w-full">
                 <button
-                  onClick={handleLoginButtonClick}
+                  type="submit"
                   className={`outline-none btn drop-shadow-md w-full mt-3 sm:mt-4  text-white font-bold py-2 px-4 rounded-xl hover:bg-indigo-600 transition-colors duration-250 text-sm sm:text-base bg-indigo-500`}
-                  disabled = {isLoggingIn}
+                  disabled={isLoggingIn}
                 >
-                  {!isLoggingIn ? "Log in" : <span className="loading loading-spinner loading-md"></span>}
+                  {!isLoggingIn ? (
+                    "Log in"
+                  ) : (
+                    <span className="loading loading-spinner loading-md"></span>
+                  )}
                 </button>
               </div>
 
               <p className="text-center text-sm mt-2">
                 Don't have an account?{" "}
                 <button
+                  type="button"
                   onClick={() => navigate("/register")}
                   className="text-indigo-500 hover:text-indigo-700 font-semibold cursor-pointer"
                 >
                   Sign up
                 </button>
               </p>
-            </div>
+            </form>
 
             {/* Divider */}
             <div className="divider md:hidden m-0 text-xs font-bold my-2 text-gray-500">

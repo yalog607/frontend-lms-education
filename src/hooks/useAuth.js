@@ -1,5 +1,5 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { loginAPI, registerAPI, logoutAPI } from '../api/auth.js';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { loginAPI, registerAPI, logoutAPI, changePasswordAPI, getMeAPI, updateAvatarAPI, updateInfoAPI } from '../api/auth.js';
 import useAuthStore from '../store/useAuthStore.js';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
@@ -38,6 +38,17 @@ export const useAuth = () => {
         }
     });
 
+    const changePasswordMutation = useMutation({
+        mutationFn: changePasswordAPI,
+        onSuccess: () => {
+            toast.success('Change your password successfully!');
+            queryClient.invalidateQueries(['me']);
+        },
+        onError: (error) => {
+            toast.error(error.response?.data?.message || "Change the password failed!");
+        }
+    })
+
     const logoutMutation = useMutation({
         mutationFn: logoutAPI,
         onSuccess: () => {
@@ -57,6 +68,52 @@ export const useAuth = () => {
         register: registerMutation.mutate,
         isRegistering: registerMutation.isPending,
         logout: logoutMutation.mutate,
-        isLoggingOut: logoutMutation.isPending
+        isLoggingOut: logoutMutation.isPending,
+        changePass: changePasswordMutation.mutate,
+        isChangingPass: changePasswordMutation.isPending,
     };
 };
+
+export const useGetMe = () => {
+    const { data, isLoading: isGetting } = useQuery({
+        queryKey: ['me'],
+        queryFn: getMeAPI
+    });
+    return {
+        userInfo: data?.user || [], isGetting
+    }
+}
+
+export const useUpdateUser = () => {
+    const queryClient = useQueryClient();
+    
+    const updateAvatarMutation = useMutation({
+        mutationFn: updateAvatarAPI,
+        onSuccess: () => {
+            queryClient.invalidateQueries(['me']);
+        },
+        onError: (err) => {
+            console.log("Update avatar error: ", err);
+            toast.error("Update avatar failed!")
+        }
+    });
+
+    const updateInfoMutation = useMutation({
+        mutationFn: updateInfoAPI,
+        onSuccess: () => {
+            toast.success('Profile updated successfully!');
+            queryClient.invalidateQueries(['me']);
+        },
+        onError: (err) => {
+            console.log("Update user error: ", err);
+            toast.error("Update user failed!")
+        }
+    })
+
+    return {
+        updateAvatar: updateAvatarMutation.mutate,
+        isUpdatingAvatar: updateAvatarMutation.isPending,
+        updateInfo: updateInfoMutation.mutate,
+        isUpdatingInfo: updateInfoMutation.isPending
+    }
+}

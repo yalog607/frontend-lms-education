@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import avatarImg from "../assets/images/icon.png";
 import Footer from "../Components/Footer";
 import { useAuth } from "../hooks/useAuth";
-import { FaEye, FaEyeSlash  } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -23,7 +24,13 @@ const Register = () => {
     return content && content.trim().length > 0;
   };
 
-  const handleRegisterButtonClick = () => {
+  const handleRegisterFormSubmit = (e) => {
+    e.preventDefault();
+
+    if (!email || !first_name || !last_name || !password || !confirmPassword) {
+      return toast.error("Please enter complete information");
+    }
+
     const data = {
       email,
       first_name,
@@ -53,7 +60,10 @@ const Register = () => {
         <div className="bg-base-200 p-4 sm:p-6 md:p-8 rounded-lg shadow-lg shadow-indigo-300 border border-indigo-200 w-full max-w-full sm:max-w-2xl md:max-w-4xl mt-4 sm:mt-6">
           <div className="flex flex-col md:flex-row w-full gap-4 md:gap-0">
             {/* Left Side - Login Form */}
-            <div className="w-full md:w-1/2 flex flex-col gap-3 sm:gap-4 px-4 sm:px-6 md:px-8">
+            <form
+              onSubmit={handleRegisterFormSubmit}
+              className="w-full md:w-1/2 flex flex-col gap-3 sm:gap-4 px-4 sm:px-6 md:px-8"
+            >
               <div className="w-full flex flex-col mb-2 sm:mb-4">
                 <label
                   className="block font-bold text-xs sm:text-sm text-gray-500 mb-2"
@@ -65,7 +75,6 @@ const Register = () => {
                   placeholder="Enter your email"
                   type="email"
                   id="email"
-                  required
                   onChange={(e) => setEmail(e.target.value)}
                   className={`px-3 sm:px-4 py-2 border border-gray-300 rounded-lg w-full font-semibold text-sm sm:text-md focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition ${hasValue(email) ? "border-green-500 outline-green-500" : "border-gray-300"}`}
                 />
@@ -109,6 +118,7 @@ const Register = () => {
                     Password:
                   </label>
                   <button
+                    type="button"
                     className="cursor-pointer text-lg hover:text-indigo-800 duration-300"
                     onClick={() => setIsHide(!isHide)}
                   >
@@ -142,7 +152,7 @@ const Register = () => {
               </div>
               <div className="w-full">
                 <button
-                  onClick={handleRegisterButtonClick}
+                  type="submit"
                   disabled={isRegistering}
                   className="outline-none btn drop-shadow-md w-full mt-3 sm:mt-4 bg-indigo-500 text-white font-bold py-2 px-4 rounded-xl hover:bg-indigo-600 transition-colors duration-250 text-sm sm:text-base"
                 >
@@ -157,13 +167,14 @@ const Register = () => {
               <p className="text-center text-sm mt-2">
                 Already have an account?{" "}
                 <button
+                  type="button"
                   onClick={() => navigate("/login")}
                   className="text-indigo-500 hover:text-indigo-700 font-semibold cursor-pointer"
                 >
                   Log in
                 </button>
               </p>
-            </div>
+            </form>
 
             {/* Divider */}
             <div className="divider md:hidden m-0 text-xs font-bold my-2 text-gray-500">

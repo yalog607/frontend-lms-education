@@ -1,48 +1,28 @@
 import React, {useEffect} from "react";
 import { Route, Routes, Link, NavLink } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import axiosClient from "./lib/axiosClient.js";
 import useAuthStore from "./store/useAuthStore.js";
-import { useQuery } from "@tanstack/react-query";
 
 import LandingPage from "./Pages/LandingPage.jsx";
 import AdminPage from "./Pages/AdminPage.jsx";
 import Home from "./Pages/Home.jsx"
+import Courses from "./Pages/Courses.jsx";
 import NotFound from "./Pages/NotFound.jsx";
 
 import Login from "./Pages/Login.jsx";
 import Register from "./Pages/Register.jsx";
 
 import { AdminRoute, GuestRoute, ProtectedRoute } from "./Components/ProtectedRoutes.jsx";
+import Profile from "./Pages/Profile.jsx";
 
 function App() {
-  const { setUser } = useAuthStore();
-
-  const { data: user, isLoading } = useQuery({
-    queryKey: ["me"],
-    queryFn: async () => {
-      const token = localStorage.getItem("token");
-      if (!token) return null;
-
-      try {
-        const res = await axiosClient.get("/auth/me"); 
-        return res.user;
-      // eslint-disable-next-line no-unused-vars
-      } catch (error) {
-        return null;
-      }
-    },
-    retry: false,
-    refetchOnWindowFocus: false,
-  });
+  const { checkAuth, user, isCheckingAuth } = useAuthStore();
 
   useEffect(() => {
-    if (user) {
-      setUser(user);
-    }
-  }, [user, setUser]);
+    checkAuth();
+  }, [checkAuth]);
 
-  if (isLoading) {
+  if (isCheckingAuth) {
     return (
       <div className="h-screen w-screen flex justify-center items-center">
         <span className="loading loading-dots loading-lg"></span>
@@ -77,6 +57,24 @@ function App() {
           element={
             <ProtectedRoute user={user}>
               <Home />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/courses"
+          element={
+            <ProtectedRoute user={user}>
+              <Courses />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute user={user}>
+              <Profile />
             </ProtectedRoute>
           }
         />

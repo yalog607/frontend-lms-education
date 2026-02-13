@@ -82,7 +82,7 @@ const SearchBar = () => {
           ref={inputRef}
           type="text"
           className="grow"
-          placeholder="Search"
+          placeholder="Search the course"
           value={inputValue}
           onChange={handleInputChange}
           onFocus={() => inputValue && setShowDropdown(true)}
@@ -143,7 +143,7 @@ const SearchBar = () => {
                       </div>
 
                       {/* Thông tin text */}
-                      <div className="flex-1 min-w-0">
+                      <div className="flex-1 min-w-0 overflow-hidden">
                         <h4 className="text-sm font-semibold text-slate-800 truncate">
                           {course?.name}
                         </h4>
@@ -153,7 +153,7 @@ const SearchBar = () => {
                       </div>
                     </div>
 
-                    <p className="font-medium text-sm text-red-500/80">${course.price.toLocaleString()}</p>
+                    <p className="hidden sm:block font-medium text-sm text-red-500/80">${course.price.toLocaleString()}</p>
                   </div>
                 </li>
               ))}

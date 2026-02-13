@@ -14,11 +14,11 @@ import { RiDashboard3Line } from "react-icons/ri";
 import { RiAccountCircleLine } from "react-icons/ri";
 import { MdOutlineSlowMotionVideo } from "react-icons/md";
 
-import { useGetCourse } from "../hooks/useCourse";
+import { useGetLatestCourse } from "../hooks/useCourse";
 
 const Home = () => {
   const { user } = useAuthStore();
-  const { data: Courses, isLoading } = useGetCourse();
+  const { data: Courses, isLoading } = useGetLatestCourse();
   const navigate = useNavigate();
 
   const handleCourseClick = (id) => {
@@ -26,11 +26,11 @@ const Home = () => {
   }
 
   useEffect(() => {
-    document.title = "Yalina | Dashboard";
+    document.title = "Dashboard";
   }, []);
   return (
     <>
-      <div className="flex flex-col md:flex-row min-h-screen bg-base-200 font-sans">
+      <div className="flex flex-col md:flex-row min-h-screen bg-base-200 font-sans items-start">
         <Sidebar />
         <div className="w-full mx-auto flex-1 flex flex-col bg-base-300 p-4 sm:p-6 lg:p-8 gap-4 sm:gap-6 overflow-x-hidden overflow-y-auto">
           <div className="flex items-center justify-between gap-4 w-full">
@@ -116,12 +116,12 @@ const Home = () => {
               </div>
               <div className="stat-value text-2xl mt-1 text-emerald-600">
                 <span className="text-2xl">$</span>
-                {user?.balance?.toLocaleString("vi-VN")}{" "}
+                {user?.balance?.toLocaleString("en-US")}{" "}
               </div>
               <div className="stat-desc mt-1 truncate max-w-50">
                 Updated:{" "}
                 {user?.updatedAt
-                  ? new Date(user.updatedAt).toLocaleString("vi-VN")
+                  ? new Date(user.updatedAt).toLocaleDateString("en-US")
                   : "N/A"}
               </div>
               <div
@@ -140,7 +140,7 @@ const Home = () => {
           </div>
 
           <div className="bg-base-100 w-full rounded drop-shadow-md transition-all duration-300 p-6">
-            <h1 className="font-bold text-xl text-stone-900 mb-4">Courses</h1>
+            <h1 className="font-bold text-lg mb-4 badge badge-soft badge-neutral">Latest Courses</h1>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
               {isLoading ? (
                 <div className="col-span-full flex justify-center py-10">
@@ -158,8 +158,8 @@ const Home = () => {
                     <div className="p-4 md:p-6 flex flex-col gap-2 justify-start">
                       <h2 className="font-medium text-md truncate w-full text-gray-800/80">{c?.name}</h2>
                       <p className="text-red-500/90 font-medium">${c?.price.toLocaleString()}</p>
-                      <div className="flex justify-between items-center text-sm text-gray-900/80">
-                        <div className="hidden md:flex items-center justify-center gap-1">
+                      <div className="flex justify-between items-center text-sm text-gray-900/80 flex-wrap">
+                        <div className="flex items-center justify-center gap-1">
                           <MdOutlineSlowMotionVideo  />
                           <p>{c?.teacher_id?.first_name || "Instructor"} </p>
                         </div>

@@ -1,40 +1,45 @@
-import { useState } from "react";
+import {} from "react";
 import { NavLink, Link } from "react-router-dom";
 import {
   FaBars,
   FaTimes,
-  FaHome ,
+  FaHome,
   FaBook,
   FaComments,
   FaSignOutAlt,
   FaChevronLeft,
 } from "react-icons/fa";
 import { RiProfileLine } from "react-icons/ri";
-import { MdRateReview, MdNotificationsActive  } from "react-icons/md";
+import { MdRateReview, MdNotificationsActive } from "react-icons/md";
 import useAuthStore from "../store/useAuthStore";
 import { useAuth } from "../hooks/useAuth";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 export default function Sidebar() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useLocalStorage("sidebar-open", true);
   const { logout } = useAuth();
-  const {user} = useAuthStore();
+  const { user } = useAuthStore();
   if (!user) return null;
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
-  
+
   const handleLogoutClick = () => {
     logout();
-  }
+  };
 
   const menuItems = [
-    { name: "Dashboard", icon: FaHome , path: "/home" },
-    { name: "Course", icon: FaBook, path: "/courses" },
+    { name: "Dashboard", icon: FaHome, path: "/home" },
+    { name: "My Courses", icon: FaBook, path: "/courses" },
     { name: "Profile", icon: RiProfileLine, path: "/profile" },
     { name: "Comments", icon: FaComments, path: "/comment" },
     { name: "Rating", icon: MdRateReview, path: "/rating" },
-    { name: 'Notifications', icon: MdNotificationsActive, path: '/notifications'}
+    {
+      name: "Notifications",
+      icon: MdNotificationsActive,
+      path: "/notifications",
+    },
   ];
 
   return (
@@ -62,23 +67,43 @@ export default function Sidebar() {
               {menuItems.map((item) => {
                 const IconComponent = item.icon;
                 return (
-                  <button
+                  <NavLink
                     key={item.name}
-                    className="w-full cursor-pointer flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-rose-50 hover:text-rose-500 transition-colors group text-gray-600"
+                    to={item.path}
+                    onClick={() => setIsOpen(false)}
+                    className={({ isActive }) =>
+                      `w-full cursor-pointer flex items-center gap-3 px-4 py-3 rounded-lg transition-colors group 
+                        ${isActive ? 'bg-rose-50 text-rose-500' : 'text-gray-600 hover:bg-rose-50 hover:text-rose-500'}
+                    `
+                    }
                   >
                     <IconComponent className={`${item.color} text-lg`} />
                     <span className="text-sm font-medium">{item.name}</span>
-                  </button>
+                  </NavLink>
                 );
               })}
             </nav>
             <div className="p-4 border-t border-gray-500">
               <div className="flex items-center">
                 <div>
-                  <Link className="text-sm font-semibold truncate hover:underline" to={"/setting"}>{user.first_name} {user.last_name}</Link>
-                  {user.role === 'admin' ? <Link to={'/admin'} className="text-xs truncate block">{user.role}</Link> : <p className="text-xs truncate">{user.role}</p>}
+                  <Link
+                    className="text-sm font-semibold truncate hover:underline"
+                    to={"/setting"}
+                  >
+                    {user.first_name} {user.last_name}
+                  </Link>
+                  {user.role === "admin" ? (
+                    <Link to={"/admin"} className="text-xs truncate block">
+                      {user.role}
+                    </Link>
+                  ) : (
+                    <p className="text-xs truncate">{user.role}</p>
+                  )}
                 </div>
-                <button onClick={handleLogoutClick} className="ml-auto p-2 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer">
+                <button
+                  onClick={handleLogoutClick}
+                  className="ml-auto p-2 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
+                >
                   <FaSignOutAlt className="text-red-500" />
                 </button>
               </div>
@@ -91,9 +116,7 @@ export default function Sidebar() {
       <div
         className={`hidden md:flex h-screen text-gray-800 transition-all duration-300 flex-col bg-base-100
           sticky top-0 overflow-hidden
-          ${
-          isOpen ? "w-64" : "w-20"
-        }`}
+          ${isOpen ? "w-64" : "w-20"}`}
       >
         {/* Header - Avatar và tên Yalina */}
         <div className="p-4 flex items-center justify-between">
@@ -125,7 +148,7 @@ export default function Sidebar() {
             return (
               <NavLink
                 key={item.name}
-                to={item.path} 
+                to={item.path}
                 end={item.path === "/"}
                 className={({ isActive }) =>
                   `w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors group cursor-pointer
@@ -154,14 +177,30 @@ export default function Sidebar() {
             {isOpen && (
               <div className="flex items-center gap-3 flex-1 min-w-0">
                 <div className="min-w-0">
-                  <Link to='/setting' className="text-sm font-semibold truncate hover:underline">{user.first_name} {user.last_name}</Link>
-                  {user.role ? <Link to={"/admin"} className="text-xs text-gray-400 truncate block">{user.role}</Link> : <p className="text-xs text-gray-400 truncate">{user.role}</p>}
+                  <Link
+                    to="/profile"
+                    className="text-sm font-semibold truncate hover:underline"
+                  >
+                    {user.first_name} {user.last_name}
+                  </Link>
+                  {user.role ? (
+                    <Link
+                      to={"/admin"}
+                      className="text-xs text-primary truncate block"
+                    >
+                      {user.role}
+                    </Link>
+                  ) : (
+                    <p className="text-xs text-gray-400 truncate">
+                      {user.role}
+                    </p>
+                  )}
                 </div>
               </div>
             )}
 
             <button
-                onClick={handleLogoutClick}
+              onClick={handleLogoutClick}
               className="flex-1 md:flex-0 p-2 mx-auto hover:bg-rose-50 rounded-lg transition-colors shrink-0 cursor-pointer"
               title="Đăng xuất"
             >
