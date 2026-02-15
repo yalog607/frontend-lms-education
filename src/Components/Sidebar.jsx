@@ -16,7 +16,7 @@ import { useAuth } from "../hooks/useAuth";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
 export default function Sidebar() {
-  const [isOpen, setIsOpen] = useLocalStorage("sidebar-open", true);
+  const [isOpen, setIsOpen] = useLocalStorage("sidebar-open", false);
   const { logout } = useAuth();
   const { user } = useAuthStore();
   if (!user) return null;
@@ -114,7 +114,7 @@ export default function Sidebar() {
 
       {/* Desktop Sidebar */}
       <div
-        className={`hidden md:flex h-screen text-gray-800 transition-all duration-300 flex-col bg-base-100
+        className={`hidden md:flex h-screen text-gray-800 transition-all duration-300 flex-col bg-base-100 border-r border-gray-500/10
           sticky top-0 overflow-hidden
           ${isOpen ? "w-64" : "w-20"}`}
       >

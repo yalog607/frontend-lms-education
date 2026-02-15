@@ -6,3 +6,38 @@
 @theme {
     --font-display: "Inter", sans-serif; 
 }
+
+:root {
+  --swiper-theme-color: #f43f5e;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50%; /* Hình tròn */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* Đổ bóng nhẹ */
+  transition: all 0.3s ease;
+  overflow: hidden !important;
+  color: #f0f0f0 !important;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  transform: scale(1.1); /* Phóng to nhẹ */
+}
+
+@media (max-width: 768px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none !important;
+  }
+}
+
+.swiper-pagination-bullet-active {
+  background-color: white !important;
+  opacity: 1 !important;
+}
+.swiper-pagination-bullet {
+  background-color: rgba(255, 255, 255, 0.6);
+}

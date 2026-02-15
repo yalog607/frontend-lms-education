@@ -1,18 +1,23 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Route, Routes, Link, NavLink } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import useAuthStore from "./store/useAuthStore.js";
 
 import LandingPage from "./Pages/LandingPage.jsx";
 import AdminPage from "./Pages/AdminPage.jsx";
-import Home from "./Pages/Home.jsx"
+import Home from "./Pages/Home.jsx";
 import Courses from "./Pages/Courses.jsx";
 import NotFound from "./Pages/NotFound.jsx";
+import CourseDetail from "./Pages/CourseDetail.jsx";
 
 import Login from "./Pages/Login.jsx";
 import Register from "./Pages/Register.jsx";
 
-import { AdminRoute, GuestRoute, ProtectedRoute } from "./Components/ProtectedRoutes.jsx";
+import {
+  AdminRoute,
+  GuestRoute,
+  ProtectedRoute,
+} from "./Components/ProtectedRoutes.jsx";
 import Profile from "./Pages/Profile.jsx";
 
 function App() {
@@ -27,13 +32,18 @@ function App() {
       <div className="h-screen w-screen flex justify-center items-center">
         <span className="loading loading-dots loading-lg"></span>
       </div>
-    )
+    );
   }
 
   return (
     <>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+
+        <Route
+          path="/course/:id"
+          element={<CourseDetail />}
+        />
 
         <Route
           path="/login"
@@ -43,6 +53,7 @@ function App() {
             </GuestRoute>
           }
         />
+
         <Route
           path="/register"
           element={
@@ -87,10 +98,10 @@ function App() {
             </AdminRoute>
           }
         />
-        
-        <Route path="*" element={<NotFound/>} />
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
-      <Toaster position="top-center" reverseOrder={true} />
+      <Toaster position="top-right" reverseOrder={true} />
     </>
   );
 }

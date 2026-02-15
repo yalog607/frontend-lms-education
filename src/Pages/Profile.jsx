@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import Sidebar from "../Components/Sidebar";
-import { useAuth, useUpdateUser, useGetMe } from "../hooks/useAuth";
+import { useAuth, useUpdateUser } from "../hooks/useAuth";
 import { toast } from "react-hot-toast";
 import {
   FaCamera,
@@ -11,16 +11,17 @@ import {
   FaSave,
 } from "react-icons/fa";
 import default_avt from "../assets/images/default_avatar.png";
+import useAuthStore from "../store/useAuthStore";
 
 const Profile = () => {
-  const { userInfo, isGetting } = useGetMe();
+  const { user } = useAuthStore();
   const { changePass, isChangingPass } = useAuth();
   const { updateAvatar, isUpdatingAvatar, updateInfo, isUpdatingInfo } = useUpdateUser();
 
   const [formData, setFormData] = useState({
-    first_name: userInfo?.first_name || "",
-    last_name: userInfo?.last_name || "",
-    phone: userInfo?.phone || "",
+    first_name: "",
+    last_name: "",
+    phone: "",
   });
 
   const [passData, setPassData] = useState({
@@ -30,26 +31,23 @@ const Profile = () => {
   });
 
   const [previewAvatar, setPreviewAvatar] = useState(
-    userInfo?.avatar || default_avt,
+    user?.avatar || default_avt,
   );
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
 
   useEffect(() => {
-    document.title = "My Profile | Yalina";
-  }, []);
-
-  useEffect(() => {
-    if (userInfo) {
+    document.title = "My Profile";
+    if (user) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setFormData({
-        first_name: userInfo.first_name || "",
-        last_name: userInfo.last_name || "",
-        phone: userInfo.phone || "",
+        first_name: user.first_name || "",
+        last_name: user.last_name || "",
+        phone: user.phone || "",
       });
-      setPreviewAvatar(userInfo.avatar || default_avt);
+      setPreviewAvatar(user.avatar || default_avt);
     }
-  }, [userInfo?.first_name, userInfo?.last_name, userInfo?.phone, userInfo?.avatar]);
+  }, []);
 
   const handleInfoChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -89,6 +87,7 @@ const Profile = () => {
       if (selectedFile) {
         const formData = new FormData();
         formData.append("image", selectedFile);
+      
         await updateAvatar(formData);
       }
 
@@ -120,7 +119,7 @@ const Profile = () => {
     setPassData({ password: "", newPassword: "", confirmPassword: "" });
   };
 
-  if (isGetting) {
+  if (!user) {
     return (
       <div className="h-screen w-screen flex justify-center items-center">
         <span className="loading loading-dots loading-lg"></span>
@@ -129,11 +128,11 @@ const Profile = () => {
   }
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-base-300 font-sans items-start">
+    <div className="flex flex-col md:flex-row min-h-screen bg-base-200 font-sans items-start">
       <Sidebar />
 
       {/* Main Content */}
-      <div className="w-full flex-1 flex flex-col p-4 sm:p-6 lg:p-8 gap-6 overflow-x-hidden overflow-y-auto">
+      <div className="w-full min-h-screen flex-1 flex flex-col p-4 sm:p-6 lg:p-8 gap-6 overflow-x-hidden overflow-y-auto">
         {/* Header Title */}
         <div className="bg-base-100 p-4 rounded-xl shadow-sm border border-base-200">
           <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
@@ -178,14 +177,18 @@ const Profile = () => {
                 </div>
 
                 {isUpdatingAvatar && (
-                    <span className="text-sm text-success">Updating avatar...</span>
+                    <span className="text-sm text-warning font-semibold">
+                      Updating avatar
+                      {" "}
+                      <span className="loading loading-xs loading-bars"></span>
+                      </span>
                 )}
 
                 <h2 className="card-title mt-4 text-2xl">
-                  {userInfo?.first_name} {userInfo?.last_name}
+                  {user?.first_name} {user?.last_name}
                 </h2>
                 <div className="badge badge-secondary badge-outline mt-1 uppercase font-bold text-xs">
-                  {userInfo?.role}
+                  {user?.role}
                 </div>
 
                 <div className="w-full divider my-2"></div>
@@ -196,7 +199,7 @@ const Profile = () => {
                       Email
                     </span>
                     <span className="text-gray-700 text-sm truncate">
-                      {userInfo?.email}
+                      {user?.email}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
@@ -204,8 +207,8 @@ const Profile = () => {
                       Joined Date
                     </span>
                     <span className="text-gray-700 text-sm">
-                      {userInfo?.createdAt
-                        ? new Date(userInfo.createdAt).toLocaleDateString("en-US")
+                      {user?.createdAt
+                        ? new Date(user.createdAt).toLocaleDateString("en-US")
                         : "N/A"}
                     </span>
                   </div>
@@ -214,7 +217,7 @@ const Profile = () => {
                       Balance
                     </span>
                     <span className="text-emerald-600 font-bold text-sm">
-                      ${userInfo?.balance?.toLocaleString()}
+                      ${user?.balance?.toLocaleString()}
                     </span>
                   </div>
                 </div>
@@ -227,9 +230,11 @@ const Profile = () => {
             {/* Form 1: Personal Information */}
             <div className="card bg-base-100 shadow-md border border-base-200">
               <div className="card-body">
-                <h3 className="card-title text-lg border-b border-gray-100 pb-2 mb-4">
+                <h3 className="card-title text-lg">
                   Personal Information
                 </h3>
+                <div className="w-full divider my-1"></div>
+                
                 <form
                   onSubmit={handleSubmitInfo}
                   className="grid grid-cols-1 md:grid-cols-2 gap-4"
@@ -294,7 +299,7 @@ const Profile = () => {
                     </label>
                     <input
                       type="text"
-                      value={userInfo?.email}
+                      value={user?.email}
                       disabled
                       className="input input-bordered bg-gray-100 text-gray-500 w-full cursor-not-allowed"
                     />
@@ -322,9 +327,10 @@ const Profile = () => {
             {/* Form 2: Change Password */}
             <div className="card bg-base-100 shadow-md border border-base-200">
               <div className="card-body">
-                <h3 className="card-title text-lg border-b border-gray-100 pb-2 mb-4 flex items-center gap-2">
+                <h3 className="card-title text-lg flex items-center gap-2">
                   <FaLock className="text-sky-500" /> Change Password
                 </h3>
+                <div className="w-full divider my-1"></div>
                 <form onSubmit={handleChangePassword} className="space-y-4">
                   <div className="form-control">
                     <label className="label">

@@ -13,8 +13,6 @@ export const useAuth = () => {
         mutationFn: loginAPI,
         onSuccess: (data) => {
             setAuth(data.user, data.accessToken);
-
-            toast.success(`Welcome, ${data.user.first_name}`);
             queryClient.setQueryData(['me'], data.user)
             navigate('/home');
         },
@@ -28,8 +26,6 @@ export const useAuth = () => {
         mutationFn: registerAPI,
         onSuccess: (data) => {
             setAuth(data.user, data.accessToken)
-
-            toast('Register successfully!', { icon: '🎉' });
             queryClient.setQueryData(['me'], data.user)
             navigate('/home');
         },
@@ -85,11 +81,13 @@ export const useGetMe = () => {
 }
 
 export const useUpdateUser = () => {
+    const { checkAuth } = useAuthStore();
     const queryClient = useQueryClient();
     
     const updateAvatarMutation = useMutation({
         mutationFn: updateAvatarAPI,
         onSuccess: () => {
+            checkAuth();
             queryClient.invalidateQueries(['me']);
         },
         onError: (err) => {
@@ -101,6 +99,7 @@ export const useUpdateUser = () => {
     const updateInfoMutation = useMutation({
         mutationFn: updateInfoAPI,
         onSuccess: () => {
+            checkAuth();
             toast.success('Profile updated successfully!');
             queryClient.invalidateQueries(['me']);
         },
@@ -111,9 +110,9 @@ export const useUpdateUser = () => {
     })
 
     return {
-        updateAvatar: updateAvatarMutation.mutate,
+        updateAvatar: updateAvatarMutation.mutateAsync,
         isUpdatingAvatar: updateAvatarMutation.isPending,
-        updateInfo: updateInfoMutation.mutate,
+        updateInfo: updateInfoMutation.mutateAsync,
         isUpdatingInfo: updateInfoMutation.isPending
     }
 }

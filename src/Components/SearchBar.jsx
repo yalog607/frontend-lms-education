@@ -76,7 +76,7 @@ const SearchBar = () => {
 
   return (
     <div ref={containerRef} className="relative z-50 flex flex-col rounded-xl items-center justify-center gap-1 w-full">
-      <label className="input rounded-full flex items-center gap-2 bg-base-100 w-full outline-none shadow-sm hover:shadow-md transition-shadow">
+      <label className="input rounded-full flex items-center gap-2 bg-base-100 w-full outline-none shadow-sm hover:shadow-md transition-shadow border-gray-500/20">
         <FiSearch />
         <input
           ref={inputRef}
@@ -153,7 +153,7 @@ const SearchBar = () => {
                       </div>
                     </div>
 
-                    <p className="hidden sm:block font-medium text-sm text-red-500/80">${course.price.toLocaleString()}</p>
+                    <p className="hidden sm:block font-medium text-sm text-emerald-600">${course.price.toLocaleString()}</p>
                   </div>
                 </li>
               ))}

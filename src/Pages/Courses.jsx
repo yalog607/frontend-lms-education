@@ -40,7 +40,7 @@ const Courses = () => {
   };
 
   const handleCourseClick = (id) => {
-    navigate(`/courses/${id}`);
+    navigate(`/course/${id}`);
   };
 
   useEffect(() => {
@@ -50,18 +50,13 @@ const Courses = () => {
     <>
       <div className="flex flex-col md:flex-row min-h-screen bg-base-200 font-sans items-start">
         <Sidebar />
-        <div className="w-full min-h-screen mx-auto flex-1 flex flex-col bg-base-300 p-4 sm:p-6 lg:p-8 gap-4 sm:gap-6 overflow-x-hidden overflow-y-auto">
-          <div className="flex items-center justify-between gap-4 w-full">
-            <div className="flex-1">
-              <SearchBar />
-            </div>
-            <HeaderProfile />
-          </div>
-
+        <div className="w-full min-h-screen mx-auto flex-1 flex flex-col bg-base-200 p-4 sm:p-6 lg:p-8 gap-4 sm:gap-6 overflow-x-hidden overflow-y-auto">
           <div className="bg-base-100 w-full rounded drop-shadow-md transition-all duration-300 p-6">
-            <h1 className="font-bold text-lg mb-4 badge badge-soft badge-neutral">
+            <h1 className="font-bold text-lg">
               Enrolled Courses
             </h1>
+            <div className="w-full divider my-2"></div>
+
             <div className="">
               {isLoading ? (
                 <div className="col-span-full flex justify-center py-10">
@@ -130,9 +125,11 @@ const Courses = () => {
           </div>
 
           <div className="bg-base-100 w-full rounded drop-shadow-md transition-all duration-300 p-6">
-            <h1 className="font-bold text-lg mb-4 badge badge-soft badge-neutral">
+            <h1 className="font-bold text-lg">
               Enrollment
             </h1>
+
+            <div className="w-full divider my-1"></div>
 
             {isGettingEnrollment ? (
               <div className="w-full flex justify-center items center p-20">
@@ -175,7 +172,7 @@ const Courses = () => {
                               <p
                                 className="truncate hover:underline underline-offset-2 cursor-pointer"
                                 onClick={() => {
-                                  navigate(`/courses/${e?.course_id?._id}`);
+                                  navigate(`/course/${e?.course_id?._id}`);
                                 }}
                               >
                                 {e?.course_id?.name || "Unknown Course"}
@@ -201,7 +198,7 @@ const Courses = () => {
                                   )
                                 : "N/A"}
                             </td>
-                            <td className="text-rose-500 font-bold">
+                            <td className="text-orange-600 font-bold">
                               ${e?.pricePaid}
                             </td>
                           </tr>
