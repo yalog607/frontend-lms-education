@@ -5,28 +5,24 @@ import { RiDashboard3Line } from "react-icons/ri";
 import { RiAccountCircleLine } from "react-icons/ri";
 import { MdOutlineSlowMotionVideo } from "react-icons/md";
 
-import { useGetCourse } from "../hooks/useCourse";
-
-const ShowCourse = ({title}) => {
-  const { data: AllCourses, isLoadingAllCourses } = useGetCourse();
+const ShowCourse = ({title, data, isLoading}) => {
   const navigate = useNavigate();
 
   const handleCourseClick = (id) => {
     navigate(`/course/${id}`);
   };
   return (
-    <div className="bg-base-100 w-full rounded drop-shadow-md transition-all duration-300 p-6">
-      <h1 className="font-bold text-lg">{title}</h1>
-      <div className="w-full divider my-2"></div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-        {isLoadingAllCourses ? (
+    <div className="bg-base-100 w-full rounded transition-all duration-300 p-4 md:p-8">
+      <h1 className="font-bold text-2xl mb-4">{title}</h1>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-6">
+        {isLoading ? (
           <div className="col-span-full flex justify-center py-10">
             <span className="loading loading-spinner loading-lg text-rose-500"></span>
           </div>
         ) : (
-          AllCourses?.courses.map((c) => (
+          data?.courses.map((c) => (
             <div
-              className="card bg-base-200/80 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+              className="card bg-base-200/80 hover:drop-shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer border border-gray-500/10"
               onClick={() => handleCourseClick(c?._id)}
               key={c?._id}
             >

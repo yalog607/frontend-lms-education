@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
+
 import Sidebar from "../Components/Sidebar";
+
 import { useAuth, useUpdateUser } from "../hooks/useAuth";
 import { toast } from "react-hot-toast";
 import {
@@ -14,7 +16,7 @@ import default_avt from "../assets/images/default_avatar.png";
 import useAuthStore from "../store/useAuthStore";
 
 const Profile = () => {
-  const { user } = useAuthStore();
+  const { user, isCheckingAuth} = useAuthStore();
   const { changePass, isChangingPass } = useAuth();
   const { updateAvatar, isUpdatingAvatar, updateInfo, isUpdatingInfo } = useUpdateUser();
 
@@ -47,7 +49,7 @@ const Profile = () => {
       });
       setPreviewAvatar(user.avatar || default_avt);
     }
-  }, []);
+  }, [user]); 
 
   const handleInfoChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -119,7 +121,7 @@ const Profile = () => {
     setPassData({ password: "", newPassword: "", confirmPassword: "" });
   };
 
-  if (!user) {
+  if (isCheckingAuth) {
     return (
       <div className="h-screen w-screen flex justify-center items-center">
         <span className="loading loading-dots loading-lg"></span>
@@ -132,16 +134,16 @@ const Profile = () => {
       <Sidebar />
 
       {/* Main Content */}
-      <div className="w-full min-h-screen flex-1 flex flex-col p-4 sm:p-6 lg:p-8 gap-6 overflow-x-hidden overflow-y-auto">
+      <div className="container mx-auto w-full min-h-screen flex-1 flex flex-col p-4 sm:p-6 lg:p-8 gap-6 overflow-x-hidden overflow-y-auto">
         {/* Header Title */}
         <div className="bg-base-100 p-4 rounded-xl shadow-sm border border-base-200">
-          <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-            <FaUser className="text-secondary" /> My Profile
-          </h1>
-          <p className="text-sm text-gray-500 mt-1">
-            Manage personal information and account security
-          </p>
-        </div>
+            <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+              <FaUser className="text-secondary" /> My Profile
+            </h1>
+            <p className="text-sm text-gray-500 mt-1">
+              Manage personal information and account security
+            </p>
+          </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* --- LEFT COLUMN: AVATAR CARD --- */}
@@ -311,7 +313,7 @@ const Profile = () => {
                       className="btn btn-secondary text-white"
                       disabled={isUpdatingInfo}
                     >
-                      {isUpdatingInfo ? (
+                      {isUpdatingInfo || isUpdatingAvatar ? (
                         <span className="loading loading-spinner"></span>
                       ) : (
                         <>
@@ -387,7 +389,7 @@ const Profile = () => {
                   <div className="flex justify-end mt-4">
                     <button
                       type="submit"
-                      className="btn btn-info text-white"
+                      className={`btn btn-info text-white ${isUpdatingAvatar ? "btn-disabled" : ""}`}
                       disabled={isChangingPass}
                     >
                       {isChangingPass ? (

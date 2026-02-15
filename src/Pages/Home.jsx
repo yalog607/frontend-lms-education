@@ -8,17 +8,18 @@ import HeaderProfile from "../Components/HeaderProfile";
 import Slideshow from "../Components/Slideshow";
 import ShowCourse from "../Components/ShowCourse";
 
+import { useGetCourse } from "../hooks/useCourse";
+
 const Home = () => {
-
-
+  const {data: AllCourses, isLoading } = useGetCourse();
   useEffect(() => {
     document.title = "Dashboard";
   }, []);
   return (
     <>
-      <div className="flex flex-col md:flex-row min-h-screen bg-base-200 font-sans items-start">
+      <div className="flex flex-col md:flex-row min-h-screen bg-base-100 font-sans items-start">
         <Sidebar />
-        <div className="w-full min-h-screen mx-auto flex-1 flex flex-col bg-base-200 p-4 sm:p-6 lg:p-8 gap-4 sm:gap-6 overflow-x-hidden overflow-y-auto">
+        <div className="container w-full min-h-screen mx-auto flex-1 flex flex-col bg-base-100 p-4 sm:p-6 lg:p-8 gap-4 sm:gap-6 overflow-x-hidden overflow-y-auto">
           <div className="flex items-center justify-between gap-4 w-full">
             <div className="flex-1">
               <SearchBar />
@@ -26,7 +27,7 @@ const Home = () => {
             <HeaderProfile />
           </div>
 
-          <Slideshow/>
+          <Slideshow />
 
           {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             <div className="stat bg-base-100 shadow-sm hover:shadow-md transition-all duration-300 rounded-2xl hover:-translate-y-1 border border-base-200/50">
@@ -179,7 +180,7 @@ const Home = () => {
             </div>
           </div> */}
 
-          <ShowCourse title="All Courses"/>
+          <ShowCourse title="All Courses" data={AllCourses} isLoading={isLoading} />
         </div>
       </div>
     </>

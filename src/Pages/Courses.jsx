@@ -50,17 +50,18 @@ const Courses = () => {
     <>
       <div className="flex flex-col md:flex-row min-h-screen bg-base-200 font-sans items-start">
         <Sidebar />
-        <div className="w-full min-h-screen mx-auto flex-1 flex flex-col bg-base-200 p-4 sm:p-6 lg:p-8 gap-4 sm:gap-6 overflow-x-hidden overflow-y-auto">
+        <div className="container w-full min-h-screen mx-auto flex-1 flex flex-col bg-base-200 p-4 sm:p-6 lg:p-8 gap-4 sm:gap-6 overflow-x-hidden overflow-y-auto">
           <div className="bg-base-100 w-full rounded drop-shadow-md transition-all duration-300 p-6">
-            <h1 className="font-bold text-lg">
-              Enrolled Courses
-            </h1>
+            <h1 className="font-bold text-lg">Enrolled Courses</h1>
             <div className="w-full divider my-2"></div>
 
             <div className="">
               {isLoading ? (
-                <div className="col-span-full flex justify-center py-10">
-                  <span className="loading loading-spinner loading-lg text-rose-500"></span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  <div className="skeleton w-full h-64"></div>
+                  <div className="skeleton w-full h-64 hidden sm:block"></div>
+                  <div className="skeleton w-full h-64 hidden lg:block"></div>
+                  <div className="skeleton w-full h-64 hidden xl:block"></div>
                 </div>
               ) : (
                 <div className="w-full">
@@ -125,9 +126,7 @@ const Courses = () => {
           </div>
 
           <div className="bg-base-100 w-full rounded drop-shadow-md transition-all duration-300 p-6">
-            <h1 className="font-bold text-lg">
-              Enrollment
-            </h1>
+            <h1 className="font-bold text-lg">Enrollment</h1>
 
             <div className="w-full divider my-1"></div>
 
@@ -217,7 +216,7 @@ const Courses = () => {
                         onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 1}
                       >
-                        <GrCaretPrevious/>
+                        <GrCaretPrevious />
                       </button>
 
                       {/* Render các số trang */}
@@ -237,7 +236,7 @@ const Courses = () => {
                         onClick={() => handlePageChange(currentPage + 1)}
                         disabled={currentPage === totalPages}
                       >
-                        <GrCaretNext/>
+                        <GrCaretNext />
                       </button>
                     </div>
                   </div>

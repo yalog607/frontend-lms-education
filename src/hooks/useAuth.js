@@ -65,7 +65,7 @@ export const useAuth = () => {
         isRegistering: registerMutation.isPending,
         logout: logoutMutation.mutate,
         isLoggingOut: logoutMutation.isPending,
-        changePass: changePasswordMutation.mutate,
+        changePass: changePasswordMutation.mutateAsync,
         isChangingPass: changePasswordMutation.isPending,
     };
 };

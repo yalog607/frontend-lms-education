@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { NavLink, useNavigate, Link } from "react-router-dom";
 import useAuthStore from "../store/useAuthStore";
+import SearchBar from "./SearchBar";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user } = useAuthStore();
   const navigate = useNavigate();
-  
+
   const handleLoginClick = () => {
     navigate("/login");
   };
@@ -24,7 +25,7 @@ const Header = () => {
     "px-4 py-2 hover:bg-white rounded-md font-bold text-gray-900 hover:text-rose-500 transition-colors duration-150";
 
   return (
-    <div className="w-full bg-pink-50 py-2 md:py-4 px-4 sm:px-8 md:px-12 lg:px-40 text-gray-800 font-bold flex flex-row items-center shadow-md">
+    <div className="w-full bg-pink-50 py-2 md:py-4 px-4 sm:px-8 md:px-12 lg:px-40 text-gray-800 flex flex-row items-center">
       <div className="cursor-pointer px-4 sm:px-6 md:px-8">
         <h1
           className="font-bold text-4xl bg-linear-to-r from-rose-600 to-rose-400 text-transparent bg-clip-text hover:from-rose-700 hover:to-rose-500 transition-colors duration-100"
@@ -35,34 +36,42 @@ const Header = () => {
       </div>
 
       <div className="hidden lg:flex flex-1 justify-end gap-10">
-        <NavLink
-          end
-          to="/"
-          className={({ isActive }) => (isActive ? activeLink : cssText)}
-        >
-          Home
-        </NavLink>
-        <NavLink
-          end
-          to="/login"
-          className={({ isActive }) => (isActive ? activeLink : cssText)}
-        >
-          About Us
-        </NavLink>
-        <NavLink
-          end
-          to="/login"
-          className={({ isActive }) => (isActive ? activeLink : cssText)}
-        >
-          Contact
-        </NavLink>
+        {user ? (
+          <>
+            <NavLink
+              end
+              to="/"
+              className={({ isActive }) => (isActive ? activeLink : cssText)}
+            >
+              Home
+            </NavLink>
+            <NavLink
+              end
+              to="/login"
+              className={({ isActive }) => (isActive ? activeLink : cssText)}
+            >
+              About Us
+            </NavLink>
+            <NavLink
+              end
+              to="/login"
+              className={({ isActive }) => (isActive ? activeLink : cssText)}
+            >
+              Contact
+            </NavLink>
+          </>
+        ) : (
+          <div className="w-1/2">
+            <SearchBar />
+          </div>
+        )}
+
         <Link
           to={"/login"}
           className="btn px-8 py-1 rounded-lg border-2 border-rose-500 bg-transparent text-rose-500 hover:bg-rose-600 hover:text-base-100 transition-colors duration-300 font-bold"
         >
           {user ? "Continue" : "Login"}
         </Link>
-        
       </div>
 
       <div className="lg:hidden flex-1 flex justify-end">

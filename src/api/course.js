@@ -19,7 +19,7 @@ export const createCoursesAPI = async(data) => {
 
 export const getCourseByIdAPI = async(id) => {
     if (!id) return null;
-    return await axiosClient.get(`/course/create-course/${id}`);
+    return await axiosClient.get(`/course/get-course/${id}`);
 }
 
 export const getCourseOfTeacherAPI = async(id) => {

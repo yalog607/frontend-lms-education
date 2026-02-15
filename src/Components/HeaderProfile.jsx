@@ -66,21 +66,12 @@ const HeaderProfile = () => {
             </Link>
 
             <Link
-              to="/my-courses"
+              to="/courses"
               onClick={() => setIsOpen(false)}
               className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-700 rounded-lg hover:bg-rose-50 hover:text-rose-500 transition-colors"
             >
               <FaBook className="text-lg" />
               Khóa học của tôi
-            </Link>
-
-            <Link
-              to="/setting"
-              onClick={() => setIsOpen(false)}
-              className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-700 rounded-lg hover:bg-rose-50 hover:text-rose-500 transition-colors"
-            >
-              <FaCog className="text-lg" />
-              Cài đặt
             </Link>
           </div>
 

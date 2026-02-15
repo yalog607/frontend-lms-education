@@ -16,8 +16,9 @@ const Banner = () => {
     title: "Master Data Structures & Algorithms", 
     desc: "Build the bedrock of computer science. Master complex algorithms, optimize your code efficiency, and confidently ace technical interviews at top tech companies.",
     btnText: "EXPLORE COURSE",
-    gradient: "from-[#1c92d2] to-[#f2fcfe] md:from-[#000428] md:to-[#004e92]", 
-    image: "https://files.fullstack.edu.vn/f8-prod/banners/20/6308a6bf603a4.png" 
+    gradient: "from-[#000428] to-[#004e92]", 
+    image: "" ,
+    link: ""
   },
   {
     id: 2,
@@ -25,7 +26,8 @@ const Banner = () => {
     desc: "Dive deep into the 4 pillars of OOP: Encapsulation, Abstraction, Inheritance, and Polymorphism. Learn to write clean, scalable, and maintainable code for real-world apps.",
     btnText: "START LEARNING",
     gradient: "from-[#ff512f] to-[#dd2476]", 
-    image: "https://files.fullstack.edu.vn/f8-prod/banners/32/6421144f7d542.png"
+    image: "",
+    link: ""
   },
   {
     id: 3,
@@ -33,7 +35,8 @@ const Banner = () => {
     desc: "Comprehensive roadmap for beginners. Hands-on projects, active community support, and everything you need to launch your career in software development.",
     btnText: "JOIN COMMUNITY",
     gradient: "from-[#11998e] to-[#38ef7d]", 
-    image: "https://files.fullstack.edu.vn/f8-prod/banners/26/63dc61f2a061e.png"
+    image: "",
+    link: ""
   },
   ];
 
@@ -61,7 +64,7 @@ const Banner = () => {
               className={`w-full h-70 md:h-80 bg-linear-to-r ${item.gradient} flex items-center px-12 md:px-24 relative rounded-2xl`}
             >
               
-              <div className="w-full md:w-1/2 text-white z-10 flex flex-col items-start justify-center">
+              <div className="w-full lg:w-1/2 text-white z-10 flex flex-col items-start justify-center">
                 <h2 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4 leading-tight">
                   {item.title}
                 </h2>
@@ -74,7 +77,7 @@ const Banner = () => {
                 </button>
               </div>
 
-              <div className="hidden md:flex w-1/2 h-full justify-end items-end relative z-10">
+              <div className="hidden lg:flex w-1/2 h-full justify-end items-end relative z-10">
                   <img 
                     src={banner} 
                     alt={item.title} 

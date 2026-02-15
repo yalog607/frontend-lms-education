@@ -76,7 +76,7 @@ const SearchBar = () => {
 
   return (
     <div ref={containerRef} className="relative z-50 flex flex-col rounded-xl items-center justify-center gap-1 w-full">
-      <label className="input rounded-full flex items-center gap-2 bg-base-100 w-full outline-none shadow-sm hover:shadow-md transition-shadow border-gray-500/20">
+      <label className="input rounded-full flex items-center gap-2 bg-base-100 w-full outline-none shadow-sm hover:shadow-md transition-all border-gray-500/20">
         <FiSearch />
         <input
           ref={inputRef}
@@ -104,7 +104,7 @@ const SearchBar = () => {
       </label>
 
       {showDropdown && (
-        <div className="absolute top-full bg-base-100 w-full rounded-md shadow-md mt-2 transition-transform">
+        <div className="absolute top-full bg-base-100 w-full rounded-md drop-shadow-xl mt-2 transition-transform">
           {isLoading && (
             <div className="p-4 text-center text-gray-500 text-sm">
               <span className="loading loading-spinner loading-sm mr-2"></span>
