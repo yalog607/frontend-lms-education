@@ -35,16 +35,16 @@ const LandingPage = () => {
               Welcome to Yalina
             </button>
             <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-800 capitalize select-none mb-3 md:mb-4 leading-tight text-shadow-md">
-              <span>Be the best </span>
-              <span className="font-extrabold text-rose-500 text-shadow-lg underline decoration-rose-500">
+              <span>Be the best{" "}</span>
+              <span className="font-extrabold text-rose-500 text-shadow-lg underline decoration-rose-500 inline-block">
                 Student{" "}
               </span>
-              <span>You can with </span>
-              <span className="font-extrabold text-rose-500 text-shadow-lg">
+              <span>You can with{" "}</span>
+              <span className="font-extrabold text-rose-500 text-shadow-lg inline-block">
                 E-Learning
               </span>
             </p>
-            <p className="text-gray-950/70 font-light text-lg">
+            <p className="text-gray-950/70 font-medium text-lg">
               Unlock your potential with our extensive library of courses. From
               technical skills to creative arts, we provide the tools you need to
               advance your career and achieve your personal goals, no matter where

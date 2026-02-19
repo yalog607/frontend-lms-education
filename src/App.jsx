@@ -19,6 +19,7 @@ import {
   ProtectedRoute,
 } from "./Components/ProtectedRoutes.jsx";
 import Profile from "./Pages/Profile.jsx";
+import LessonPage from "./Pages/Lesson.jsx";
 
 function App() {
   const { checkAuth, user, isCheckingAuth } = useAuthStore();
@@ -86,6 +87,15 @@ function App() {
           element={
             <ProtectedRoute user={user}>
               <Profile />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/learn/:courseId/play/:lessonId"
+          element={
+            <ProtectedRoute user={user}>
+              <LessonPage/>
             </ProtectedRoute>
           }
         />

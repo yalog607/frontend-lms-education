@@ -130,13 +130,13 @@ const Profile = () => {
   }
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-base-200 font-sans items-start">
+    <div className="flex flex-col md:flex-row min-h-screen bg-base-100 font-sans items-start">
       <Sidebar />
 
       {/* Main Content */}
       <div className="container mx-auto w-full min-h-screen flex-1 flex flex-col p-4 sm:p-6 lg:p-8 gap-6 overflow-x-hidden overflow-y-auto">
         {/* Header Title */}
-        <div className="bg-base-100 p-4 rounded-xl shadow-sm border border-base-200">
+        <div className="bg-base-100 p-4 rounded-xl shadow-sm border border-gray-500/10">
             <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
               <FaUser className="text-secondary" /> My Profile
             </h1>
@@ -148,7 +148,7 @@ const Profile = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* --- LEFT COLUMN: AVATAR CARD --- */}
           <div className="lg:col-span-1">
-            <div className="card bg-base-100 shadow-md border border-base-200">
+            <div className="card bg-base-100 shadow-md border border-gray-500/10">
               <div className="card-body items-center text-center">
                 <div className="relative group">
                   {/* Avatar Circle */}
@@ -230,7 +230,7 @@ const Profile = () => {
           {/* --- RIGHT COLUMN: FORMS --- */}
           <div className="lg:col-span-2 space-y-6">
             {/* Form 1: Personal Information */}
-            <div className="card bg-base-100 shadow-md border border-base-200">
+            <div className="card bg-base-100 shadow-md border border-gray-500/10">
               <div className="card-body">
                 <h3 className="card-title text-lg">
                   Personal Information
@@ -327,7 +327,7 @@ const Profile = () => {
             </div>
 
             {/* Form 2: Change Password */}
-            <div className="card bg-base-100 shadow-md border border-base-200">
+            <div className="card bg-base-100 shadow-md border border-gray-500/10">
               <div className="card-body">
                 <h3 className="card-title text-lg flex items-center gap-2">
                   <FaLock className="text-sky-500" /> Change Password

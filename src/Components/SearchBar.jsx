@@ -75,7 +75,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div ref={containerRef} className="relative z-50 flex flex-col rounded-xl items-center justify-center gap-1 w-full">
+    <div ref={containerRef} className="relative z-50 flex flex-col rounded-xl items-center justify-center gap-1 w-full  ">
       <label className="input rounded-full flex items-center gap-2 bg-base-100 w-full outline-none shadow-sm hover:shadow-md transition-all border-gray-500/20">
         <FiSearch />
         <input
@@ -123,9 +123,9 @@ const SearchBar = () => {
             <ul className="py-2">
               {searchResults.map((course) => (
                 <li key={course._id || course.id} className="px-2">
-                  <div className="flex justify-between items-center px-4 py-3 hover:bg-gray-200 cursor-pointer transition-colors rounded-xl" onClick={() => handleResultClick(course._id)}>
+                  <div className="flex gap-3 justify-between items-center px-4 py-3 hover:bg-gray-200 cursor-pointer transition-colors rounded-xl" onClick={() => handleResultClick(course._id)}>
                     <div
-                      className="flex items-center gap-3"
+                      className="flex items-center gap-3 flex-1 min-w-0"
                     >
                       {/* Ảnh thumbnail nhỏ (nếu có) */}
                       <div className="w-10 h-10 rounded bg-gray-200 overflow-hidden shrink-0">

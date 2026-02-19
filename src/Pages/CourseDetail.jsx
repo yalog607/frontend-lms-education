@@ -1,5 +1,5 @@
 // pages/CourseDetail.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 
 import {
@@ -67,6 +67,14 @@ const CourseDetail = () => {
       setOpenChapters(allSectionIds);
     }
   };
+
+  const handleClickLesson = (courseId, lessonId) => {
+    navigate(`/learn/${courseId}/play/${lessonId}`)
+  }
+
+  useEffect(() => {
+    document.title = "Course Detail";
+  }, [])
 
   if (isLoading) {
     return (
@@ -190,6 +198,7 @@ const CourseDetail = () => {
                             <li
                               key={lesson._id}
                               className="flex justify-between items-center p-3 px-4 hover:bg-gray-50 cursor-pointer group"
+                              onClick={() => handleClickLesson(Course.course._id, lesson._id)}
                             >
                               <div className="flex items-center gap-3">
                                 <FaPlayCircle className="text-rose-400 group-hover:text-rose-500 text-lg" />

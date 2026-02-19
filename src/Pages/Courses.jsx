@@ -16,6 +16,7 @@ import { GrCaretPrevious, GrCaretNext } from "react-icons/gr";
 
 import { useGetUserCourse } from "../hooks/useCourse";
 import { useGetUserEnrollment } from "../hooks/useEnrollment";
+import ShowCourse from "../Components/ShowCourse";
 
 const Courses = () => {
   const { data: Courses, isLoading } = useGetUserCourse();
@@ -39,19 +40,15 @@ const Courses = () => {
     setCurrentPage(pageNumber);
   };
 
-  const handleCourseClick = (id) => {
-    navigate(`/course/${id}`);
-  };
-
   useEffect(() => {
     document.title = "My Courses";
   }, []);
   return (
     <>
-      <div className="flex flex-col md:flex-row min-h-screen bg-base-200 font-sans items-start">
+      <div className="flex flex-col md:flex-row min-h-screen bg-base-100 font-sans items-start">
         <Sidebar />
-        <div className="container w-full min-h-screen mx-auto flex-1 flex flex-col bg-base-200 p-4 sm:p-6 lg:p-8 gap-4 sm:gap-6 overflow-x-hidden overflow-y-auto">
-          <div className="bg-base-100 w-full rounded drop-shadow-md transition-all duration-300 p-6">
+        <div className="container w-full min-h-screen mx-auto flex-1 flex flex-col bg-base-100 p-4 sm:p-6 lg:p-8 gap-4 sm:gap-6 overflow-x-hidden overflow-y-auto">
+          {/* <div className="bg-base-100 w-full rounded drop-shadow-md transition-all duration-300 p-6">
             <h1 className="font-bold text-lg">Enrolled Courses</h1>
             <div className="w-full divider my-2"></div>
 
@@ -123,10 +120,11 @@ const Courses = () => {
                 </div>
               )}
             </div>
-          </div>
+          </div> */}
+          <ShowCourse data={Courses} isLoading={isLoading} title={"Enrolled Courses"} none={"You haven't enrolled in any courses yet."} />
 
-          <div className="bg-base-100 w-full rounded drop-shadow-md transition-all duration-300 p-6">
-            <h1 className="font-bold text-lg">Enrollment</h1>
+          <div className="bg-base-100 w-full rounded drop-shadow-md transition-all duration-300 p-6 border border-gray-500/10">
+            <h1 className="font-bold text-xl">Enrollment</h1>
 
             <div className="w-full divider my-1"></div>
 

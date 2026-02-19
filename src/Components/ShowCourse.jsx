@@ -1,23 +1,29 @@
-import React, {  } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { RiDashboard3Line } from "react-icons/ri";
 import { RiAccountCircleLine } from "react-icons/ri";
 import { MdOutlineSlowMotionVideo } from "react-icons/md";
+import { FaBookReader } from "react-icons/fa";
 
-const ShowCourse = ({title, data, isLoading}) => {
+const ShowCourse = ({ title, data, isLoading, none }) => {
   const navigate = useNavigate();
 
   const handleCourseClick = (id) => {
     navigate(`/course/${id}`);
   };
   return (
-    <div className="bg-base-100 w-full rounded transition-all duration-300 p-4 md:p-8">
-      <h1 className="font-bold text-2xl mb-4">{title}</h1>
+    <div className="bg-base-100 w-full rounded transition-all duration-300">
+      <h1 className="font-bold text-xl mb-4">{title}</h1>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-6">
         {isLoading ? (
-          <div className="col-span-full flex justify-center py-10">
-            <span className="loading loading-spinner loading-lg text-rose-500"></span>
+          <>
+            <div className="skeleton w-full h-64"></div>
+          </>
+        ) : data?.courses.length === 0 ? (
+          <div className="w-full mx-auto col-span-5 text-center py-10 text-gray-500 flex flex-col justify-center items-center">
+            <FaBookReader size={40} className="mb-2 opacity-50" />
+            <p>{none}</p>
           </div>
         ) : (
           data?.courses.map((c) => (

@@ -64,7 +64,7 @@ const Banner = () => {
               className={`w-full h-70 md:h-80 bg-linear-to-r ${item.gradient} flex items-center px-12 md:px-24 relative rounded-2xl`}
             >
               
-              <div className="w-full lg:w-1/2 text-white z-10 flex flex-col items-start justify-center">
+              <div className="w-full lg:w-2/3 text-white z-10 flex flex-col items-start justify-center">
                 <h2 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4 leading-tight">
                   {item.title}
                 </h2>
@@ -77,7 +77,7 @@ const Banner = () => {
                 </button>
               </div>
 
-              <div className="hidden lg:flex w-1/2 h-full justify-end items-end relative z-10">
+              <div className="hidden lg:flex w-1/3 h-full justify-center items-center relative z-10">
                   <img 
                     src={banner} 
                     alt={item.title} 

@@ -11,7 +11,7 @@ import ShowCourse from "../Components/ShowCourse";
 import { useGetCourse } from "../hooks/useCourse";
 
 const Home = () => {
-  const {data: AllCourses, isLoading } = useGetCourse();
+  const { data: AllCourses, isLoading } = useGetCourse();
   useEffect(() => {
     document.title = "Dashboard";
   }, []);
@@ -180,7 +180,14 @@ const Home = () => {
             </div>
           </div> */}
 
-          <ShowCourse title="All Courses" data={AllCourses} isLoading={isLoading} />
+          <div className="w-full p-4 md:p-8">
+            <ShowCourse
+              title="All Courses"
+              data={AllCourses}
+              isLoading={isLoading}
+              none={"No Courses Found"}
+            />
+          </div>
         </div>
       </div>
     </>
