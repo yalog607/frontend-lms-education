@@ -41,3 +41,8 @@ export const searchCourseAPI = async(q) => {
     if (!q) return [];
     return await axiosClient.get(`/course/search-course/${q}`,);
 }
+
+export const checkOwnCourseAPI = async(course_id) => {
+    if (!course_id) return null;
+    return await axiosClient.get(`/course/check-own-course/${course_id}`);
+}

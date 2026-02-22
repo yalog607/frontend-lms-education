@@ -75,13 +75,13 @@ const SearchBar = () => {
   };
 
   return (
-    <div ref={containerRef} className="relative z-50 flex flex-col rounded-xl items-center justify-center gap-1 w-full  ">
+    <div ref={containerRef} className="relative z-50 flex flex-col rounded-xl items-center justify-center gap-1 w-full">
       <label className="input rounded-full flex items-center gap-2 bg-base-100 w-full outline-none shadow-sm hover:shadow-md transition-all border-gray-500/20">
         <FiSearch />
         <input
           ref={inputRef}
           type="text"
-          className="grow"
+          className="grow text-base md:text-sm"
           placeholder="Search the course"
           value={inputValue}
           onChange={handleInputChange}

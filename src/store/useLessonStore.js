@@ -7,6 +7,7 @@ const useLessonStore = create((set) => ({
 
     isAutoplay: true,
     toggleAutoplay: () => set((state) => ({ isAutoplay: !state.isAutoplay })),
+    setAutoplay: (value) => set(() => ({ isAutoplay: value })),
 
     expandedSections: [], 
     toggleSection: (sectionId) => set((state) => {

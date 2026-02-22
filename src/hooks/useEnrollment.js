@@ -1,11 +1,25 @@
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useMutation } from "@tanstack/react-query"
 import { getUserEnrollmentAPI } from "../api/enrollment"
-
+import { enrollCourseAPI } from "../api/enrollment"
+import toast from "react-hot-toast"
 
 export const useGetUserEnrollment = () => {
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ['user-enrollment'],
         queryFn: getUserEnrollmentAPI,
     })
-    return {data, isLoading, isError, error};
+    return { data, isLoading, isError, error };
+}
+
+export const useEnrollCourse = () => {
+    const { mutate, isPending, isError, error } = useMutation({
+        mutationFn: enrollCourseAPI,
+        onSuccess: () => {
+            toast.success("Enroll course successfully!");
+        },
+        onError: (error) => {
+            toast.error(error.response?.data?.message || "Enroll course failed!");
+        }
+    })
+    return { mutate, isPending, isError, error };
 }

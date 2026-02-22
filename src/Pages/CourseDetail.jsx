@@ -1,5 +1,5 @@
 // pages/CourseDetail.jsx
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 
 import {
@@ -13,26 +13,27 @@ import {
 } from "react-icons/fa";
 import { IoIosAdd, IoIosRemove, IoMdArrowRoundBack } from "react-icons/io";
 
-import { useCourseById } from "../hooks/useCourse";
+import { useCourseById, useCheckOwnCourse } from "../hooks/useCourse";
 import Sidebar from "../Components/Sidebar";
 import SearchBar from "../Components/SearchBar";
 import HeaderProfile from "../Components/HeaderProfile";
 import useAuthStore from "../store/useAuthStore";
-import Header from "../Components/Header";
-import Footer from "../Components/Footer";
+import { useEnrollCourse } from "../hooks/useEnrollment";
+import { useCourseProgress } from "../hooks/useProgress";
+import toast from "react-hot-toast";
 
-const formatDuration = (totalMinutes) => {
-    if (!totalMinutes) return "0 minute";
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
+const formatDuration = (totalSeconds) => {
+  if (!totalSeconds) return "0 second";
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
 
-    let mStr = minutes > 0 ? "minutes" : "minute";
-    let hStr = hours > 0 ? "hours" : "hour";
+  let mStr = minutes > 0 ? "minutes" : "minute";
+  let sStr = seconds > 0 ? "seconds" : "second";
 
-    if (hours > 0) {
-        return `${hours} ${mStr} ${minutes} ${hStr}`;
-    }
-    return `${minutes} ${mStr}`;
+  if (minutes > 0) {
+    return `${minutes} ${mStr} ${seconds} ${sStr}`;
+  }
+  return `${seconds} ${sStr}`;
 };
 
 const CourseDetail = () => {
@@ -40,7 +41,18 @@ const CourseDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
+  const { mutate: enrollCourse, isPending } = useEnrollCourse();
   const { data: Course, isLoading } = useCourseById(id);
+  const { data: checkOwnCourseData, isLoading: isCheckOwnCourseLoading } = useCheckOwnCourse(id);
+
+  const allLessonIds = useMemo(() => {
+      if (!Course?.course?.sections) return [];
+      return Course.course.sections.flatMap((s) =>
+        s.lessons.map((l) => l._id),
+      );
+    }, [Course]);
+  
+    const { data: progressData } = useCourseProgress(allLessonIds);
 
   const [openChapters, setOpenChapters] = useState([]);
 
@@ -69,12 +81,41 @@ const CourseDetail = () => {
   };
 
   const handleClickLesson = (courseId, lessonId) => {
-    navigate(`/learn/${courseId}/play/${lessonId}`)
-  }
+    navigate(`/learn/${courseId}/play/${lessonId}`);
+  };
 
   useEffect(() => {
     document.title = "Course Detail";
-  }, [])
+  }, []);
+
+  const handleStartLearning = () => {
+    let targetLessonId = Course.course.sections[0].lessons[0]._id;
+
+    const inProgressLesson = progressData.find(p => !p.isCompleted && p.last_watched > 0);
+    
+    if (inProgressLesson) {
+        targetLessonId = inProgressLesson.lesson_id;
+    }
+
+    navigate(`/learn/${Course.course._id}/play/${targetLessonId}`);
+}
+
+  const handleEnrollClick = () => {
+    if (!user) {
+      toast.error("You need to log in to enroll in this course");
+      navigate("/login");
+    } else {
+      if (checkOwnCourseData?.isEnrolled) {
+        handleStartLearning();
+      } else {
+        if (user.balance < Course.course.price) {
+            toast.error("Your balance is insufficient to enroll in this course. Please top up your account.");
+            return;
+        }
+        enrollCourse(Course.course._id);
+      }
+    }
+  };
 
   if (isLoading) {
     return (
@@ -91,7 +132,7 @@ const CourseDetail = () => {
         <div className="container w-full flex-1 mx-auto min-h-screen bg-base-100 flex flex-col p-4 sm:p-6 lg:p-8 gap-4 sm:gap-6 overflow-x-hidden overflow-y-auto">
           <div className="flex items-center justify-between gap-4 w-full">
             <div
-              className="flex items-center justify-start gap-1 cursor-pointer hover:-translate-x-1 transition-all duration-200"
+              className="flex items-center justify-start gap-1 cursor-pointer hover:-translate-x-1 hover:text-rose-500 transition-all duration-200"
               onClick={() => navigate(-1)}
             >
               <IoMdArrowRoundBack />
@@ -198,7 +239,9 @@ const CourseDetail = () => {
                             <li
                               key={lesson._id}
                               className="flex justify-between items-center p-3 px-4 hover:bg-gray-50 cursor-pointer group"
-                              onClick={() => handleClickLesson(Course.course._id, lesson._id)}
+                              onClick={() =>
+                                handleClickLesson(Course.course._id, lesson._id)
+                              }
                             >
                               <div className="flex items-center gap-3">
                                 <FaPlayCircle className="text-rose-400 group-hover:text-rose-500 text-lg" />
@@ -206,7 +249,9 @@ const CourseDetail = () => {
                                   {lesson.title}
                                 </span>
                               </div>
-                              <span className="text-xs font-medium text-gray-500">{formatDuration(lesson.duration)}</span>
+                              <span className="text-xs font-medium text-gray-500">
+                                {formatDuration(lesson.duration)}
+                              </span>
                             </li>
                           ))}
                         </ul>
@@ -238,8 +283,11 @@ const CourseDetail = () => {
                       : "Free"}
                   </h2>
 
-                  <button className="btn btn-secondary text-white rounded-full w-full lg:w-1/2 font-bold text-md mb-6 shadow-md">
-                    Enroll
+                  <button
+                    className={`btn btn-secondary text-white rounded-full w-full lg:w-1/2 font-bold text-md mb-6 shadow-md ${isPending ? "opacity-50 cursor-not-allowed" : ""}`}
+                    onClick={handleEnrollClick}
+                  >
+                    {isPending || isCheckOwnCourseLoading ? "Processing..." : checkOwnCourseData?.isEnrolled ? "Continue" : "Enroll Now"}
                   </button>
 
                   {/* List thông tin chi tiết */}
@@ -256,15 +304,16 @@ const CourseDetail = () => {
                     <li className="flex items-center gap-3 text-gray-600 text-sm">
                       <FaFilm className="text-gray-800" />
                       <span>
-                        Tổng số <strong>{Course.course.lessons_length}</strong>{" "}
-                        bài học
+                        <strong>{Course.course.lessons_length}</strong> {}
+                        {Course.course.lessons_length > 0
+                          ? "lessons"
+                          : "lesson"}
                       </span>
                     </li>
                     <li className="flex items-center gap-3 text-gray-600 text-sm">
                       <FaClock className="text-gray-800" />
                       <span>
-                        Thời lượng{" "}
-                        <strong>{Course.course.totalDuration}</strong>
+                        Duration <strong>{Course.course.totalDuration}</strong>
                       </span>
                     </li>
                     <li className="flex items-center gap-3 text-gray-600 text-sm">

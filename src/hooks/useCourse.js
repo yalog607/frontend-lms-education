@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getUserCourseAPI, searchCourseAPI, getLatestCoursesAPI, getAllCoursesAPI, getCourseByIdAPI, getCourseOfTeacherAPI, createCoursesAPI, updateCourseAPI, deleteCourseAPI } from '../api/course';
+import { checkOwnCourseAPI, getUserCourseAPI, searchCourseAPI, getLatestCoursesAPI, getAllCoursesAPI, getCourseByIdAPI, getCourseOfTeacherAPI, createCoursesAPI, updateCourseAPI, deleteCourseAPI } from '../api/course';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
@@ -136,4 +136,13 @@ export const useSearchCourse = (searchTerm) => {
         isError,
         error
     }
+}
+
+export const useCheckOwnCourse = (course_id) => {
+    const { data, isLoading, isError, error } = useQuery({
+        queryKey: ['check-own-course', course_id],
+        queryFn: () => checkOwnCourseAPI(course_id),
+        enabled: !!course_id
+    })
+    return { data, isLoading, isError, error };
 }
