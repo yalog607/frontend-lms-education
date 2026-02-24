@@ -144,7 +144,7 @@ const SearchBar = () => {
 
                       {/* Thông tin text */}
                       <div className="flex-1 min-w-0 overflow-hidden">
-                        <h4 className="text-sm font-semibold text-slate-800 truncate">
+                        <h4 className="text-sm font-semibold text-gray-600 truncate">
                           {course?.name}
                         </h4>
                         <p className="text-xs font-semibold text-amber-500 truncate">
@@ -153,7 +153,7 @@ const SearchBar = () => {
                       </div>
                     </div>
 
-                    <p className="hidden sm:block font-medium text-sm text-emerald-600">${course.price.toLocaleString()}</p>
+                    <p className="hidden sm:block font-bold text-sm text-success">${course.price.toLocaleString()}</p>
                   </div>
                 </li>
               ))}

@@ -9,6 +9,7 @@ import Home from "./Pages/Home.jsx";
 import Courses from "./Pages/Courses.jsx";
 import NotFound from "./Pages/NotFound.jsx";
 import CourseDetail from "./Pages/CourseDetail.jsx";
+import AllCourses from "./Pages/AllCourses.jsx";
 
 import Login from "./Pages/Login.jsx";
 import Register from "./Pages/Register.jsx";
@@ -74,6 +75,15 @@ function App() {
         />
 
         <Route
+          path="/all-courses"
+          element={
+            <GuestRoute user={user}>
+              <AllCourses />
+            </GuestRoute>
+          }
+        />
+
+        <Route
           path="/courses"
           element={
             <ProtectedRoute user={user}>
@@ -111,7 +121,7 @@ function App() {
 
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <Toaster position="top-right" reverseOrder={true} />
+      <Toaster position="top-center" reverseOrder={true} />
     </>
   );
 }

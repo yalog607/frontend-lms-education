@@ -9,11 +9,20 @@ import JensenHuang from "../assets/images/jensenhuang.webp";
 import TimCook from "../assets/images/timcook.jpg";
 import { Link } from "react-router-dom";
 
+import { RiDashboard3Line } from "react-icons/ri";
+import { RiAccountCircleLine } from "react-icons/ri";
+import { FaChalkboardTeacher } from "react-icons/fa";
+
+import { useGetLatestCourse } from "../hooks/useCourse.js";
+import { FaBookReader } from "react-icons/fa";
+
 const LandingPage = () => {
   const navigate = useNavigate();
   const handleLoginClick = () => {
     navigate("/login");
   };
+
+  const { data: latestCourses, isLoading } = useGetLatestCourse();
 
   const listCard = [
     { name: "Bill Gates", url: BillGates, talk: "Microsoft is the best" },
@@ -35,20 +44,20 @@ const LandingPage = () => {
               Welcome to Yalina
             </button>
             <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-800 capitalize select-none mb-3 md:mb-4 leading-tight text-shadow-md">
-              <span>Be the best{" "}</span>
+              <span>Be the best </span>
               <span className="font-extrabold text-rose-500 text-shadow-lg underline decoration-rose-500 inline-block">
-                Student{" "}
+                Individual{" "}
               </span>
-              <span>You can with{" "}</span>
+              <span>You can with </span>
               <span className="font-extrabold text-rose-500 text-shadow-lg inline-block">
                 E-Learning
               </span>
             </p>
             <p className="text-gray-950/70 font-medium text-lg">
               Unlock your potential with our extensive library of courses. From
-              technical skills to creative arts, we provide the tools you need to
-              advance your career and achieve your personal goals, no matter where
-              you are located.
+              technical skills to creative arts, we provide the tools you need
+              to advance your career and achieve your personal goals, no matter
+              where you are located.
             </p>
             <button
               className="mt-4 md:mt-6 py-2 px-6 md:py-3 md:px-8 bg-rose-500 text-gray-100 drop-shadow rounded-md hover:bg-rose-700 hover:shadow-lg transition-all duration-300 text-sm md:text-md font-bold cursor-pointer"
@@ -69,8 +78,80 @@ const LandingPage = () => {
         </div>
       </div>
 
+      <div className="w-full flex flex-col px-8 sm:px-16 md:px-18 lg:px-40 pt-12 md:pt-20 pb-6 md:pb-8 justify-center items-center bg-base-200/50 rounded-t-4xl border-y border-gray-500/10">
+        <div className="flex-1 mb-12 bg-white py-2 md:py-3 lg:px-12 md:px-6 px-4 rounded shadow-md hover:shadow-xl transition-shadow duration-250 items-center">
+          <span className="font-bold text-3xl sm:text-4xl md:text-5xl text-pink-700 text-shadow-sm">
+            Latest Courses
+          </span>
+        </div>
+
+        <div className="flex-1 w-full transition-all duration-300 mb-10">
+          <div className="flex flex-col md:flex-row gap-4 sm:gap-6 w-full justify-between items-center flex-wrap">
+            {isLoading ? (
+              <>
+                <div className="skeleton w-full h-64"></div>
+                <div className="skeleton w-full h-64"></div>
+                <div className="skeleton w-full h-64"></div>
+                <div className="skeleton w-full h-64"></div>
+              </>
+            ) : latestCourses?.courses.length === 0 ? (
+              <div className="w-full mx-auto col-span-5 text-center py-10 text-gray-500 flex flex-col justify-center items-center">
+                <FaBookReader size={40} className="mb-2 opacity-50" />
+                <p>No courses available</p>
+              </div>
+            ) : (
+              latestCourses?.courses.map((c) => (
+                <div
+                  className="flex-1 w-96 overflow-hidden card bg-base-200/80 hover:drop-shadow-xl transition-all duration-300 hover:-translate-y-1 hover:scale-105  cursor-pointer border border-gray-500/10"
+                  onClick={() => navigate(`/course/${c?._id}`)}
+                  key={c?._id}
+                >
+                  <figure className="w-full h-48 bg-gray-100">
+                    <img
+                      className="w-full h-full object-cover"
+                      src={c?.thumbnail}
+                      alt="Course"
+                    />
+                  </figure>
+                  <div className="p-4 md:p-6 flex flex-col gap-2 justify-start">
+                    <h2 className="font-medium text-md truncate w-full text-gray-800/80 line-clamp-2">
+                      {c?.name}
+                    </h2>
+                    <p className="text-success text-sm font-bold">
+                      ${c?.price.toLocaleString()}
+                    </p>
+                    <div className="flex justify-between items-center text-sm text-gray-700 flex-wrap">
+                      <div className="flex items-center justify-center gap-1">
+                        <FaChalkboardTeacher />
+                        <p>{c?.teacher_id?.first_name || "Instructor"} </p>
+                      </div>
+                      <div className="flex items-center justify-center gap-1">
+                        <RiAccountCircleLine />
+                        <p>{c?.studentCount} </p>
+                      </div>
+                      <div className="flex items-center justify-center gap-1">
+                        <RiDashboard3Line />
+                        <p>{c?.level} </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+
+        <div className="flex-1 w-full text-center">
+          <button
+          onClick={() => navigate('/all-courses')}
+          className="btn btn-outline outline-none btn-ghost border-2 border-rose-500 text-rose-500 hover:bg-rose-500 hover:text-base-100 transition-all duration-300 font-bold">
+            Show more
+          </button>
+        </div>
+      </div>
+
       {/* Feedback */}
-      <div className="w-full flex flex-col px-8 sm:px-16 md:px-18 lg:px-40 py-12 md:py-20 text-lg text-gray-800 justify-center items-center bg-rose-50 rounded-t-4xl">
+      <div className="w-full flex flex-col px-8 sm:px-16 md:px-18 lg:px-40 py-12 md:py-20 text-lg text-gray-800 justify-center items-center bg-base-300/50">
         <div className="flex-1 mb-12 bg-white py-2 md:py-3 lg:px-12 md:px-6 px-4 rounded shadow-md hover:shadow-xl transition-shadow duration-250 items-center">
           <span className="font-bold text-3xl sm:text-4xl md:text-5xl text-pink-700 text-shadow-sm">
             What Our Clients Say
@@ -112,7 +193,7 @@ const LandingPage = () => {
       </div>
 
       {/* Contact */}
-      <div className="w-full px-8 sm:px-16 md:px-18 lg:px-40 py-12 md:py-20 flex flex-col md:flex-row gap-4 md:gap-6 bg-rose-50 justify-between items-center md:items-start">
+      <div className="w-full px-8 sm:px-16 md:px-18 lg:px-40 py-12 md:py-20 flex flex-wrap flex-col md:flex-row gap-4 md:gap-6 bg-rose-50 justify-between items-center md:items-start">
         <div className="flex flex-col gap-2 w-1/2 md:w-1/5 items-center md:items-start">
           <h1 className="font-bold text-2xl md:text-4xl bg-linear-to-r bg-clip-text text-transparent from-rose-700 to-rose-500">
             Yalina

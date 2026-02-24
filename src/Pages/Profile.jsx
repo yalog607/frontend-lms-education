@@ -200,7 +200,7 @@ const Profile = () => {
                     <span className="text-gray-500 text-sm font-medium">
                       Email
                     </span>
-                    <span className="text-gray-700 text-sm truncate">
+                    <span className="text-zinc-700 text-sm truncate">
                       {user?.email}
                     </span>
                   </div>
@@ -208,7 +208,7 @@ const Profile = () => {
                     <span className="text-gray-500 text-sm font-medium">
                       Joined Date
                     </span>
-                    <span className="text-gray-700 text-sm">
+                    <span className="text-zinc-700 text-sm">
                       {user?.createdAt
                         ? new Date(user.createdAt).toLocaleDateString("en-US")
                         : "N/A"}
@@ -218,7 +218,7 @@ const Profile = () => {
                     <span className="text-gray-500 text-sm font-medium">
                       Balance
                     </span>
-                    <span className="text-emerald-600 font-bold text-sm">
+                    <span className="text-success font-bold text-sm">
                       ${user?.balance?.toLocaleString()}
                     </span>
                   </div>

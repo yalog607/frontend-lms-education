@@ -36,35 +36,27 @@ const Header = () => {
       </div>
 
       <div className="hidden lg:flex flex-1 justify-end gap-10">
-        {user ? (
-          <>
-            <NavLink
-              end
-              to="/"
-              className={({ isActive }) => (isActive ? activeLink : cssText)}
-            >
-              Home
-            </NavLink>
-            <NavLink
-              end
-              to="/login"
-              className={({ isActive }) => (isActive ? activeLink : cssText)}
-            >
-              About Us
-            </NavLink>
-            <NavLink
-              end
-              to="/login"
-              className={({ isActive }) => (isActive ? activeLink : cssText)}
-            >
-              Contact
-            </NavLink>
-          </>
-        ) : (
-          <div className="w-1/2">
-            <SearchBar />
-          </div>
-        )}
+        <NavLink
+          end
+          to="/"
+          className={({ isActive }) => (isActive ? activeLink : cssText)}
+        >
+          Home
+        </NavLink>
+        <NavLink
+          end
+          to="/login"
+          className={({ isActive }) => (isActive ? activeLink : cssText)}
+        >
+          About Us
+        </NavLink>
+        <NavLink
+          end
+          to="/login"
+          className={({ isActive }) => (isActive ? activeLink : cssText)}
+        >
+          Contact
+        </NavLink>
 
         <Link
           to={"/login"}

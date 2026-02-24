@@ -25,7 +25,7 @@ import toast from "react-hot-toast";
 const formatDuration = (totalSeconds) => {
   if (!totalSeconds) return "0 second";
   const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds % 60;
+  const seconds = Math.floor(totalSeconds % 60);
 
   let mStr = minutes > 0 ? "minutes" : "minute";
   let sStr = seconds > 0 ? "seconds" : "second";
@@ -43,16 +43,15 @@ const CourseDetail = () => {
 
   const { mutate: enrollCourse, isPending } = useEnrollCourse();
   const { data: Course, isLoading } = useCourseById(id);
-  const { data: checkOwnCourseData, isLoading: isCheckOwnCourseLoading } = useCheckOwnCourse(id);
+  const { data: checkOwnCourseData, isLoading: isCheckOwnCourseLoading } =
+    useCheckOwnCourse(id);
 
   const allLessonIds = useMemo(() => {
-      if (!Course?.course?.sections) return [];
-      return Course.course.sections.flatMap((s) =>
-        s.lessons.map((l) => l._id),
-      );
-    }, [Course]);
-  
-    const { data: progressData } = useCourseProgress(allLessonIds);
+    if (!Course?.course?.sections) return [];
+    return Course.course.sections.flatMap((s) => s.lessons.map((l) => l._id));
+  }, [Course]);
+
+  const { data: progressData } = useCourseProgress(allLessonIds);
 
   const [openChapters, setOpenChapters] = useState([]);
 
@@ -89,32 +88,46 @@ const CourseDetail = () => {
   }, []);
 
   const handleStartLearning = () => {
+    if (
+      Course.course.sections.length === 0 ||
+      Course.course.sections[0].lessons.length === 0
+    ) {
+      toast.error("Course data is not available");
+      return;
+    }
     let targetLessonId = Course.course.sections[0].lessons[0]._id;
 
-    const inProgressLesson = progressData.find(p => !p.isCompleted && p.last_watched > 0);
-    
+    const inProgressLesson = progressData.find(
+      (p) => !p.isCompleted && p.last_watched > 0,
+    );
+
     if (inProgressLesson) {
-        targetLessonId = inProgressLesson.lesson_id;
+      targetLessonId = inProgressLesson.lesson_id;
     }
 
     navigate(`/learn/${Course.course._id}/play/${targetLessonId}`);
-}
+  };
+
+  const enrollHandler = () => {
+    if (user.balance < Course.course.price) {
+      toast.error(
+        "Your balance is insufficient to enroll in this course. Please top up your account.",
+      );
+      return;
+    }
+    enrollCourse(Course.course._id);
+  };
 
   const handleEnrollClick = () => {
     if (!user) {
       toast.error("You need to log in to enroll in this course");
       navigate("/login");
-    } else {
-      if (checkOwnCourseData?.isEnrolled) {
-        handleStartLearning();
-      } else {
-        if (user.balance < Course.course.price) {
-            toast.error("Your balance is insufficient to enroll in this course. Please top up your account.");
-            return;
-        }
-        enrollCourse(Course.course._id);
-      }
+      return;
+    } else if (checkOwnCourseData?.isEnrolled) {
+      handleStartLearning();
+      return;
     }
+    return document.getElementById("enrollModal").showModal();
   };
 
   if (isLoading) {
@@ -226,7 +239,8 @@ const CourseDetail = () => {
                           {chapter.title}
                         </div>
                         <span className="text-sm text-gray-500">
-                          {chapter.lessons.length} bài học
+                          {chapter.lessons.length}{" "}
+                          {chapter.lessons.length > 1 ? "lessons" : "lesson"}
                         </span>
                       </div>
 
@@ -277,18 +291,59 @@ const CourseDetail = () => {
                 </div>
 
                 <div className="text-center px-4">
-                  <h2 className="text-3xl font-light text-orange-600 mb-4">
-                    {Course.course.price > 0
-                      ? `$${Course.course.price.toLocaleString("en-US")}`
-                      : "Free"}
+                  <h2 className="text-3xl mb-4 font-bold text-success">
+                    {checkOwnCourseData?.isEnrolled ? (
+                      <span className="">Enrolled</span>
+                    ) : Course.course.price > 0 ? (
+                      <span className="">
+                        ${Course.course.price.toLocaleString("en-US")}
+                      </span>
+                    ) : (
+                      <span className="">Free</span>
+                    )}
                   </h2>
 
                   <button
+                    htmlFor="my_modal_6"
                     className={`btn btn-secondary text-white rounded-full w-full lg:w-1/2 font-bold text-md mb-6 shadow-md ${isPending ? "opacity-50 cursor-not-allowed" : ""}`}
                     onClick={handleEnrollClick}
                   >
-                    {isPending || isCheckOwnCourseLoading ? "Processing..." : checkOwnCourseData?.isEnrolled ? "Continue" : "Enroll Now"}
+                    {isPending || isCheckOwnCourseLoading
+                      ? "Processing..."
+                      : checkOwnCourseData?.isEnrolled
+                        ? "Continue"
+                        : "Enroll Now"}
                   </button>
+
+                  <dialog
+                    id="enrollModal"
+                    className="modal modal-bottom sm:modal-middle"
+                  >
+                    <div className="modal-box">
+                      <h3 className="font-bold text-lg text-neutral">Enroll Confirmation</h3>
+                      <p className="py-4">
+                        Are you sure you want to enroll in{" "}
+                        <strong className="text-primary">{Course.course.name}</strong> for{" "}
+                        <strong className="text-success">
+                          ${Course.course.price.toLocaleString("en-US")}
+                        </strong>
+                        ?
+                      </p>
+                      <div className="modal-action">
+                        <form method="dialog">
+                          <button
+                            type="button"
+                            className="btn btn-secondary text-white rounded-full w-full lg:w-auto font-bold text-md"
+                            onClick={enrollHandler}
+                          >
+                            Yes, Enroll me
+                          </button>
+                          {/* if there is a button in form, it will close the modal */}
+                          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                        </form>
+                      </div>
+                    </div>
+                  </dialog>
 
                   {/* List thông tin chi tiết */}
                   <ul className="text-left space-y-3">

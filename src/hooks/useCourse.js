@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { checkOwnCourseAPI, getUserCourseAPI, searchCourseAPI, getLatestCoursesAPI, getAllCoursesAPI, getCourseByIdAPI, getCourseOfTeacherAPI, createCoursesAPI, updateCourseAPI, deleteCourseAPI } from '../api/course';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import useAuthStore from '../store/useAuthStore';
 
 export const useGetLatestCourse = () => {
     const { data, isLoading, isError, error } = useQuery({
@@ -139,10 +140,14 @@ export const useSearchCourse = (searchTerm) => {
 }
 
 export const useCheckOwnCourse = (course_id) => {
+    const { user } = useAuthStore();
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ['check-own-course', course_id],
-        queryFn: () => checkOwnCourseAPI(course_id),
-        enabled: !!course_id
+        queryFn: () => {
+            if (!user) return Promise.resolve(null);
+            return checkOwnCourseAPI(course_id);
+        },
+        enabled: !!course_id && !!user
     })
     return { data, isLoading, isError, error };
 }

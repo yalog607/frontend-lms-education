@@ -165,7 +165,7 @@ const Courses = () => {
                         currentItems.map((e, i) => (
                           <tr key={e._id} className="hover">
                             <th>{indexOfFirstItem + i + 1}</th>
-                            <td className="font-medium">
+                            <td className="font-medium text-primary">
                               <p
                                 className="truncate hover:underline underline-offset-2 cursor-pointer"
                                 onClick={() => {
@@ -188,14 +188,14 @@ const Courses = () => {
                                 </div>
                               </div>
                             </td>
-                            <td className="font-semibold">
+                            <td className="font-semibold text-warning">
                               {e?.enrollmentDate
                                 ? new Date(e.enrollmentDate).toLocaleDateString(
                                     "vi-VN",
                                   )
                                 : "N/A"}
                             </td>
-                            <td className="text-orange-600 font-bold">
+                            <td className="text-success font-bold">
                               ${e?.pricePaid}
                             </td>
                           </tr>

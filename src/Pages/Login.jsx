@@ -70,7 +70,7 @@ const Login = () => {
                   type="email"
                   id="email"
                   onChange={(e) => setEmail(e.target.value)}
-                  className={`px-3 sm:px-4 py-2 border border-gray-300 rounded-lg w-full font-semibold text-sm sm:text-md focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition ${hasValue(email) ? "border-green-500 outline-green-500" : "border-gray-300"}`}
+                  className={`px-3 sm:px-4 py-2 border border-gray-300 rounded-lg w-full font-semibold text-base sm:text-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition ${hasValue(email) ? "border-green-500 outline-green-500" : "border-gray-300"}`}
                 />
               </div>
               <div className="w-full flex flex-col relative">
@@ -94,7 +94,7 @@ const Login = () => {
                   type={isHide ? "password" : "text"}
                   id="password"
                   onChange={(e) => setPassword(e.target.value)}
-                  className={`px-3 sm:px-4 py-2 border border-gray-300 rounded-lg w-full font-semibold text-sm sm:text-md focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition ${hasValue(password) ? "border-green-500 outline-green-500" : "border-gray-300"}`}
+                  className={`px-3 sm:px-4 py-2 border border-gray-300 rounded-lg w-full font-semibold text-base sm:text-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition ${hasValue(password) ? "border-green-500 outline-green-500" : "border-gray-300"}`}
                 />
               </div>
               <div className="w-full">

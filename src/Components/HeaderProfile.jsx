@@ -52,6 +52,7 @@ const HeaderProfile = () => {
               {user.first_name} {user.last_name}
             </p>
             <p className="text-xs text-gray-500 truncate">{user.email}</p>
+            <p className="text-xs text-gray-500">Balance: <span className="text-success font-bold text-sm">${user.balance}</span></p>
           </div>
 
           {/* Danh sách Menu */}
