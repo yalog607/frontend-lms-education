@@ -20,12 +20,12 @@ const Header = () => {
   };
 
   let cssText =
-    "px-4 py-2 text-gray-800 hover:bg-white rounded-md hover:text-rose-600 transition-colors duration-150";
+    "px-4 py-2 font-medium text-neutral hover:bg-base-300/50 rounded-md hover:text-rose-500 transition-colors duration-150";
   let activeLink =
-    "px-4 py-2 hover:bg-white rounded-md font-bold text-gray-900 hover:text-rose-500 transition-colors duration-150";
+    "px-4 py-2 hover:bg-base-300/50 rounded-md font-bold text-gray-900 hover:text-rose-500 transition-colors duration-150";
 
   return (
-    <div className="w-full bg-pink-50 py-2 md:py-4 px-4 sm:px-8 md:px-12 lg:px-40 text-gray-800 flex flex-row items-center">
+    <div className="w-full bg-base-100 py-2 md:py-4 px-4 sm:px-8 md:px-12 lg:px-40 text-gray-800 flex flex-row items-center fixed top-0 z-50 shadow-sm">
       <div className="cursor-pointer px-4 sm:px-6 md:px-8">
         <h1
           className="font-bold text-4xl bg-linear-to-r from-rose-600 to-rose-400 text-transparent bg-clip-text hover:from-rose-700 hover:to-rose-500 transition-colors duration-100"
@@ -98,7 +98,7 @@ const Header = () => {
 
       {/* Menu Sidebar */}
       <div
-        className={`fixed top-0 right-0 min-h-screen w-64 bg-rose-50 shadow-lg z-40 transform transition-all duration-300 ease-out ${isMenuOpen ? "translate-x-0 opacity-100 pointer-events-auto" : "translate-x-full opacity-0"} lg:hidden`}
+        className={`fixed top-0 right-0 min-h-screen w-64 bg-base-100 shadow-lg z-40 transform transition-all duration-300 ease-out ${isMenuOpen ? "translate-x-0 opacity-100 pointer-events-auto" : "translate-x-full opacity-0"} lg:hidden`}
       >
         <div className="p-6">
           <button
@@ -113,7 +113,7 @@ const Header = () => {
               to="/"
               onClick={() => setIsMenuOpen(false)}
               className={({ isActive }) =>
-                `px-4 py-2 rounded-md transition-colors duration-150 ${isActive ? "bg-rose-400 text-white" : "text-gray-800 hover:bg-rose-100"}`
+                `px-4 py-2 rounded-md transition-colors duration-150 ${isActive ? "bg-rose-400 text-white" : "text-neutral hover:bg-rose-50"}`
               }
             >
               Home
@@ -122,7 +122,7 @@ const Header = () => {
               to="/login"
               onClick={() => setIsMenuOpen(false)}
               className={({ isActive }) =>
-                `px-4 py-2 rounded-md transition-colors duration-150 ${isActive ? "bg-rose-400 text-white" : "text-gray-800 hover:bg-rose-100"}`
+                `px-4 py-2 rounded-md transition-colors duration-150 ${isActive ? "bg-rose-400 text-white" : "text-neutral hover:bg-rose-50"}`
               }
             >
               About Us
@@ -131,7 +131,7 @@ const Header = () => {
               to="/login"
               onClick={() => setIsMenuOpen(false)}
               className={({ isActive }) =>
-                `px-4 py-2 rounded-md transition-colors duration-150 ${isActive ? "bg-rose-400 text-white" : "text-gray-800 hover:bg-rose-100"}`
+                `px-4 py-2 rounded-md transition-colors duration-150 ${isActive ? "bg-rose-400 text-white" : "text-neutral hover:bg-rose-50"}`
               }
             >
               Contact

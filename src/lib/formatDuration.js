@@ -11,3 +11,15 @@ export const formatDuration = (totalSeconds) => {
   }
   return `${seconds} ${sStr}`;
 };
+
+export const formatDurationShort = (totalSeconds) => {
+  if (!totalSeconds || totalSeconds < 0) return "00:00";
+  
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = Math.floor(totalSeconds % 60);
+
+  const mm = String(minutes).padStart(2, '0');
+  const ss = String(seconds).padStart(2, '0');
+
+  return `${mm}:${ss}`;
+};

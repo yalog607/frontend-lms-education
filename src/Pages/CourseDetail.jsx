@@ -8,9 +8,8 @@ import {
   FaBatteryFull,
   FaFilm,
   FaClock,
-  FaInfinity,
-  FaPlay,
 } from "react-icons/fa";
+import { LiaChalkboardTeacherSolid } from "react-icons/lia";
 import { IoIosAdd, IoIosRemove, IoMdArrowRoundBack } from "react-icons/io";
 
 import { useCourseById, useCheckOwnCourse } from "../hooks/useCourse";
@@ -351,9 +350,9 @@ const CourseDetail = () => {
                       <FaBatteryFull className="text-gray-800" />
                       <span className="">
                         Level:{" "}
-                        <span className="font-medium">
+                        <strong>
                           {Course.course.level}
-                        </span>
+                        </strong>
                       </span>
                     </li>
                     <li className="flex items-center gap-3 text-gray-600 text-sm">
@@ -372,8 +371,8 @@ const CourseDetail = () => {
                       </span>
                     </li>
                     <li className="flex items-center gap-3 text-gray-600 text-sm">
-                      <FaInfinity className="text-gray-800" />
-                      <span>Learn from every time, everywhere</span>
+                      <LiaChalkboardTeacherSolid className="text-gray-800" />
+                      <span>Instructor: <strong>{Course.course.teacher_id?.first_name} {Course.course.teacher_id?.last_name}</strong></span>
                     </li>
                   </ul>
                 </div>

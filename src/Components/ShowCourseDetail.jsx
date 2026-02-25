@@ -29,7 +29,7 @@ const ShowCourseDetail = ({ course: c }) => {
         <h2 className="font-medium text-md truncate w-full text-gray-800/80 line-clamp-2">
           {c?.name}
         </h2>
-        <p className="text-success text-sm font-bold">
+        <p className="text-success text-sm font-medium">
             {isLoading ? <span className="text-warning">Loading...</span> : ownCourseData?.isEnrolled ? 'Enrolled' : `$${c?.price.toLocaleString()}`}
         </p>
         <div className="flex justify-between items-center text-sm text-gray-700 flex-wrap">

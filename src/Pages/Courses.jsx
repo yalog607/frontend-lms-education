@@ -195,7 +195,7 @@ const Courses = () => {
                                   )
                                 : "N/A"}
                             </td>
-                            <td className="text-success font-bold">
+                            <td className="text-success font-medium">
                               ${e?.pricePaid}
                             </td>
                           </tr>

@@ -9,12 +9,20 @@ import JensenHuang from "../assets/images/jensenhuang.webp";
 import TimCook from "../assets/images/timcook.jpg";
 import { Link } from "react-router-dom";
 
+import { FcRuler } from "react-icons/fc";
 import { RiDashboard3Line } from "react-icons/ri";
 import { RiAccountCircleLine } from "react-icons/ri";
 import { FaChalkboardTeacher } from "react-icons/fa";
+import { FaArrowDown } from "react-icons/fa";
 
 import { useGetLatestCourse } from "../hooks/useCourse.js";
 import { FaBookReader } from "react-icons/fa";
+
+import pink_bg from "../assets/images/pink-banner.jpg";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -33,27 +41,31 @@ const LandingPage = () => {
     <div className="">
       <title>Yalina - Learn from anywhere</title>
 
-      <div className="w-full min-h-screen flex flex-col overflow-hidden">
-        {/* Header */}
-        <Header />
-
+      {/* Header */}
+      <Header />
+      <div className="w-full min-h-screen flex flex-col">
         {/* Banner */}
-        <div className="h-screen flex-1 px-4 sm:px-8 md:px-12 lg:px-40 bg-linear-to-b from-pink-50 to-white grid grid-cols-1 lg:grid-cols-12 items-center justify-items-center lg:justify-items-start rounded-b-4xl text-center lg:text-left text-base-100 gap-8 lg:gap-12 user-select-none pb-8">
+        <div className="h-screen z-0 relative flex-1 px-4 sm:px-8 md:px-12 lg:px-40 bg-base-100 grid grid-cols-1 lg:grid-cols-12 items-center justify-items-center lg:justify-items-start text-center lg:text-left text-base-100 gap-8 lg:gap-12 select-none overflow-hidden">
+          <div
+            className="absolute inset-0 z-[-1] h-full w-full bg-cover bg-center bg-no-repeat opacity-70"
+            style={{ backgroundImage: `url(${pink_bg})` }}
+          ></div>
+
           <div className="col-span-1 lg:col-span-6 flex flex-col items-center lg:items-start justify-center text-center lg:text-left w-full px-4 sm:px-6 md:px-8">
             <button className="py-2 px-4 md:py-3 md:px-6 bg-base-100 text-pink-700 font-bold rounded select-none mb-4 md:mb-6 shadow-lg hover:shadow-xl transition-shadow">
               Welcome to Yalina
             </button>
-            <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-800 capitalize select-none mb-3 md:mb-4 leading-tight text-shadow-md">
+            <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-base-100 capitalize select-none mb-3 md:mb-4 leading-tight text-shadow-md">
               <span>Be the best </span>
               <span className="font-extrabold text-rose-500 text-shadow-lg underline decoration-rose-500 inline-block">
                 Individual{" "}
               </span>
-              <span>You can with </span>
+              <span> You can with </span>
               <span className="font-extrabold text-rose-500 text-shadow-lg inline-block">
                 E-Learning
               </span>
             </p>
-            <p className="text-gray-950/70 font-medium text-lg">
+            <p className="text-base-100 font-medium text-lg">
               Unlock your potential with our extensive library of courses. From
               technical skills to creative arts, we provide the tools you need
               to advance your career and achieve your personal goals, no matter
@@ -71,89 +83,121 @@ const LandingPage = () => {
           </div>
 
           <div className="col-span-1 lg:col-span-6 w-full flex justify-center px-4 sm:px-6 md:px-8">
-            <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-full bg-rose-200 rounded-full shadow-lg md:shadow-xl flex items-center justify-center p-4 md:p-8 hover:shadow-2xl transition-all duration-300">
+            <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-full bg-transparent flex items-center justify-center p-4 md:p-8">
               <img src={banner} alt="banner" />
             </div>
           </div>
         </div>
       </div>
 
-      <div className="w-full flex flex-col px-8 sm:px-16 md:px-18 lg:px-40 pt-12 md:pt-20 pb-6 md:pb-8 justify-center items-center bg-base-200/50 rounded-t-4xl border-y border-gray-500/10">
-        <div className="flex-1 mb-12 bg-white py-2 md:py-3 lg:px-12 md:px-6 px-4 rounded shadow-md hover:shadow-xl transition-shadow duration-250 items-center">
-          <span className="font-bold text-3xl sm:text-4xl md:text-5xl text-pink-700 text-shadow-sm">
+      <div className="relative z-0 w-full flex flex-col px-8 sm:px-16 md:px-18 lg:px-40 pt-12 md:pt-20 pb-6 md:pb-8 justify-center items-center border-y border-gray-500/10 overflow-hidden bg-linear-to-br from-rose-50 via-base-100 to-rose-50">
+        <div className="absolute top-20 left-40 text-indigo-500 opacity-100 text-7xl -rotate-25 hidden md:block select-none">
+          ✦
+        </div>
+        <div className="absolute top-40 right-20 text-pink-500 opacity-100 text-5xl rotate-30 hidden md:block select-none">
+          +
+        </div>
+        <div className="absolute bottom-10 right-1/3 text-5xl rotate-30 hidden md:block select-none">
+          <FcRuler />
+        </div>
+
+        <div className="flex-1 mb-12 bg-white py-2 md:py-3 lg:px-12 md:px-6 px-4 rounded-full shadow-md hover:shadow-xl transition-shadow duration-250 items-center">
+          <span className="font-bold text-3xl sm:text-4xl md:text-5xl text-rose-600 text-shadow-sm">
             Latest Courses
           </span>
         </div>
 
         <div className="flex-1 w-full transition-all duration-300 mb-10">
-          <div className="flex flex-col md:flex-row gap-4 sm:gap-6 w-full justify-between items-center flex-wrap">
-            {isLoading ? (
-              <>
-                <div className="skeleton w-full h-64"></div>
-                <div className="skeleton w-full h-64"></div>
-                <div className="skeleton w-full h-64"></div>
-                <div className="skeleton w-full h-64"></div>
-              </>
-            ) : latestCourses?.courses.length === 0 ? (
-              <div className="w-full mx-auto col-span-5 text-center py-10 text-gray-500 flex flex-col justify-center items-center">
-                <FaBookReader size={40} className="mb-2 opacity-50" />
-                <p>No courses available</p>
-              </div>
-            ) : (
-              latestCourses?.courses.map((c) => (
-                <div
-                  className="flex-1 w-96 overflow-hidden card bg-base-200/80 hover:drop-shadow-xl transition-all duration-300 hover:-translate-y-1 hover:scale-105  cursor-pointer border border-gray-500/10"
-                  onClick={() => navigate(`/course/${c?._id}`)}
-                  key={c?._id}
-                >
-                  <figure className="w-full h-48 bg-gray-100">
-                    <img
-                      className="w-full h-full object-cover"
-                      src={c?.thumbnail}
-                      alt="Course"
-                    />
-                  </figure>
-                  <div className="p-4 md:p-6 flex flex-col gap-2 justify-start">
-                    <h2 className="font-medium text-md truncate w-full text-gray-800/80 line-clamp-2">
-                      {c?.name}
-                    </h2>
-                    <p className="text-success text-sm font-bold">
-                      ${c?.price.toLocaleString()}
-                    </p>
-                    <div className="flex justify-between items-center text-sm text-gray-700 flex-wrap">
-                      <div className="flex items-center justify-center gap-1">
-                        <FaChalkboardTeacher />
-                        <p>{c?.teacher_id?.first_name || "Instructor"} </p>
-                      </div>
-                      <div className="flex items-center justify-center gap-1">
-                        <RiAccountCircleLine />
-                        <p>{c?.studentCount} </p>
-                      </div>
-                      <div className="flex items-center justify-center gap-1">
-                        <RiDashboard3Line />
-                        <p>{c?.level} </p>
+          {isLoading ? (
+            // Lúc loading
+            <div className="flex gap-4 sm:gap-6 w-full overflow-hidden">
+              <div className="skeleton min-w-70 h-64"></div>
+              <div className="skeleton min-w-70 h-64"></div>
+              <div className="skeleton min-w-70 h-64"></div>
+              <div className="skeleton min-w-70 h-64"></div>
+            </div>
+          ) : latestCourses?.courses.length === 0 ? (
+            <div className="w-full mx-auto text-center py-10 text-gray-500 flex flex-col justify-center items-center">
+              <FaBookReader size={40} className="mb-2 opacity-50" />
+              <p>No courses available</p>
+            </div>
+          ) : (
+            <Swiper
+              modules={[Autoplay]}
+              loop={true}
+              speed={3000}
+              autoplay={{
+                delay: 0,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
+              }}
+              spaceBetween={20}
+              breakpoints={{
+                320: { slidesPerView: 1.2, spaceBetween: 15 },
+                640: { slidesPerView: 2, spaceBetween: 20 },
+                1024: { slidesPerView: 3, spaceBetween: 24 },
+                1280: { slidesPerView: 4, spaceBetween: 24 },
+              }}
+              className="continuous-slider w-full"
+            >
+              {latestCourses?.courses.map((c) => (
+                <SwiperSlide key={c?._id} className="h-auto p-4">
+                  <div
+                    className="h-full overflow-hidden card bg-base-200/80 transition-all duration-300 hover:scale-105 hover:shadow-sm cursor-pointer border border-gray-500/10"
+                    onClick={() => navigate(`/course/${c?._id}`)}
+                  >
+                    <figure className="w-full h-64 bg-base-100 shrink-0">
+                      <img
+                        className="w-full h-full object-cover"
+                        src={c?.thumbnail}
+                        alt={c?.name || "Course"}
+                      />
+                    </figure>
+                    <div className="p-4 md:p-6 flex flex-col gap-2 justify-start flex-1">
+                      <h2 className="font-medium text-md truncate w-full text-gray-800/80 line-clamp-2">
+                        {c?.name}
+                      </h2>
+                      <p className="text-success text-sm font-bold">
+                        ${c?.price.toLocaleString()}
+                      </p>
+                      <div className="flex justify-between items-center text-sm text-gray-700 flex-wrap gap-y-2 mt-auto pt-2">
+                        <div className="flex items-center justify-center gap-1">
+                          <FaChalkboardTeacher />
+                          <p className="line-clamp-1 max-w-20">
+                            {c?.teacher_id?.first_name || "Instructor"}
+                          </p>
+                        </div>
+                        <div className="flex items-center justify-center gap-1">
+                          <RiAccountCircleLine />
+                          <p>{c?.studentCount}</p>
+                        </div>
+                        <div className="flex items-center justify-center gap-1">
+                          <RiDashboard3Line />
+                          <p>{c?.level}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))
-            )}
-          </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          )}
         </div>
 
         <div className="flex-1 w-full text-center">
           <button
-          onClick={() => navigate('/all-courses')}
-          className="btn btn-outline outline-none btn-ghost border-2 border-rose-500 text-rose-500 hover:bg-rose-500 hover:text-base-100 transition-all duration-300 font-bold">
-            Show more
+            onClick={() => navigate("/all-courses")}
+            className="btn btn-outline outline-none btn-ghost border-2 border-rose-500 text-rose-500 hover:bg-rose-500 hover:text-base-100 transition-all duration-300 font-bold"
+          >
+            <FaArrowDown /> Show more
           </button>
         </div>
       </div>
 
       {/* Feedback */}
-      <div className="w-full flex flex-col px-8 sm:px-16 md:px-18 lg:px-40 py-12 md:py-20 text-lg text-gray-800 justify-center items-center bg-base-300/50">
-        <div className="flex-1 mb-12 bg-white py-2 md:py-3 lg:px-12 md:px-6 px-4 rounded shadow-md hover:shadow-xl transition-shadow duration-250 items-center">
-          <span className="font-bold text-3xl sm:text-4xl md:text-5xl text-pink-700 text-shadow-sm">
+      <div className="w-full flex flex-col px-8 sm:px-16 md:px-18 lg:px-40 py-12 md:py-20 text-lg text-gray-800 justify-center items-center bg-linear-to-tr from-base-300 via-base-100 to-base-300">
+        <div className="flex-1 mb-12 bg-white py-2 md:py-3 lg:px-12 md:px-6 px-4 rounded-full shadow-md hover:shadow-xl transition-shadow duration-250 items-center">
+          <span className="font-bold text-3xl sm:text-4xl md:text-5xl text-rose-600 text-shadow-sm">
             What Our Clients Say
           </span>
         </div>
@@ -169,6 +213,9 @@ const LandingPage = () => {
                   alt={item.name}
                   className="rounded-xl w-full h-48 md:h-64 object-cover"
                 />
+                <figcaption className="absolute bottom-0 w-full bg-black/50 text-white text-xs p-1 text-center rounded-t-full">
+                  Hình ảnh mang tính minh họa
+                </figcaption>
               </figure>
               <div className="card-body items-center text-center">
                 <h2 className="card-title text-xl">{item.name}</h2>

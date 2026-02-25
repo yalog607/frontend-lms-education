@@ -7,6 +7,7 @@ import {
   FaChevronDown,
   FaChevronUp,
 } from "react-icons/fa";
+import { formatDurationShort } from "../../lib/formatDuration";
 
 const LessonSidebar = ({ course, progressData }) => {
   const navigate = useNavigate();
@@ -63,7 +64,7 @@ const LessonSidebar = ({ course, progressData }) => {
                     </div>
                     <div className="text-sm">
                       <p
-                        className={`line-clamp-2 ${isActive ? "font-bold" : ""}`}
+                        className={`line-clamp-2 ${isActive ? "font-bold" : "font-medium"}`}
                       >
                         {lesson.title}
                       </p>
@@ -72,8 +73,7 @@ const LessonSidebar = ({ course, progressData }) => {
                         {" | "}
                       </span>
                       <span className="text-xs text-gray-500">
-                        {Math.floor(lesson.duration / 60)}:
-                        {String(lesson.duration % 60).padStart(2, "0")}
+                        {formatDurationShort(lesson.duration)}
                       </span>
                     </div>
                   </div>

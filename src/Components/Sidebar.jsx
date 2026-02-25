@@ -1,5 +1,5 @@
 import {} from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import {
   FaBars,
   FaTimes,
@@ -16,6 +16,7 @@ import { useAuth } from "../hooks/useAuth";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
 export default function Sidebar() {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useLocalStorage("sidebar-open", false);
   const { logout } = useAuth();
   const { user } = useAuthStore();
@@ -48,7 +49,9 @@ export default function Sidebar() {
       <div className="md:hidden sticky top-0 z-100 w-full">
         <div className="p-4 flex items-center justify-between shadow bg-base-100 relative z-50">
           <div className="flex items-center gap-3">
-            <div className="w-full rounded-full drop-shadow bg-linear-to-r from-rose-600 to-rose-400 text-transparent bg-clip-text flex items-center justify-center font-bold text-3xl">
+            <div
+            onClick={() => navigate('/home')}
+            className="w-full rounded-full drop-shadow bg-linear-to-r from-rose-600 to-rose-400 text-transparent bg-clip-text flex items-center justify-center font-bold text-3xl">
               Yalina
             </div>
           </div>
@@ -122,7 +125,9 @@ export default function Sidebar() {
         <div className="p-4 flex items-center justify-between">
           {isOpen && (
             <div className="flex items-center gap-3 flex-1">
-              <div className="w-full bg-linear-to-r drop-shadow from-rose-600 to-rose-400 bg-clip-text text-transparent flex items-center justify-center font-bold text-3xl cursor-pointer select-none">
+              <div
+              onClick={() => navigate('/home')}
+              className="w-full bg-linear-to-r drop-shadow from-rose-600 to-rose-400 bg-clip-text text-transparent flex items-center justify-center font-bold text-3xl cursor-pointer select-none">
                 Yalina
               </div>
             </div>

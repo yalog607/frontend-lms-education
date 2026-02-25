@@ -1,4 +1,6 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -10,6 +12,7 @@ import "swiper/css/scrollbar";
 import banner from "../assets/images/banner.png"
 
 const Banner = () => {
+  const navigate = useNavigate();
   const banners = [
     {
     id: 1,
@@ -18,7 +21,7 @@ const Banner = () => {
     btnText: "EXPLORE COURSE",
     gradient: "from-[#000428] to-[#004e92]", 
     image: "" ,
-    link: ""
+    link: "/course/699d0d900ff264833ecbdf69"
   },
   {
     id: 2,
@@ -27,16 +30,16 @@ const Banner = () => {
     btnText: "START LEARNING",
     gradient: "from-[#ff512f] to-[#dd2476]", 
     image: "",
-    link: ""
+    link: "/course/698989c7b9aaa834b001407f"
   },
   {
     id: 3,
     title: "Become a Zero-to-Hero Developer",
     desc: "Comprehensive roadmap for beginners. Hands-on projects, active community support, and everything you need to launch your career in software development.",
-    btnText: "JOIN COMMUNITY",
+    btnText: "ENROLL NOW",
     gradient: "from-[#11998e] to-[#38ef7d]", 
     image: "",
-    link: ""
+    link: "/course/699d0d290ff264833ecbdf40"
   },
   ];
 
@@ -47,7 +50,7 @@ const Banner = () => {
         slidesPerView={1}
         loop={true}
         autoplay={{
-          delay: 4000,
+          delay: 3200,
           disableOnInteraction: false,
         }}
         pagination={{
@@ -55,13 +58,15 @@ const Banner = () => {
           dynamicBullets: true,
         }}
         navigation={true}
+        grabCursor={true}
+        speed={800}
         modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper rounded-2xl overflow-hidden shadow-lg bg-base-200"
+        className="rounded-2xl overflow-hidden bg-base-100"
       >
         {banners.map((item) => (
           <SwiperSlide key={item.id}>
             <div 
-              className={`w-full h-70 md:h-80 bg-linear-to-r ${item.gradient} flex items-center px-12 md:px-24 relative rounded-2xl`}
+              className={`w-full h-70 md:h-80 bg-linear-to-r ${item.gradient} flex items-center px-12 md:px-24 relative rounded-2xl bg-base-100`}
             >
               
               <div className="w-full lg:w-2/3 text-white z-10 flex flex-col items-start justify-center">
@@ -72,7 +77,9 @@ const Banner = () => {
                   {item.desc}
                 </p>
                 
-                <button className="border-2 border-white text-white px-5 py-2 rounded-full font-bold text-xs md:text-sm uppercase hover:bg-white hover:text-rose-500 transition-all duration-300 cursor-pointer">
+                <button
+                  onClick={() => navigate(item.link)}
+                  className="border-2 border-white text-white px-5 py-2 rounded-full font-bold text-xs md:text-sm uppercase hover:bg-white hover:text-rose-500 transition-all duration-300 cursor-pointer">
                   {item.btnText}
                 </button>
               </div>

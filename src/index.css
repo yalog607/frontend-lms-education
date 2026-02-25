@@ -10,9 +10,8 @@
     --font-mono: "JetBrains Mono", monospace;
 }
 
-
-:root {
-  --swiper-theme-color: #f43f5e;
+.continuous-slider .swiper-wrapper {
+  transition-timing-function: linear !important;
 }
 
 .swiper-button-next,
@@ -23,7 +22,9 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* Đổ bóng nhẹ */
   transition: all 0.3s ease;
   overflow: hidden !important;
-  color: #f0f0f0 !important;
+  color: oklch(25.8% 0.092 26.042) !important;
+  background-color: azure;
+  padding: 8px !important; 
 }
 
 .swiper-button-next:hover,
