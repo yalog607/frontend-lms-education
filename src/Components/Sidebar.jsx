@@ -47,7 +47,7 @@ export default function Sidebar() {
     <>
       {/* Mobile Navbar */}
       <div className="md:hidden sticky top-0 z-100 w-full">
-        <div className="p-4 flex items-center justify-between shadow bg-base-100 relative z-50">
+        <div className="p-4 flex items-center justify-between shadow bg-white relative z-50">
           <div className="flex items-center gap-3">
             <div
             onClick={() => navigate('/home')}
@@ -65,7 +65,7 @@ export default function Sidebar() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden overflow-y-auto bg-base-100 shadow">
+          <div className="md:hidden overflow-y-auto bg-white shadow">
             <nav className="flex flex-col p-4 space-y-2">
               {menuItems.map((item) => {
                 const IconComponent = item.icon;
@@ -117,7 +117,7 @@ export default function Sidebar() {
 
       {/* Desktop Sidebar */}
       <div
-        className={`hidden md:flex h-screen text-gray-800 transition-all duration-300 flex-col bg-base-100 border-r border-gray-500/10
+        className={`hidden md:flex h-screen text-gray-800 transition-all duration-300 flex-col bg-white border-r border-gray-500/10
           sticky top-0 overflow-hidden
           ${isOpen ? "w-64" : "w-20"}`}
       >

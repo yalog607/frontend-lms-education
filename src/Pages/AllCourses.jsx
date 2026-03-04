@@ -30,8 +30,8 @@ const AllCourses = () => {
 
   return (
     <>
-      <div className="flex flex-col min-h-screen bg-base-100 font-sans items-start">
-        <div className="container w-full flex-1 mx-auto min-h-screen bg-base-100 flex flex-col p-4 sm:p-6 lg:p-8 gap-4 sm:gap-6 overflow-x-hidden overflow-y-auto">
+      <div className="flex flex-col min-h-screen bg-white font-sans items-start">
+        <div className="container w-full flex-1 mx-auto min-h-screen bg-white flex flex-col p-4 sm:p-6 lg:p-8 gap-4 sm:gap-6 overflow-x-hidden overflow-y-auto">
           <div className="flex items-center justify-between gap-4 w-full">
             <div
               className="flex items-center justify-start gap-1 cursor-pointer hover:-translate-x-1 hover:text-rose-500 transition-all duration-200"
@@ -48,7 +48,7 @@ const AllCourses = () => {
             ) : (
               <Link
                 to={"/home"}
-                className="btn px-8 py-1 rounded-lg border-2 border-rose-500 bg-rose-50 text-rose-500 hover:bg-rose-600 hover:text-base-100 transition-colors duration-300 font-bold"
+                className="btn px-8 py-1 rounded-lg border-2 border-rose-500 bg-rose-50 text-rose-500 hover:bg-rose-600 hover:text-white transition-colors duration-300 font-bold"
               >
                 Let's Try
               </Link>

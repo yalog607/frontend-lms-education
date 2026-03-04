@@ -130,13 +130,13 @@ const Profile = () => {
   }
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-base-100 font-sans items-start">
+    <div className="flex flex-col md:flex-row min-h-screen bg-white font-sans items-start">
       <Sidebar />
 
       {/* Main Content */}
       <div className="container mx-auto w-full min-h-screen flex-1 flex flex-col p-4 sm:p-6 lg:p-8 gap-6 overflow-x-hidden overflow-y-auto">
         {/* Header Title */}
-        <div className="bg-base-100 p-4 rounded-xl shadow-sm border border-gray-500/10">
+        <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-500/10">
             <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
               <FaUser className="text-secondary" /> My Profile
             </h1>
@@ -148,12 +148,12 @@ const Profile = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* --- LEFT COLUMN: AVATAR CARD --- */}
           <div className="lg:col-span-1">
-            <div className="card bg-base-100 shadow-md border border-gray-500/10">
+            <div className="card bg-white shadow-md border border-gray-500/10">
               <div className="card-body items-center text-center">
                 <div className="relative group">
                   {/* Avatar Circle */}
                   <div className="avatar">
-                    <div className="w-32 h-32 rounded-full ring ring-offset-base-100 ring-offset-2 overflow-hidden">
+                    <div className="w-32 h-32 rounded-full ring ring-offset-white ring-offset-2 overflow-hidden">
                       <img
                         src={previewAvatar}
                         alt="Profile"
@@ -164,7 +164,7 @@ const Profile = () => {
 
                   {/* Camera Icon Overlay */}
                   <div
-                    className="absolute bottom-0 right-0 bg-base-100 p-2 rounded-full shadow-lg cursor-pointer hover:bg-gray-100 transition-all border border-gray-200"
+                    className="absolute bottom-0 right-0 bg-white p-2 rounded-full shadow-lg cursor-pointer hover:bg-gray-100 transition-all border border-gray-200"
                     onClick={() => fileInputRef.current.click()}
                   >
                     <FaCamera size={18} className="text-gray-600" />
@@ -186,7 +186,7 @@ const Profile = () => {
                       </span>
                 )}
 
-                <h2 className="card-title mt-4 text-2xl">
+                <h2 className="card-title mt-4 text-2xl text-black">
                   {user?.first_name} {user?.last_name}
                 </h2>
                 <div className="badge badge-secondary badge-outline mt-1 uppercase font-bold text-xs">
@@ -230,9 +230,9 @@ const Profile = () => {
           {/* --- RIGHT COLUMN: FORMS --- */}
           <div className="lg:col-span-2 space-y-6">
             {/* Form 1: Personal Information */}
-            <div className="card bg-base-100 shadow-md border border-gray-500/10">
+            <div className="card bg-white shadow-md border border-gray-500/10">
               <div className="card-body">
-                <h3 className="card-title text-lg">
+                <h3 className="card-title text-lg text-black">
                   Personal Information
                 </h3>
                 <div className="w-full divider my-1"></div>
@@ -254,7 +254,7 @@ const Profile = () => {
                       value={formData.first_name}
                       onChange={handleInfoChange}
                       placeholder="Enter first name"
-                      className="input input-bordered focus:input-secondary w-full"
+                      className="input border-gray-500/20 bg-white text-black focus:input-secondary w-full"
                     />
                   </div>
 
@@ -271,7 +271,7 @@ const Profile = () => {
                       value={formData.last_name}
                       onChange={handleInfoChange}
                       placeholder="Enter last name"
-                      className="input input-bordered focus:input-secondary w-full"
+                      className="input border-gray-500/20 bg-white text-black focus:input-secondary w-full"
                     />
                   </div>
 
@@ -288,7 +288,7 @@ const Profile = () => {
                       value={formData.phone}
                       onChange={handleInfoChange}
                       placeholder="e.g. 0912345678"
-                      className="input input-bordered focus:input-secondary w-full"
+                      className="input border-gray-500/20 bg-white text-black focus:input-secondary w-full"
                     />
                   </div>
 
@@ -303,7 +303,7 @@ const Profile = () => {
                       type="text"
                       value={user?.email}
                       disabled
-                      className="input input-bordered bg-gray-100 text-gray-500 w-full cursor-not-allowed"
+                      className="input border-gray-500/20 bg-gray-100 text-gray-500 w-full cursor-not-allowed"
                     />
                   </div>
 
@@ -327,9 +327,9 @@ const Profile = () => {
             </div>
 
             {/* Form 2: Change Password */}
-            <div className="card bg-base-100 shadow-md border border-gray-500/10">
+            <div className="card bg-white shadow-md border border-gray-500/10">
               <div className="card-body">
-                <h3 className="card-title text-lg flex items-center gap-2">
+                <h3 className="card-title text-lg flex items-center gap-2 text-sky-500">
                   <FaLock className="text-sky-500" /> Change Password
                 </h3>
                 <div className="w-full divider my-1"></div>
@@ -347,7 +347,7 @@ const Profile = () => {
                       value={passData.password}
                       onChange={handlePassChange}
                       placeholder="••••••••"
-                      className="input input-bordered focus:input-info w-full"
+                      className="input border-gray-500/20 bg-white text-black focus:input-info w-full"
                     />
                   </div>
 
@@ -365,7 +365,7 @@ const Profile = () => {
                         value={passData.newPassword}
                         onChange={handlePassChange}
                         placeholder="••••••••"
-                        className="input input-bordered focus:input-info w-full"
+                        className="input border-gray-500/20 bg-white text-black focus:input-info w-full"
                       />
                     </div>
                     <div className="form-control">
@@ -381,7 +381,7 @@ const Profile = () => {
                         value={passData.confirmPassword}
                         onChange={handlePassChange}
                         placeholder="••••••••"
-                        className="input input-bordered focus:input-info w-full"
+                        className="input border-gray-500/20 bg-white text-black focus:input-info w-full"
                       />
                     </div>
                   </div>

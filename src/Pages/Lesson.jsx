@@ -77,18 +77,18 @@ const LessonPage = () => {
 
   if (isLoading || !currentLesson) {
     return (
-      <div className="h-screen grid place-items-center">
-        <span className="loading loading-spinner"></span>
+      <div className="h-screen grid place-items-center bg-white">
+        <span className="loading loading-spinner text-black"></span>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col min-h-screen w-full">
+    <div className="flex flex-col min-h-screen w-full bg-white">
       {/* Header with back button and progress */}
-      <div className="flex items-center justify-between px-4 py-3 bg-base-300 border-b border-gray-500/10">
+      <div className="flex items-center justify-between px-4 py-3 bg-neutral-100 border-b border-gray-500/10">
         <div
-          className="flex items-center gap-2 text-sm font-medium justify-start cursor-pointer transition-all hover:text-rose-500 hover:-translate-x-1"
+          className="flex items-center gap-2 text-sm font-medium justify-start cursor-pointer transition-all text-black hover:text-rose-500 hover:-translate-x-1"
           onClick={() => navigate(`/course/${courseId}`)}
         >
           <IoMdArrowRoundBack />
@@ -105,9 +105,9 @@ const LessonPage = () => {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row h-full w-full">
+      <div className="flex flex-col md:flex-row h-full w-full bg-white text-black">
         {/* --- LEFT: VIDEO & CONTENT --- */}
-        <div className="flex-1 flex flex-col h-full overflow-y-auto">
+        <div className="flex-1 flex flex-col h-full overflow-y-auto border-none">
           {/* Video Container */}
           <div className="w-full bg-black aspect-video shrink-0">
             <VideoPlayer

@@ -46,3 +46,7 @@ export const checkOwnCourseAPI = async(course_id) => {
     if (!course_id) return null;
     return await axiosClient.get(`/course/check-own-course/${course_id}`);
 }
+
+export const getEnrolledCourseIdsAPI = async() => {
+    return await axiosClient.get('/course/get-enrolled-course-ids');
+}

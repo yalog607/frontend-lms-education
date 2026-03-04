@@ -17,7 +17,7 @@ const LessonSidebar = ({ course, progressData }) => {
   const { expandedSections, toggleSection } = useLessonStore();
 
   return (
-    <div className="bg-base-10 border-t md:border-none border-gray-500/50 h-full overflow-y-auto">
+    <div className="bg-white border-t md:border-none border-gray-500/50 h-full overflow-y-auto">
       <div className="p-4 font-bold border-y border-gray-500/10">
         Course content
       </div>

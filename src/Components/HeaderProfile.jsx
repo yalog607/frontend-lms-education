@@ -34,7 +34,7 @@ const HeaderProfile = () => {
     <div className="relative" ref={dropdownRef}>
       <div className="avatar cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
         <div
-          className={`w-10 h-10 rounded-full ring-2 ring-offset-2 transition-all duration-200 ${isOpen ? "ring-rose-500 ring-offset-rose-100" : "ring-gray-200 ring-offset-base-100 hover:ring-rose-300"}`}
+          className={`w-10 h-10 rounded-full ring-2 ring-offset-2 transition-all duration-200 ${isOpen ? "ring-rose-500 ring-offset-rose-100" : "ring-gray-200 ring-offset-neutral-50 hover:ring-rose-300"}`}
         >
           <img
             src={user.avatar || default_avatar}

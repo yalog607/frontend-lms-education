@@ -61,12 +61,12 @@ const Banner = () => {
         grabCursor={true}
         speed={800}
         modules={[Autoplay, Pagination, Navigation]}
-        className="rounded-2xl overflow-hidden bg-base-100"
+        className="rounded-2xl overflow-hidden bg-white"
       >
         {banners.map((item) => (
           <SwiperSlide key={item.id}>
             <div 
-              className={`w-full h-70 md:h-80 bg-linear-to-r ${item.gradient} flex items-center px-12 md:px-24 relative rounded-2xl bg-base-100`}
+              className={`w-full h-70 md:h-80 bg-linear-to-r ${item.gradient} flex items-center px-12 md:px-24 relative rounded-2xl bg-white`}
             >
               
               <div className="w-full lg:w-2/3 text-white z-10 flex flex-col items-start justify-center">

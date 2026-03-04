@@ -39,7 +39,7 @@ const Login = () => {
 
       <div className="grow flex flex-col items-center justify-center px-3 sm:px-6 lg:px-8">
         <div className="avatar cursor-pointer" onClick={handleLogoClick}>
-          <div className="ring-primary ring-offset-base-100 w-16 sm:w-18 rounded-full ring-2 ring-offset-2">
+          <div className="ring-primary ring-offset-white w-16 sm:w-18 rounded-full ring-2 ring-offset-2">
             <img src={avatarImg} />
           </div>
         </div>
@@ -51,7 +51,7 @@ const Login = () => {
           </span>
         </h1>
 
-        <div className="bg-base-200 p-4 sm:p-6 md:p-8 rounded-lg shadow-lg shadow-indigo-300 border border-indigo-200 w-full max-w-full sm:max-w-2xl md:max-w-4xl mt-4 sm:mt-6">
+        <div className="bg-neutral-50 p-4 sm:p-6 md:p-8 rounded-lg shadow-lg shadow-indigo-300 border border-indigo-200 w-full max-w-full sm:max-w-2xl md:max-w-4xl mt-4 sm:mt-6">
           <div className="flex flex-col md:flex-row w-full gap-4 md:gap-0">
             {/* Left Side - Login Form */}
             <form
@@ -70,20 +70,20 @@ const Login = () => {
                   type="email"
                   id="email"
                   onChange={(e) => setEmail(e.target.value)}
-                  className={`px-3 sm:px-4 py-2 border border-gray-300 rounded-lg w-full font-semibold text-base sm:text-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition ${hasValue(email) ? "border-green-500 outline-green-500" : "border-gray-300"}`}
+                  className={`px-3 sm:px-4 py-2 border text-black border-gray-300 rounded-lg w-full font-semibold text-base sm:text-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition ${hasValue(email) ? "border-green-500 outline-green-500" : "border-gray-300"}`}
                 />
               </div>
               <div className="w-full flex flex-col relative">
                 <div className="w-full flex justify-between items-center mb-2">
                   <label
-                    className="block font-bold text-xs sm:text-sm text-gray-500"
+                    className="block font-bold text-xs sm:text-sm text-gray-500 "
                     htmlFor="password"
                   >
                     Password:
                   </label>
                   <button
                     type="button"
-                    className="cursor-pointer text-lg hover:text-indigo-800 duration-300"
+                    className="cursor-pointer text-lg hover:text-indigo-800 duration-300 text-black"
                     onClick={() => setIsHide(!isHide)}
                   >
                     {isHide ? <FaEyeSlash /> : <FaEye />}
@@ -94,13 +94,13 @@ const Login = () => {
                   type={isHide ? "password" : "text"}
                   id="password"
                   onChange={(e) => setPassword(e.target.value)}
-                  className={`px-3 sm:px-4 py-2 border border-gray-300 rounded-lg w-full font-semibold text-base sm:text-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition ${hasValue(password) ? "border-green-500 outline-green-500" : "border-gray-300"}`}
+                  className={`px-3 sm:px-4 py-2 border text-black border-gray-300 rounded-lg w-full font-semibold text-base sm:text-sm focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition ${hasValue(password) ? "border-green-500 outline-green-500" : "border-gray-300"}`}
                 />
               </div>
               <div className="w-full">
                 <button
                   type="submit"
-                  className={`outline-none btn drop-shadow-md w-full mt-3 sm:mt-4  text-white font-bold py-2 px-4 rounded-xl hover:bg-indigo-600 transition-colors duration-250 text-sm sm:text-base bg-indigo-500`}
+                  className={`outline-none border-none btn drop-shadow-md w-full mt-3 sm:mt-4  text-white font-bold py-2 px-4 rounded-xl hover:bg-indigo-600 transition-colors duration-250 text-sm sm:text-base bg-indigo-500`}
                   disabled={isLoggingIn}
                 >
                   {!isLoggingIn ? (
@@ -111,7 +111,7 @@ const Login = () => {
                 </button>
               </div>
 
-              <p className="text-center text-sm mt-2">
+              <p className="text-center text-sm mt-2 text-black">
                 Don't have an account?{" "}
                 <button
                   type="button"

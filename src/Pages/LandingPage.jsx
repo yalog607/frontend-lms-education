@@ -45,17 +45,17 @@ const LandingPage = () => {
       <Header />
       <div className="w-full min-h-screen flex flex-col">
         {/* Banner */}
-        <div className="h-screen z-0 relative flex-1 px-4 sm:px-8 md:px-12 lg:px-40 bg-base-100 grid grid-cols-1 lg:grid-cols-12 items-center justify-items-center lg:justify-items-start text-center lg:text-left text-base-100 gap-8 lg:gap-12 select-none overflow-hidden">
+        <div className="h-screen z-0 relative flex-1 px-4 sm:px-8 md:px-12 lg:px-40 bg-white grid grid-cols-1 lg:grid-cols-12 items-center justify-items-center lg:justify-items-start text-center lg:text-left text-white gap-8 lg:gap-12 overflow-hidden">
           <div
             className="absolute inset-0 z-[-1] h-full w-full bg-cover bg-center bg-no-repeat opacity-70"
             style={{ backgroundImage: `url(${pink_bg})` }}
           ></div>
 
-          <div className="col-span-1 lg:col-span-6 flex flex-col items-center lg:items-start justify-center text-center lg:text-left w-full px-4 sm:px-6 md:px-8">
-            <button className="py-2 px-4 md:py-3 md:px-6 bg-base-100 text-pink-700 font-bold rounded select-none mb-4 md:mb-6 shadow-lg hover:shadow-xl transition-shadow">
+          <div className="col-span-1 lg:col-span-6 flex flex-col items-center lg:items-start justify-center text-center lg:text-left w-full px-4 sm:px-6 md:px-8 pt-12 md:pt-24">
+            <button className="py-2 px-4 md:py-3 md:px-6 bg-white text-pink-700 font-bold rounded select-none mb-4 md:mb-6 shadow-lg hover:shadow-xl transition-shadow">
               Welcome to Yalina
             </button>
-            <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-base-100 capitalize select-none mb-3 md:mb-4 leading-tight text-shadow-md">
+            <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white capitalize select-none mb-3 md:mb-4 leading-tight text-shadow-md">
               <span>Be the best </span>
               <span className="font-extrabold text-rose-500 text-shadow-lg underline decoration-rose-500 inline-block">
                 Individual{" "}
@@ -65,7 +65,7 @@ const LandingPage = () => {
                 E-Learning
               </span>
             </p>
-            <p className="text-base-100 font-medium text-lg">
+            <p className="text-neutral-900 font-medium text-lg">
               Unlock your potential with our extensive library of courses. From
               technical skills to creative arts, we provide the tools you need
               to advance your career and achieve your personal goals, no matter
@@ -90,7 +90,7 @@ const LandingPage = () => {
         </div>
       </div>
 
-      <div className="relative z-0 w-full flex flex-col px-8 sm:px-16 md:px-18 lg:px-40 pt-12 md:pt-20 pb-6 md:pb-8 justify-center items-center border-y border-gray-500/10 overflow-hidden bg-linear-to-br from-rose-50 via-base-100 to-rose-50">
+      <div className="relative z-0 w-full flex flex-col px-8 sm:px-16 md:px-18 lg:px-40 pt-12 md:pt-20 pb-6 md:pb-8 justify-center items-center border-y border-gray-500/10 overflow-hidden bg-linear-to-br from-rose-50 via-white to-rose-50">
         <div className="absolute top-20 left-40 text-indigo-500 opacity-100 text-7xl -rotate-25 hidden md:block select-none">
           ✦
         </div>
@@ -125,7 +125,7 @@ const LandingPage = () => {
             <Swiper
               modules={[Autoplay]}
               loop={true}
-              speed={3000}
+              speed={4000}
               autoplay={{
                 delay: 0,
                 disableOnInteraction: false,
@@ -143,10 +143,10 @@ const LandingPage = () => {
               {latestCourses?.courses.map((c) => (
                 <SwiperSlide key={c?._id} className="h-auto p-4">
                   <div
-                    className="h-full overflow-hidden card bg-base-200/80 transition-all duration-300 hover:scale-105 hover:shadow-sm cursor-pointer border border-gray-500/10"
+                    className="h-full overflow-hidden card bg-gray-100/80 transition-all duration-300 hover:scale-105 hover:shadow-sm cursor-pointer border border-gray-500/10"
                     onClick={() => navigate(`/course/${c?._id}`)}
                   >
-                    <figure className="w-full h-64 bg-base-100 shrink-0">
+                    <figure className="w-full h-64 bg-white shrink-0">
                       <img
                         className="w-full h-full object-cover"
                         src={c?.thumbnail}
@@ -187,7 +187,7 @@ const LandingPage = () => {
         <div className="flex-1 w-full text-center">
           <button
             onClick={() => navigate("/all-courses")}
-            className="btn btn-outline outline-none btn-ghost border-2 border-rose-500 text-rose-500 hover:bg-rose-500 hover:text-base-100 transition-all duration-300 font-bold"
+            className="btn btn-outline outline-none btn-ghost border-2 border-rose-500 text-rose-500 hover:bg-rose-500 hover:text-white transition-all duration-300 font-bold"
           >
             <FaArrowDown /> Show more
           </button>
@@ -195,7 +195,7 @@ const LandingPage = () => {
       </div>
 
       {/* Feedback */}
-      <div className="w-full flex flex-col px-8 sm:px-16 md:px-18 lg:px-40 py-12 md:py-20 text-lg text-gray-800 justify-center items-center bg-linear-to-tr from-base-300 via-base-100 to-base-300">
+      <div className="w-full flex flex-col px-8 sm:px-16 md:px-18 lg:px-40 py-12 md:py-20 text-lg text-gray-800 justify-center items-center bg-linear-to-tr from-neutral-100 to-neutral-50">
         <div className="flex-1 mb-12 bg-white py-2 md:py-3 lg:px-12 md:px-6 px-4 rounded-full shadow-md hover:shadow-xl transition-shadow duration-250 items-center">
           <span className="font-bold text-3xl sm:text-4xl md:text-5xl text-rose-600 text-shadow-sm">
             What Our Clients Say
@@ -205,7 +205,7 @@ const LandingPage = () => {
           {listCard.map((item) => (
             <div
               key={item.name}
-              className="card bg-base-100 w-96 shadow-md hover:shadow-2xl transition-shadow duration-250"
+              className="card bg-neutral-50 w-96 shadow-md hover:shadow-2xl hover:scale-105 transition-all duration-250"
             >
               <figure className="px-10 pt-10 overflow-hidden">
                 <img
@@ -227,7 +227,7 @@ const LandingPage = () => {
       </div>
 
       {/*  */}
-      <div className="w-full flex flex-col bg-linear-to-br from-rose-800 to-rose-600 text-base-300 px-8 sm:px-16 md:px-18 lg:px-40 py-12 md:py-20 gap-4 md:gap-6">
+      <div className="w-full flex flex-col bg-linear-to-br from-rose-800 to-rose-600 text-white px-8 sm:px-16 md:px-18 lg:px-40 py-12 md:py-20 gap-4 md:gap-6">
         <h1 className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
           Your learn, everywhere you are
         </h1>
@@ -290,15 +290,15 @@ const LandingPage = () => {
             <h1 className="font-bold text-2xl md:text-4xl text-gray-800">
               Contact us
             </h1>
-            <fieldset className="w-80">
+            <fieldset className="w-80 text-neutral-950">
               <label>Enter your email address</label>
               <div className="join">
                 <input
                   type="email"
                   placeholder="username@site.com"
-                  className="input input-bordered join-item"
+                  className="input border border-gray-300 join-item bg-white"
                 />
-                <button className="btn join-item bg-rose-500 text-base-200">
+                <button className="btn join-item bg-rose-500 text-white">
                   Subscribe
                 </button>
               </div>

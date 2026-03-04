@@ -10,6 +10,23 @@
     --font-mono: "JetBrains Mono", monospace;
 }
 
+input {
+  background-color: #ffffff;
+  color: #111827;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: #111827 !important;
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important; /* màu nền bạn muốn */
+  box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  transition: background-color 9999s ease-in-out 0s;
+  caret-color: #111827;
+}
+
 .continuous-slider .swiper-wrapper {
   transition-timing-function: linear !important;
 }

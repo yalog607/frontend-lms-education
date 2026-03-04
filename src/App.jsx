@@ -31,8 +31,8 @@ function App() {
 
   if (isCheckingAuth) {
     return (
-      <div className="h-screen w-screen flex justify-center items-center">
-        <span className="loading loading-dots loading-lg"></span>
+      <div className="h-screen w-screen flex justify-center items-center bg-neutral-200">
+        <span className="loading loading-dots loading-lg text-black"></span>
       </div>
     );
   }

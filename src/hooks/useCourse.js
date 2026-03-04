@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { checkOwnCourseAPI, getUserCourseAPI, searchCourseAPI, getLatestCoursesAPI, getAllCoursesAPI, getCourseByIdAPI, getCourseOfTeacherAPI, createCoursesAPI, updateCourseAPI, deleteCourseAPI } from '../api/course';
+import { getEnrolledCourseIdsAPI, checkOwnCourseAPI, getUserCourseAPI, searchCourseAPI, getLatestCoursesAPI, getAllCoursesAPI, getCourseByIdAPI, getCourseOfTeacherAPI, createCoursesAPI, updateCourseAPI, deleteCourseAPI } from '../api/course';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../store/useAuthStore';
@@ -55,8 +55,7 @@ export const useCreateCourse = () => {
         mutationFn: createCoursesAPI,
         onSuccess: () => {
             toast.success("Create a course successfully!");
-            queryClient.invalidateQueries(['courses']);
-            queryClient.invalidateQueries({ queryKey: ['latestCourses'] });
+            queryClient.invalidateQueries(['latestCourses', 'courses']);
             navigate('/home');
         },
         onError: (error) => {
@@ -148,6 +147,14 @@ export const useCheckOwnCourse = (course_id) => {
             return checkOwnCourseAPI(course_id);
         },
         enabled: !!course_id && !!user
+    })
+    return { data, isLoading, isError, error };
+}
+
+export const useGetEnrolledCourseIds = () => {
+    const { data, isLoading, isError, error } = useQuery({
+        queryKey: ['enrolled-course-ids'],
+        queryFn: getEnrolledCourseIdsAPI
     })
     return { data, isLoading, isError, error };
 }

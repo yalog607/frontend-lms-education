@@ -8,7 +8,7 @@ const NotFound = () => {
       <title>
         404 Not Found
       </title>
-      <div className="h-screen w-full flex flex-col gap-4 bg-base-300 justify-center items-center p-6">
+      <div className="h-screen w-full flex flex-col gap-4 bg-neutral-100 justify-center items-center p-6">
         <p className="font-mono text-lg text-secondary">
           404 Not Found
         </p>

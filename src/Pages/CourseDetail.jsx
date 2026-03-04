@@ -21,19 +21,7 @@ import { useEnrollCourse } from "../hooks/useEnrollment";
 import { useCourseProgress } from "../hooks/useProgress";
 import toast from "react-hot-toast";
 
-const formatDuration = (totalSeconds) => {
-  if (!totalSeconds) return "0 second";
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = Math.floor(totalSeconds % 60);
-
-  let mStr = minutes > 0 ? "minutes" : "minute";
-  let sStr = seconds > 0 ? "seconds" : "second";
-
-  if (minutes > 0) {
-    return `${minutes} ${mStr} ${seconds} ${sStr}`;
-  }
-  return `${seconds} ${sStr}`;
-};
+import {formatDurationShort} from "../lib/formatDuration.js";
 
 const CourseDetail = () => {
   const { user } = useAuthStore();
@@ -96,7 +84,7 @@ const CourseDetail = () => {
     }
     let targetLessonId = Course.course.sections[0].lessons[0]._id;
 
-    const inProgressLesson = progressData.find(
+    const inProgressLesson = (progressData || []).find(
       (p) => !p.isCompleted && p.last_watched > 0,
     );
 
@@ -139,16 +127,16 @@ const CourseDetail = () => {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row min-h-screen bg-base-100 font-sans items-start">
+      <div className="flex flex-col md:flex-row min-h-screen bg-white font-sans items-start">
         {user && <Sidebar />}
-        <div className="container w-full flex-1 mx-auto min-h-screen bg-base-100 flex flex-col p-4 sm:p-6 lg:p-8 gap-4 sm:gap-6 overflow-x-hidden overflow-y-auto">
+        <div className="container w-full flex-1 mx-auto min-h-screen bg-white flex flex-col p-4 sm:p-6 lg:p-8 gap-4 sm:gap-6 overflow-x-hidden overflow-y-auto">
           <div className="flex items-center justify-between gap-4 w-full">
             <div
-              className="flex items-center justify-start gap-1 cursor-pointer hover:-translate-x-1 hover:text-rose-500 transition-all duration-200"
+              className="flex items-center justify-start gap-1 cursor-pointer text-black hover:-translate-x-1 hover:text-rose-500 transition-all duration-200"
               onClick={() => navigate(-1)}
             >
               <IoMdArrowRoundBack />
-              <span className="">Back</span>
+              Back
             </div>
             <div className="flex-1">
               <SearchBar />
@@ -158,7 +146,7 @@ const CourseDetail = () => {
             ) : (
               <Link
                 to={"/home"}
-                className="btn px-8 py-1 rounded-lg border-2 border-rose-500 bg-rose-50 text-rose-500 hover:bg-rose-600 hover:text-base-100 transition-colors duration-300 font-bold"
+                className="btn px-8 py-1 rounded-lg border-2 border-rose-500 bg-rose-50 text-rose-500 hover:bg-rose-600 hover:text-white transition-colors duration-300 font-bold"
               >
                 Let's Try
               </Link>
@@ -263,7 +251,7 @@ const CourseDetail = () => {
                                 </span>
                               </div>
                               <span className="text-xs font-medium text-gray-500">
-                                {formatDuration(lesson.duration)}
+                                {formatDurationShort(lesson.duration)}
                               </span>
                             </li>
                           ))}
@@ -276,7 +264,7 @@ const CourseDetail = () => {
             </div>
 
             <div className="md:col-span-1">
-              <div className="sticky top-4 bg-base-100 overflow-hidden pb-4 md:pb-6">
+              <div className="sticky top-4 bg-white overflow-hidden pb-4 md:pb-6">
                 <div className="relative overflow-hidden rounded-2xl shadow-sm cursor-pointer group aspect-video mb-5">
                   <img
                     src={Course.course.thumbnail}

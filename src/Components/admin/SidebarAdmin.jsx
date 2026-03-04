@@ -13,7 +13,7 @@ export default function Sidebar() {
     { name: 'Course', icon: FaBook, color: 'text-green-500' },
     { name: 'Communication', icon: FaComments, color: 'text-purple-500' },
     { name: 'Revenue', icon: FaMoneyBillWave, color: 'text-yellow-500' },
-    { name: 'Setting', icon: FaCog, color: 'text-base-100' },
+    { name: 'Setting', icon: FaCog, color: 'text-white' },
   ];
 
   return (

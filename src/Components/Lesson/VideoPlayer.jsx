@@ -51,9 +51,8 @@ const VideoPlayer = ({ lesson, onEnded, isAutoplay, progress }) => {
   };
 
   // YouTube - Bắt sự kiện đang chạy
-  const handleYoutubeProgress = (state) => {
-    // state.playedSeconds is the current time
-    saveProgress(state.target.api.getCurrentTime());
+  const handleYoutubeTimeUpdate = (e) => {
+    saveProgress(e.currentTarget.currentTime);
   };
 
   const handleYoutubeStart = (state) => {
@@ -128,7 +127,7 @@ const VideoPlayer = ({ lesson, onEnded, isAutoplay, progress }) => {
           if (lesson.duration > 0) saveProgress(lesson.duration);
           onEnded();
         }}
-        onProgress={handleYoutubeProgress}
+        onTimeUpdate={handleYoutubeTimeUpdate}
         onStart={handleYoutubeStart}
         volume={volume}
         onVolumeChange={(e) => {
