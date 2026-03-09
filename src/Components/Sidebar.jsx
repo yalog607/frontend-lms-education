@@ -34,8 +34,6 @@ export default function Sidebar() {
     { name: "Dashboard", icon: FaHome, path: "/home" },
     { name: "My Courses", icon: FaBook, path: "/courses" },
     { name: "Profile", icon: RiProfileLine, path: "/profile" },
-    { name: "Comments", icon: FaComments, path: "/comment" },
-    { name: "Rating", icon: MdRateReview, path: "/rating" },
     {
       name: "Notifications",
       icon: MdNotificationsActive,

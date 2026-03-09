@@ -119,8 +119,8 @@ const CourseDetail = () => {
 
   if (isLoading) {
     return (
-      <div className="h-screen w-screen flex justify-center items-center">
-        <span className="loading loading-dots loading-lg"></span>
+      <div className="h-screen w-screen flex justify-center items-center bg-white">
+        <span className="loading loading-dots loading-lg text-black"></span>
       </div>
     );
   }
