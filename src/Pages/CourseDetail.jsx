@@ -306,7 +306,7 @@ const CourseDetail = () => {
                     id="enrollModal"
                     className="modal modal-bottom sm:modal-middle"
                   >
-                    <div className="modal-box">
+                    <div className="modal-box bg-white text-neutral-800">
                       <h3 className="font-bold text-lg text-neutral">Enroll Confirmation</h3>
                       <p className="py-4">
                         Are you sure you want to enroll in{" "}
@@ -326,7 +326,7 @@ const CourseDetail = () => {
                             Yes, Enroll me
                           </button>
                           {/* if there is a button in form, it will close the modal */}
-                          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                          <button className="btn btn-sm btn-circle btn-ghost btn-danger absolute right-2 top-2">✕</button>
                         </form>
                       </div>
                     </div>

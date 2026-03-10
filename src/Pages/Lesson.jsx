@@ -6,6 +6,7 @@ import useLessonStore from "../store/useLessonStore";
 import VideoPlayer from "../Components/Lesson/VideoPlayer";
 import LessonSidebar from "../Components/Lesson/SidebarLesson";
 import { IoMdArrowRoundBack } from "react-icons/io";
+import Comment from "../Components/Comment";
 
 const LessonPage = () => {
   const { courseId, lessonId } = useParams();
@@ -130,6 +131,7 @@ const LessonPage = () => {
               className="prose max-w-none"
               dangerouslySetInnerHTML={{ __html: currentLesson.content }}
             />
+            <Comment lessonId={currentLesson._id} />
           </div>
         </div>
 
