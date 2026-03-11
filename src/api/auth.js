@@ -20,6 +20,16 @@ export const getMeAPI = async () => {
     return await axiosClient.get('/auth/me');
 }
 
+export const getAllUsersAPI = async () => {
+    return await axiosClient.get('/auth/get-all-users');
+}
+
+export const deleteUserAPI = async (userId) => {
+    return await axiosClient.delete('/admin/delete-user', {
+        data: { userId }
+    });
+}
+
 export const updateAvatarAPI = async (data) => {
     return await axiosClient.post('/auth/update-avatar-user', data, {
         headers: {

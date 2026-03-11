@@ -50,7 +50,7 @@ const Banner = () => {
         slidesPerView={1}
         loop={true}
         autoplay={{
-          delay: 3200,
+          delay: 2000,
           disableOnInteraction: false,
         }}
         pagination={{
@@ -79,7 +79,9 @@ const Banner = () => {
                 
                 <button
                   onClick={() => navigate(item.link)}
-                  className="border-2 border-white text-white px-5 py-2 rounded-full font-bold text-xs md:text-sm uppercase hover:bg-white hover:text-rose-500 transition-all duration-300 cursor-pointer">
+                  className="border-2 border-white text-white px-5 py-2 rounded-full font-bold text-xs md:text-sm uppercase hover:bg-white hover:text-rose-500 transition-all duration-300 cursor-pointer"
+                  aria-label={item.btnText}
+                >
                   {item.btnText}
                 </button>
               </div>
@@ -89,6 +91,7 @@ const Banner = () => {
                     src={banner} 
                     alt={item.title} 
                     className="max-h-[95%] object-contain drop-shadow-lg"
+                    loading="lazy"
                   />
               </div>
 

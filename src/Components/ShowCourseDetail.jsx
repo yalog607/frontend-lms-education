@@ -19,7 +19,8 @@ const ShowCourseDetail = ({ course: c, isEnrolled }) => {
         <img
           className="w-full h-full object-cover"
           src={c?.thumbnail}
-          alt="Course"
+          alt={c?.name ? `Ảnh khóa học ${c?.name}` : "Course thumbnail"}
+          loading="lazy"
         />
       </figure>
       <div className="p-4 md:p-6 flex flex-col gap-2 justify-start">

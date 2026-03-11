@@ -21,9 +21,11 @@ export const useGetCourse = () => {
 }
 
 export const useGetUserCourse = () => {
+    const { user } = useAuthStore();
     const { data, isLoading, isError, error } = useQuery({
-        queryKey: ['my-courses'],
-        queryFn: getUserCourseAPI
+        queryKey: ['my-courses', user?._id],
+        queryFn: getUserCourseAPI,
+        enabled: !!user?._id,
     })
 
     return { data, isLoading, isError, error}
@@ -45,6 +47,45 @@ export const useCourseOfTeacher = (teacherId) => {
         enabled: !!teacherId
     })
     return { data, isLoading, isError, error };
+}
+
+export const useTeacherCourses = (teacherId) => {
+    const { data, isLoading, isError, error, refetch } = useQuery({
+        queryKey: ['teacher-courses-safe', teacherId],
+        enabled: !!teacherId,
+        queryFn: async () => {
+            try {
+                const result = await getCourseOfTeacherAPI(teacherId);
+                const courses = result?.courses || result?.data || [];
+                if (Array.isArray(courses)) {
+                    return { courses, source: 'teacher-endpoint' };
+                }
+            } catch (teacherApiError) {
+                console.log('Teacher course endpoint fallback:', teacherApiError?.message);
+            }
+
+            const allCoursesPayload = await getAllCoursesAPI();
+            const allCourses = allCoursesPayload?.courses || allCoursesPayload?.data || [];
+            const filtered = allCourses.filter((course) => {
+                const teacher = course?.teacher_id;
+                if (!teacher) return false;
+                if (typeof teacher === 'string') return teacher === teacherId;
+                return teacher?._id === teacherId;
+            });
+
+            return { courses: filtered, source: 'all-courses-fallback' };
+        }
+    })
+
+    return {
+        data,
+        courses: data?.courses || [],
+        source: data?.source || 'unknown',
+        isLoading,
+        isError,
+        error,
+        refetch,
+    };
 }
 
 export const useCreateCourse = () => {
@@ -104,6 +145,8 @@ export const useDeleteCourse = () => {
         onSuccess: () => {
             toast.success("Delete a course successfully!");
             queryClient.invalidateQueries(['courses']);
+            queryClient.invalidateQueries({ queryKey: ['teacher-courses-safe'] });
+            queryClient.invalidateQueries({ queryKey: ['teacherCourses'] });
         },
         onError: (error) => {
             toast.error('Delete a course unsuccessfully');
@@ -116,6 +159,55 @@ export const useDeleteCourse = () => {
         isDeleting: courseMutation.isPending
     }
 }
+
+export const useInstructorCreateCourse = () => {
+    const queryClient = useQueryClient();
+
+    const courseMutation = useMutation({
+        mutationFn: createCoursesAPI,
+        onSuccess: () => {
+            toast.success('Create course successfully!');
+            queryClient.invalidateQueries({ queryKey: ['courses'] });
+            queryClient.invalidateQueries({ queryKey: ['latestCourses'] });
+            queryClient.invalidateQueries({ queryKey: ['teacher-courses-safe'] });
+            queryClient.invalidateQueries({ queryKey: ['teacherCourses'] });
+        },
+        onError: (error) => {
+            toast.error(error?.response?.data?.message || 'Create course failed!');
+        },
+    });
+
+    return {
+        createCourse: courseMutation.mutate,
+        isCreatingCourse: courseMutation.isPending,
+    };
+};
+
+export const useInstructorUpdateCourse = () => {
+    const queryClient = useQueryClient();
+
+    const courseMutation = useMutation({
+        mutationFn: updateCourseAPI,
+        onSuccess: (_, variables) => {
+            toast.success('Update course successfully!');
+            queryClient.invalidateQueries({ queryKey: ['courses'] });
+            queryClient.invalidateQueries({ queryKey: ['latestCourses'] });
+            queryClient.invalidateQueries({ queryKey: ['teacher-courses-safe'] });
+            queryClient.invalidateQueries({ queryKey: ['teacherCourses'] });
+            if (variables?.id) {
+                queryClient.invalidateQueries({ queryKey: ['course', variables.id] });
+            }
+        },
+        onError: (error) => {
+            toast.error(error?.response?.data?.message || 'Update course failed!');
+        },
+    });
+
+    return {
+        updateCourse: courseMutation.mutate,
+        isUpdatingCourse: courseMutation.isPending,
+    };
+};
 
 export const useSearchCourse = (searchTerm) => {
     const {data, isLoading, isError, error} = useQuery({
@@ -141,20 +233,22 @@ export const useSearchCourse = (searchTerm) => {
 export const useCheckOwnCourse = (course_id) => {
     const { user } = useAuthStore();
     const { data, isLoading, isError, error } = useQuery({
-        queryKey: ['check-own-course', course_id],
+        queryKey: ['check-own-course', course_id, user?._id],
         queryFn: () => {
             if (!user) return Promise.resolve(null);
             return checkOwnCourseAPI(course_id);
         },
-        enabled: !!course_id && !!user
+        enabled: !!course_id && !!user?._id
     })
     return { data, isLoading, isError, error };
 }
 
 export const useGetEnrolledCourseIds = () => {
+    const { user } = useAuthStore();
     const { data, isLoading, isError, error } = useQuery({
-        queryKey: ['enrolled-course-ids'],
-        queryFn: getEnrolledCourseIdsAPI
+        queryKey: ['enrolled-course-ids', user?._id],
+        queryFn: getEnrolledCourseIdsAPI,
+        enabled: !!user?._id,
     })
     return { data, isLoading, isError, error };
 }

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 
 import Sidebar from "../Components/Sidebar";
@@ -17,6 +18,12 @@ const Home = () => {
   }, []);
   return (
     <>
+      <Helmet>
+        <title>Yalina - Dashboard</title>
+        <meta name="description" content="Khám phá các khóa học mới nhất trên Yalina." />
+        <meta property="og:title" content="Yalina - Dashboard" />
+        <meta property="og:description" content="Khám phá các khóa học mới nhất trên Yalina." />
+      </Helmet>
       <div className="flex flex-col md:flex-row min-h-screen bg-white font-sans items-start">
         <Sidebar />
         <div className="container w-full min-h-screen mx-auto flex-1 flex flex-col bg-white p-4 sm:p-6 lg:p-8 gap-4 sm:gap-6 overflow-x-hidden overflow-y-auto">

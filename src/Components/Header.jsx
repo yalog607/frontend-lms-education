@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { NavLink, useNavigate, Link } from "react-router-dom";
 import useAuthStore from "../store/useAuthStore";
-import SearchBar from "./SearchBar";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

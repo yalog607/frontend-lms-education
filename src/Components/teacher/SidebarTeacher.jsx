@@ -1,22 +1,27 @@
 import { NavLink } from 'react-router-dom';
-import { FaChartLine, FaBook, FaUsers, FaSignOutAlt } from 'react-icons/fa';
+import { FaChalkboardTeacher, FaBookOpen, FaListOl, FaSignOutAlt, FaBell } from 'react-icons/fa';
 import useAuthStore from '../../store/useAuthStore.js';
 
-const menuItems = [
+const navItems = [
   {
-    to: '/admin/dashboard',
-    label: 'Admin Dashboard',
-    icon: FaChartLine,
+    to: '/teacher/dashboard',
+    label: 'Teacher Dashboard',
+    icon: FaChalkboardTeacher,
   },
   {
-    to: '/admin/users',
-    label: 'User Management',
-    icon: FaUsers,
+    to: '/teacher/my-courses',
+    label: 'My Courses',
+    icon: FaBookOpen,
   },
   {
-    to: '/admin/courses',
-    label: 'Course Management',
-    icon: FaBook,
+    to: '/teacher/lessons',
+    label: 'Lesson Manager',
+    icon: FaListOl,
+  },
+  {
+    to: '/teacher/notifications',
+    label: 'Notifications',
+    icon: FaBell,
   },
 ];
 
@@ -25,20 +30,20 @@ const linkClassName = ({ isActive }) =>
     isActive ? 'bg-rose-500 text-white' : 'text-gray-700 hover:bg-rose-50'
   }`;
 
-export default function SidebarAdmin() {
+export default function SidebarTeacher() {
   const { user, logout } = useAuthStore();
 
   return (
     <aside className="w-full md:w-72 bg-white border-r border-gray-200 md:min-h-screen p-4">
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">Admin Panel</h2>
+        <h2 className="text-2xl font-bold text-gray-800">Teacher Panel</h2>
         <p className="text-sm text-gray-500 mt-1">
-          {user?.first_name || 'Admin'} {user?.last_name || ''}
+          {user?.first_name || 'Teacher'} {user?.last_name || ''}
         </p>
       </div>
 
       <nav className="space-y-2">
-        {menuItems.map((item) => {
+        {navItems.map((item) => {
           const Icon = item.icon;
           return (
             <NavLink key={item.to} to={item.to} className={linkClassName}>

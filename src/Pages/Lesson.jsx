@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useCourseById } from "../hooks/useCourse";
+import { useCheckOwnCourse, useCourseById } from "../hooks/useCourse";
 import { useCourseProgress } from "../hooks/useProgress";
 import useLessonStore from "../store/useLessonStore";
+import useAuthStore from "../store/useAuthStore";
 import VideoPlayer from "../Components/Lesson/VideoPlayer";
 import LessonSidebar from "../Components/Lesson/SidebarLesson";
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -11,8 +12,16 @@ import Comment from "../Components/Comment";
 const LessonPage = () => {
   const { courseId, lessonId } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuthStore();
   // 1. Data Server (TanStack Query)
   const { data: courseData, isLoading } = useCourseById(courseId);
+  const { data: ownCourseData } = useCheckOwnCourse(courseId);
+
+  const isPrivilegedRole =
+    user?.role === "admin" ||
+    user?.role === "instructor" ||
+    user?.role === "teacher";
+  const hasFullAccess = isPrivilegedRole || ownCourseData?.isEnrolled;
 
   const allLessonIds = useMemo(() => {
     if (!courseData?.course?.sections) return [];
@@ -140,6 +149,7 @@ const LessonPage = () => {
           <LessonSidebar
             course={courseData.course}
             progressData={progressData || []}
+            hasFullAccess={hasFullAccess}
           />
         </div>
       </div>

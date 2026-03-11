@@ -1,4 +1,5 @@
 import {} from "react";
+import { useNotifications } from '../hooks/useNotification';
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import {
   FaBars,
@@ -30,6 +31,15 @@ export default function Sidebar() {
     logout();
   };
 
+  const managementPath =
+    user?.role === "admin"
+      ? "/admin/dashboard"
+      : user?.role === "instructor" || user?.role === "teacher"
+        ? "/teacher/dashboard"
+        : null;
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { unreadCount } = useNotifications();
   const menuItems = [
     { name: "Dashboard", icon: FaHome, path: "/home" },
     { name: "My Courses", icon: FaBook, path: "/courses" },
@@ -37,9 +47,18 @@ export default function Sidebar() {
     {
       name: "Notifications",
       icon: MdNotificationsActive,
-      path: "/notifications",
+      path: "/notification",
+      badge: unreadCount,
     },
   ];
+
+  if (managementPath) {
+    menuItems.push({
+      name: "Management",
+      icon: MdRateReview,
+      path: managementPath,
+    });
+  }
 
   return (
     <>
@@ -80,6 +99,11 @@ export default function Sidebar() {
                   >
                     <IconComponent className={`${item.color} text-lg`} />
                     <span className="text-sm font-medium">{item.name}</span>
+                    {item.name === "Notifications" && item.badge > 0 && (
+                      <span className="ml-2 bg-red-500 text-white rounded-full px-2 text-xs">
+                        {item.badge}
+                      </span>
+                    )}
                   </NavLink>
                 );
               })}
@@ -88,22 +112,27 @@ export default function Sidebar() {
               <div className="flex items-center">
                 <div>
                   <Link
-                    className="text-sm font-semibold truncate hover:underline"
+                    className="text-sm font-semibold text-neutral-900 truncate hover:underline"
                     to={"/setting"}
                   >
                     {user.first_name} {user.last_name}
                   </Link>
                   {user.role === "admin" ? (
-                    <Link to={"/admin"} className="text-xs truncate block">
+                    <Link to={"/admin/dashboard"} className="text-xs text-primary truncate block te">
+                      {user.role}
+                    </Link>
+                  ) : user.role === "instructor" || user.role === "teacher" ? (
+                    <Link to={"/teacher/dashboard"} className="text-xs text-primary truncate block">
                       {user.role}
                     </Link>
                   ) : (
-                    <p className="text-xs truncate">{user.role}</p>
+                    <p className="text-xs text-neutral-900 truncate">{user.role}</p>
                   )}
                 </div>
                 <button
                   onClick={handleLogoutClick}
                   className="ml-auto p-2 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
+                  title="Log out"
                 >
                   <FaSignOutAlt className="text-red-500" />
                 </button>
@@ -163,10 +192,14 @@ export default function Sidebar() {
                 }
               >
                 <IconComponent className="text-lg shrink-0 transition-colors" />
-
                 {isOpen && (
                   <span className="text-sm font-medium transition-colors">
                     {item.name}
+                  </span>
+                )}
+                {item.name === "Notifications" && item.badge > 0 && (
+                  <span className="ml-2 bg-red-500 text-white rounded-full px-2 text-xs">
+                    {item.badge}
                   </span>
                 )}
               </NavLink>
@@ -182,19 +215,19 @@ export default function Sidebar() {
                 <div className="min-w-0">
                   <Link
                     to="/profile"
-                    className="text-sm font-semibold truncate hover:underline"
+                    className="text-sm font-semibold text-neutral-900 truncate hover:underline"
                   >
                     {user.first_name} {user.last_name}
                   </Link>
-                  {user.role ? (
+                  {managementPath ? (
                     <Link
-                      to={"/admin"}
+                      to={managementPath}
                       className="text-xs text-primary truncate block"
                     >
                       {user.role}
                     </Link>
                   ) : (
-                    <p className="text-xs text-gray-400 truncate">
+                    <p className="text-xs text-neutral-900 truncate">
                       {user.role}
                     </p>
                   )}
@@ -205,7 +238,7 @@ export default function Sidebar() {
             <button
               onClick={handleLogoutClick}
               className="flex-1 md:flex-0 p-2 mx-auto hover:bg-rose-50 rounded-lg transition-colors shrink-0 cursor-pointer"
-              title="Đăng xuất"
+              title="Log out"
             >
               <FaSignOutAlt className="text-rose-500" />
             </button>

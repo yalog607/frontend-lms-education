@@ -1,10 +1,12 @@
 // pages/CourseDetail.jsx
 import React, { useState, useEffect, useMemo } from "react";
+import { Helmet } from "react-helmet-async";
 import { useParams, useNavigate, Link } from "react-router-dom";
 
 import {
   FaCheck,
   FaPlayCircle,
+  FaLock,
   FaBatteryFull,
   FaFilm,
   FaClock,
@@ -66,8 +68,25 @@ const CourseDetail = () => {
     }
   };
 
-  const handleClickLesson = (courseId, lessonId) => {
-    navigate(`/learn/${courseId}/play/${lessonId}`);
+  const isPrivilegedRole =
+    user?.role === "admin" ||
+    user?.role === "instructor" ||
+    user?.role === "teacher";
+  const canAccessLessons = isPrivilegedRole || checkOwnCourseData?.isEnrolled;
+
+  const handleClickLesson = (courseId, lesson) => {
+    const isLessonAccessible = canAccessLessons || lesson?.isFree;
+
+    if (!isLessonAccessible) {
+      toast.error("You need to enroll in this course to access lessons.");
+      const enrollModal = document.getElementById("enrollModal");
+      if (enrollModal) {
+        enrollModal.showModal();
+      }
+      return;
+    }
+
+    navigate(`/learn/${courseId}/play/${lesson._id}`);
   };
 
   useEffect(() => {
@@ -127,6 +146,13 @@ const CourseDetail = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{Course?.course?.name ? `Yalina - ${Course.course.name}` : "Yalina - Course Detail"}</title>
+        <meta name="description" content={Course?.course?.description || "Chi tiết khóa học trên Yalina."} />
+        <meta property="og:title" content={Course?.course?.name ? `Yalina - ${Course.course.name}` : "Yalina - Course Detail"} />
+        <meta property="og:description" content={Course?.course?.description || "Chi tiết khóa học trên Yalina."} />
+        <meta property="og:image" content={Course?.course?.thumbnail || "/banner_bg.jpg"} />
+      </Helmet>
       <div className="flex flex-col md:flex-row min-h-screen bg-white font-sans items-start">
         {user && <Sidebar />}
         <div className="container w-full flex-1 mx-auto min-h-screen bg-white flex flex-col p-4 sm:p-6 lg:p-8 gap-4 sm:gap-6 overflow-x-hidden overflow-y-auto">
@@ -236,25 +262,34 @@ const CourseDetail = () => {
                         className={`bg-white transition-all duration-300 ease-in-out ${openChapters.includes(chapter._id) ? " opacity-100" : "max-h-0 opacity-0 overflow-hidden"}`}
                       >
                         <ul className="divide-y divide-gray-100">
-                          {chapter.lessons.map((lesson) => (
-                            <li
-                              key={lesson._id}
-                              className="flex justify-between items-center p-3 px-4 hover:bg-gray-50 cursor-pointer group"
-                              onClick={() =>
-                                handleClickLesson(Course.course._id, lesson._id)
-                              }
-                            >
-                              <div className="flex items-center gap-3">
-                                <FaPlayCircle className="text-rose-400 group-hover:text-rose-500 text-lg" />
-                                <span className="text-gray-700 text-sm group-hover:text-gray-900">
-                                  {lesson.title}
+                          {chapter.lessons.map((lesson) => {
+                            const isLessonAccessible = canAccessLessons || lesson?.isFree;
+
+                            return (
+                              <li
+                                key={lesson._id}
+                                className={`flex justify-between items-center p-3 px-4 cursor-pointer group ${isLessonAccessible ? "hover:bg-gray-50" : "bg-gray-50/70"}`}
+                                onClick={() => handleClickLesson(Course.course._id, lesson)}
+                              >
+                                <div className="flex items-center gap-3">
+                                  {isLessonAccessible ? (
+                                    <FaPlayCircle className="text-rose-400 group-hover:text-rose-500 text-lg" />
+                                  ) : (
+                                    <FaLock className="text-gray-400 text-sm" />
+                                  )}
+                                  <span className={`text-sm ${isLessonAccessible ? "text-gray-700 group-hover:text-gray-900" : "text-gray-500"}`}>
+                                    {lesson.title}
+                                  </span>
+                                  {lesson?.isFree && !canAccessLessons && (
+                                    <span className="badge badge-outline badge-success badge-xs">Free</span>
+                                  )}
+                                </div>
+                                <span className={`text-xs font-medium ${isLessonAccessible ? "text-gray-500" : "text-gray-400"}`}>
+                                  {formatDurationShort(lesson.duration)}
                                 </span>
-                              </div>
-                              <span className="text-xs font-medium text-gray-500">
-                                {formatDurationShort(lesson.duration)}
-                              </span>
-                            </li>
-                          ))}
+                              </li>
+                            );
+                          })}
                         </ul>
                       </div>
                     </div>
@@ -268,8 +303,9 @@ const CourseDetail = () => {
                 <div className="relative overflow-hidden rounded-2xl shadow-sm cursor-pointer group aspect-video mb-5">
                   <img
                     src={Course.course.thumbnail}
-                    alt={Course.course.name}
+                    alt={Course.course.name ? `Ảnh khóa học ${Course.course.name}` : "Course thumbnail"}
                     className="w-full h-full object-cover"
+                    loading="lazy"
                   />
                   {/* Overlay Play Button */}
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all flex items-center justify-center z-20">

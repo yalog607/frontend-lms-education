@@ -1,5 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
-import { getLessonByIdAPI, signMuxTokenAPI } from '../api/lesson.js';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { createLessonAPI, deleteLessonAPI, getLessonByIdAPI, getRecentLessonOfTeacherAPI, signMuxTokenAPI, updateLessonAPI } from '../api/lesson.js';
+import { toast } from 'react-hot-toast';
 
 export const useLesson = (lessonId) => {
     return useQuery({
@@ -17,4 +18,71 @@ export const useMuxToken = (playbackId) => {
         enabled: !!playbackId, 
         staleTime: 30 * 60 * 1000, 
     });
+};
+
+export const useRecentLessonsOfTeacher = () => {
+    return useQuery({
+        queryKey: ['recent-lessons-of-teacher'],
+        queryFn: getRecentLessonOfTeacherAPI,
+    });
+};
+
+export const useCreateLesson = () => {
+    const queryClient = useQueryClient();
+    const mutation = useMutation({
+        mutationFn: createLessonAPI,
+        onSuccess: () => {
+            toast.success('Create lesson successfully!');
+            queryClient.invalidateQueries({ queryKey: ['course'] });
+            queryClient.invalidateQueries({ queryKey: ['recent-lessons-of-teacher'] });
+        },
+        onError: (error) => {
+            toast.error(error.response?.data?.message || 'Create lesson failed!');
+        }
+    });
+
+    return {
+        createLesson: mutation.mutate,
+        isCreatingLesson: mutation.isPending,
+    };
+};
+
+export const useUpdateLesson = () => {
+    const queryClient = useQueryClient();
+    const mutation = useMutation({
+        mutationFn: updateLessonAPI,
+        onSuccess: () => {
+            toast.success('Update lesson successfully!');
+            queryClient.invalidateQueries({ queryKey: ['course'] });
+            queryClient.invalidateQueries({ queryKey: ['recent-lessons-of-teacher'] });
+        },
+        onError: (error) => {
+            toast.error(error.response?.data?.message || 'Update lesson failed!');
+        }
+    });
+
+    return {
+        updateLesson: mutation.mutate,
+        isUpdatingLesson: mutation.isPending,
+    };
+};
+
+export const useDeleteLesson = () => {
+    const queryClient = useQueryClient();
+    const mutation = useMutation({
+        mutationFn: deleteLessonAPI,
+        onSuccess: () => {
+            toast.success('Delete lesson successfully!');
+            queryClient.invalidateQueries({ queryKey: ['course'] });
+            queryClient.invalidateQueries({ queryKey: ['recent-lessons-of-teacher'] });
+        },
+        onError: (error) => {
+            toast.error(error.response?.data?.message || 'Delete lesson failed!');
+        }
+    });
+
+    return {
+        deleteLesson: mutation.mutate,
+        isDeletingLesson: mutation.isPending,
+    };
 };

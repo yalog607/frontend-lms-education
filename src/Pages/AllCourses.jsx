@@ -1,5 +1,6 @@
 // pages/CourseDetail.jsx
 import React, { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { useNavigate, Link } from "react-router-dom";
 
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -30,6 +31,12 @@ const AllCourses = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Yalina - All Courses</title>
+        <meta name="description" content="Tất cả các khóa học nổi bật trên Yalina." />
+        <meta property="og:title" content="Yalina - All Courses" />
+        <meta property="og:description" content="Tất cả các khóa học nổi bật trên Yalina." />
+      </Helmet>
       <div className="flex flex-col min-h-screen bg-white font-sans items-start">
         <div className="container w-full flex-1 mx-auto min-h-screen bg-white flex flex-col p-4 sm:p-6 lg:p-8 gap-4 sm:gap-6 overflow-x-hidden overflow-y-auto">
           <div className="flex items-center justify-between gap-4 w-full">

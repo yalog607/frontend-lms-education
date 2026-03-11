@@ -49,8 +49,8 @@ export const useAuth = () => {
         mutationFn: logoutAPI,
         onSuccess: () => {
             logout();
+            queryClient.clear();
             toast.success('Logout successfully!');
-            queryClient.setQueryData(['me'], null)
             navigate('/login');
         },
         onError: (error) => {

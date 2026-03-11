@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import Header from "../Components/Header.jsx";
 import banner from "../assets/images/banner.png";
@@ -39,7 +40,13 @@ const LandingPage = () => {
   ];
   return (
     <div className="">
-      <title>Yalina - Learn from anywhere</title>
+      <Helmet>
+        <title>Yalina - Learn from anywhere</title>
+        <meta name="description" content="Nền tảng học tập trực tuyến chất lượng cao, học mọi lúc mọi nơi với Yalina." />
+        <meta property="og:title" content="Yalina - Learn from anywhere" />
+        <meta property="og:description" content="Nền tảng học tập trực tuyến chất lượng cao, học mọi lúc mọi nơi với Yalina." />
+        <meta property="og:image" content="/banner_bg.jpg" />
+      </Helmet>
 
       {/* Header */}
       <Header />
@@ -52,10 +59,10 @@ const LandingPage = () => {
           ></div>
 
           <div className="col-span-1 lg:col-span-6 flex flex-col items-center lg:items-start justify-center text-center lg:text-left w-full px-4 sm:px-6 md:px-8 pt-12 md:pt-24">
-            <button className="py-2 px-4 md:py-3 md:px-6 bg-white text-pink-700 font-bold rounded select-none mb-4 md:mb-6 shadow-lg hover:shadow-xl transition-shadow">
+            <button className="py-2 px-4 md:py-3 md:px-6 bg-white text-pink-700 font-bold rounded select-none mb-4 md:mb-6 shadow-lg hover:shadow-xl transition-shadow" aria-label="Welcome to Yalina">
               Welcome to Yalina
             </button>
-            <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white capitalize select-none mb-3 md:mb-4 leading-tight text-shadow-md">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white capitalize select-none mb-3 md:mb-4 leading-tight text-shadow-md">
               <span>Be the best </span>
               <span className="font-extrabold text-rose-500 text-shadow-lg underline decoration-rose-500 inline-block">
                 Individual{" "}
@@ -64,7 +71,7 @@ const LandingPage = () => {
               <span className="font-extrabold text-rose-500 text-shadow-lg inline-block">
                 E-Learning
               </span>
-            </p>
+            </h1>
             <p className="text-neutral-900 font-medium text-lg">
               Unlock your potential with our extensive library of courses. From
               technical skills to creative arts, we provide the tools you need
@@ -84,7 +91,7 @@ const LandingPage = () => {
 
           <div className="col-span-1 lg:col-span-6 w-full flex justify-center px-4 sm:px-6 md:px-8">
             <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-full bg-transparent flex items-center justify-center p-4 md:p-8">
-              <img src={banner} alt="banner" />
+              <img src={banner} alt="Banner quảng cáo Yalina" loading="lazy" />
             </div>
           </div>
         </div>
@@ -102,9 +109,9 @@ const LandingPage = () => {
         </div>
 
         <div className="flex-1 mb-12 bg-white py-2 md:py-3 lg:px-12 md:px-6 px-4 rounded-full shadow-md hover:shadow-xl transition-shadow duration-250 items-center">
-          <span className="font-bold text-3xl sm:text-4xl md:text-5xl text-rose-600 text-shadow-sm">
+          <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl text-rose-600 text-shadow-sm">
             Latest Courses
-          </span>
+          </h2>
         </div>
 
         <div className="flex-1 w-full transition-all duration-300 mb-10">
@@ -150,7 +157,8 @@ const LandingPage = () => {
                       <img
                         className="w-full h-full object-cover"
                         src={c?.thumbnail}
-                        alt={c?.name || "Course"}
+                        alt={c?.name ? `Ảnh khóa học ${c?.name}` : "Course thumbnail"}
+                        loading="lazy"
                       />
                     </figure>
                     <div className="p-4 md:p-6 flex flex-col gap-2 justify-start flex-1">
@@ -197,9 +205,9 @@ const LandingPage = () => {
       {/* Feedback */}
       <div className="w-full flex flex-col px-8 sm:px-16 md:px-18 lg:px-40 py-12 md:py-20 text-lg text-gray-800 justify-center items-center bg-linear-to-tr from-neutral-100 to-neutral-50">
         <div className="flex-1 mb-12 bg-white py-2 md:py-3 lg:px-12 md:px-6 px-4 rounded-full shadow-md hover:shadow-xl transition-shadow duration-250 items-center">
-          <span className="font-bold text-3xl sm:text-4xl md:text-5xl text-rose-600 text-shadow-sm">
+          <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl text-rose-600 text-shadow-sm">
             What Our Clients Say
-          </span>
+          </h2>
         </div>
         <div className="flex flex-col md:flex-row gap-4 w-full justify-between items-center">
           {listCard.map((item) => (
@@ -210,8 +218,9 @@ const LandingPage = () => {
               <figure className="px-10 pt-10 overflow-hidden">
                 <img
                   src={item.url}
-                  alt={item.name}
+                  alt={`Ảnh minh họa ${item.name}`}
                   className="rounded-xl w-full h-48 md:h-64 object-cover"
+                  loading="lazy"
                 />
                 <figcaption className="absolute bottom-0 w-full bg-black/50 text-white text-xs p-1 text-center rounded-t-full">
                   Hình ảnh mang tính minh họa
@@ -228,9 +237,9 @@ const LandingPage = () => {
 
       {/*  */}
       <div className="w-full flex flex-col bg-linear-to-br from-rose-800 to-rose-600 text-white px-8 sm:px-16 md:px-18 lg:px-40 py-12 md:py-20 gap-4 md:gap-6">
-        <h1 className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
+        <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
           Your learn, everywhere you are
-        </h1>
+        </h2>
         <span className="font-semibold text-lg">
           Access a world of knowledge anytime, anywhere. Whether you're at home,
           at a coffee shop, or on the go, Yalina helps you break free from
