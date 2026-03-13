@@ -48,7 +48,7 @@ export default function Sidebar() {
       name: "Notifications",
       icon: MdNotificationsActive,
       path: "/notification",
-      badge: unreadCount,
+      badge: unreadCount > 0 ? unreadCount : null,
     },
   ];
 
@@ -197,7 +197,7 @@ export default function Sidebar() {
                     {item.name}
                   </span>
                 )}
-                {item.name === "Notifications" && item.badge > 0 && (
+                {item.name === "Notifications" && item.badge && isOpen > 0 && (
                   <span className="ml-2 bg-red-500 text-white rounded-full px-2 text-xs">
                     {item.badge}
                   </span>

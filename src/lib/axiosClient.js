@@ -2,9 +2,6 @@ import axios from 'axios';
 
 const axiosClient = axios.create({
     baseURL: import.meta.env.VITE_MODE === 'production' ? import.meta.env.VITE_SERVER_URL : import.meta.env.VITE_LOCAL_URL,
-    headers: {
-        'Content-Type': 'application/json',
-    },
     timeout: 10000,
 });
 

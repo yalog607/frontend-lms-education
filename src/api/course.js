@@ -14,7 +14,11 @@ export const getUserCourseAPI = async() => {
 
 export const createCoursesAPI = async(data) => {
     if (!data) return null;
-    return await axiosClient.post('/course/create-course', data);
+    return await axiosClient.post('/course/create-course', data, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    });
 }
 
 export const getCourseByIdAPI = async(id) => {

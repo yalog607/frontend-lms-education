@@ -42,6 +42,7 @@ export default function UserManagement() {
         <div className="mb-6 bg-linear-to-r from-rose-50 to-pink-50 border border-rose-100 rounded-2xl p-5">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900">User Management</h1>
           <p className="text-gray-500 mt-1">Search and review learner, teacher, and admin accounts.</p>
+                  <p className="text-gray-500 mt-1">Search and review learner, teacher, and admin accounts.</p>
         </div>
 
         <div className="mb-4 bg-white border border-rose-100 rounded-2xl p-4 shadow-sm flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
@@ -100,13 +101,7 @@ export default function UserManagement() {
                       </td>
                       <td>{user?.coursesCount || 0}</td>
                       <td>
-                        <button
-                          className="btn btn-xs btn-error text-white"
-                          onClick={() => onDelete(user?._id)}
-                          disabled={isDeletingUser || user?._id === currentUser?._id}
-                        >
-                          Delete
-                        </button>
+                        <button className="btn btn-xs btn-error text-white" onClick={() => onDelete(user?._id)} disabled={isDeletingUser || user?._id === currentUser?._id}>Delete</button>
                       </td>
                     </tr>
                   ))}

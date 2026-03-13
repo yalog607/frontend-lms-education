@@ -98,7 +98,6 @@ const VideoPlayer = ({ lesson, onEnded, isAutoplay, progress }) => {
         className="w-full h-full"
         onLoadedMetadata={(e) => {
           const duration = e.target.duration;
-          console.log(duration);
           handleDuration(duration);
         }}
         onError={(err) => {

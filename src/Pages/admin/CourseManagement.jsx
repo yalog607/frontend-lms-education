@@ -48,6 +48,7 @@ export default function CourseManagement() {
         <div className="mb-6 bg-linear-to-r from-rose-50 to-pink-50 border border-rose-100 rounded-2xl p-5">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Course Management</h1>
           <p className="text-gray-500 mt-1">Review, search, open details, and remove courses.</p>
+                  <p className="text-gray-500 mt-1">Review, search, open details, and remove courses.</p>
         </div>
 
         <div className="bg-white border border-rose-100 rounded-2xl p-4 mb-4 shadow-sm">
@@ -95,25 +96,12 @@ export default function CourseManagement() {
                       <td>{course?.price > 0 ? `$${course.price}` : 'Free'}</td>
                       <td>{course?.lessons_length || 0}</td>
                       <td>
-                        <span className={`badge ${course?.isPublished ? 'badge-success' : 'badge-ghost'}`}>
-                          {course?.isPublished ? 'Published' : 'Draft'}
-                        </span>
+                        <span className={`badge ${course?.isPublished ? 'badge-success' : 'badge-ghost'}`}> {course?.isPublished ? 'Published' : 'Draft'} </span>
                       </td>
                       <td>
                         <div className="flex gap-2">
-                          <button
-                            className="btn btn-xs btn-outline"
-                            onClick={() => navigate(`/course/${course?._id}`)}
-                          >
-                            View
-                          </button>
-                          <button
-                            className="btn btn-xs btn-error text-white"
-                            onClick={() => handleDelete(course?._id)}
-                            disabled={isDeleting}
-                          >
-                            Delete
-                          </button>
+                          <button className="btn btn-xs btn-outline" onClick={() => navigate(`/course/${course?._id}`)}>View</button>
+                          <button className="btn btn-xs btn-error text-white" onClick={() => handleDelete(course?._id)} disabled={isDeleting}>Delete</button>
                         </div>
                       </td>
                     </tr>

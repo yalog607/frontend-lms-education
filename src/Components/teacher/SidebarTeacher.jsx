@@ -1,5 +1,7 @@
-import { NavLink } from 'react-router-dom';
-import { FaChalkboardTeacher, FaBookOpen, FaListOl, FaSignOutAlt, FaBell } from 'react-icons/fa';
+
+import { useState } from 'react';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { FaChalkboardTeacher, FaBookOpen, FaListOl, FaSignOutAlt, FaBell, FaChevronLeft } from 'react-icons/fa';
 import useAuthStore from '../../store/useAuthStore.js';
 
 const navItems = [
@@ -22,45 +24,178 @@ const navItems = [
     to: '/teacher/notifications',
     label: 'Notifications',
     icon: FaBell,
+    badge: 0,
   },
 ];
 
-const linkClassName = ({ isActive }) =>
-  `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-    isActive ? 'bg-rose-500 text-white' : 'text-gray-700 hover:bg-rose-50'
-  }`;
-
 export default function SidebarTeacher() {
   const { user, logout } = useAuthStore();
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(true);
 
+  if (!user) return null;
+
+  const toggleSidebar = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  // Responsive: Mobile Navbar
+  // Desktop Sidebar
   return (
-    <aside className="w-full md:w-72 bg-white border-r border-gray-200 md:min-h-screen p-4">
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">Teacher Panel</h2>
-        <p className="text-sm text-gray-500 mt-1">
-          {user?.first_name || 'Teacher'} {user?.last_name || ''}
-        </p>
+    <>
+      {/* Mobile Navbar */}
+      <div className="md:hidden sticky top-0 z-100 w-full">
+        <div className="p-4 flex items-center justify-between shadow bg-primary relative z-50">
+          <div className="flex items-center gap-3">
+            <div
+              onClick={() => navigate('/home')}
+              className="w-full rounded-full drop-shadow bg-linear-to-r from-rose-600 to-rose-400 text-transparent bg-clip-text flex items-center justify-center font-bold text-3xl">
+              Yalina
+            </div>
+          </div>
+          <button
+            onClick={toggleSidebar}
+            className="p-2 hover:bg-primary/20 text-primary rounded-lg transition-colors cursor-pointer"
+          >
+            <FaChevronLeft size={20} className={isOpen ? '' : 'rotate-180'} />
+          </button>
+        </div>
+        {isOpen && (
+          <div className="md:hidden overflow-y-auto bg-primary/5 shadow">
+            <nav className="flex flex-col p-4 space-y-2">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <NavLink
+                    key={item.label}
+                    to={item.to}
+                    onClick={() => setIsOpen(false)}
+                    className={({ isActive }) =>
+                      `w-full cursor-pointer flex items-center gap-3 px-4 py-3 rounded-lg transition-colors group 
+                        ${isActive ? 'bg-primary/20 text-primary' : 'text-gray-600 hover:bg-primary/10 hover:text-primary'}`
+                    }
+                  >
+                    <Icon className="text-lg" />
+                    <span className="text-sm font-medium">{item.label}</span>
+                    {item.badge > 0 && (
+                      <span className="ml-2 bg-red-500 text-white rounded-full px-2 text-xs">
+                        {item.badge}
+                      </span>
+                    )}
+                  </NavLink>
+                );
+              })}
+            </nav>
+            <div className="p-4 border-t border-gray-500">
+              <div className="flex items-center">
+                <div>
+                  <Link
+                    className="text-sm font-semibold text-primary truncate hover:underline"
+                    to="/profile"
+                  >
+                    {user.first_name} {user.last_name}
+                  </Link>
+                  <Link to="/teacher/dashboard" className="text-xs text-primary truncate block">
+                    {user.role}
+                  </Link>
+                </div>
+                <button
+                  onClick={logout}
+                  className="ml-auto p-2 hover:bg-primary/20 rounded-lg transition-colors cursor-pointer"
+                  title="Log out"
+                >
+                  <FaSignOutAlt className="text-primary" />
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
-      <nav className="space-y-2">
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          return (
-            <NavLink key={item.to} to={item.to} className={linkClassName}>
-              <Icon />
-              <span className="font-medium">{item.label}</span>
-            </NavLink>
-          );
-        })}
-      </nav>
-
-      <button
-        className="btn mt-8 w-full bg-gray-900 text-white hover:bg-black"
-        onClick={logout}
+      {/* Desktop Sidebar */}
+      <div
+        className={`hidden md:flex h-screen text-primary transition-all duration-300 flex-col bg-primary/5 border-r border-primary/20
+          sticky top-0 overflow-hidden
+          ${isOpen ? 'w-64' : 'w-20'}`}
       >
-        <FaSignOutAlt />
-        Logout
-      </button>
-    </aside>
+        <div className="p-4 flex items-center justify-between">
+          {isOpen && (
+            <div className="flex items-center gap-3 flex-1">
+              <div
+                onClick={() => navigate('/home')}
+                className="w-full bg-linear-to-r drop-shadow from-rose-600 to-rose-400 bg-clip-text text-transparent flex items-center justify-center font-bold text-3xl cursor-pointer select-none">
+                Yalina
+              </div>
+            </div>
+          )}
+          <button
+            onClick={toggleSidebar}
+            className="mx-auto p-1 hover:bg-rose-50 rounded-lg transition-all duration-300 ml-auto cursor-pointer"
+            title={isOpen ? 'Thu nhỏ' : 'Mở rộng'}
+          >
+            <FaChevronLeft
+              size={18}
+              className={`text-rose-500 transition-transform duration-300 ${!isOpen ? 'rotate-180' : 'rotate-0'}`}
+            />
+          </button>
+        </div>
+        <nav className="flex-1 px-3 py-6 space-y-4 overflow-y-auto">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <NavLink
+                key={item.label}
+                to={item.to}
+                className={({ isActive }) =>
+                  `w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors group cursor-pointer
+                  ${isActive ? 'bg-primary/20 text-primary' : 'text-gray-600 hover:bg-primary/10 hover:text-primary'}`
+                }
+              >
+                <Icon className="text-lg shrink-0 transition-colors" />
+                {isOpen && (
+                  <span className="text-sm font-medium transition-colors">
+                    {item.label}
+                  </span>
+                )}
+                {item.badge > 0 && (
+                  <span className="ml-2 bg-red-500 text-white rounded-full px-2 text-xs">
+                    {item.badge}
+                  </span>
+                )}
+              </NavLink>
+            );
+          })}
+        </nav>
+        <div className="p-4">
+          <div className="flex items-center justify-between">
+            {isOpen && (
+              <div className="flex items-center gap-3 flex-1 min-w-0">
+                <div className="min-w-0">
+                  <Link
+                    to="/profile"
+                    className="text-sm font-semibold text-primary truncate hover:underline"
+                  >
+                    {user.first_name} {user.last_name}
+                  </Link>
+                  <Link
+                    to="/teacher/dashboard"
+                    className="text-xs text-primary truncate block"
+                  >
+                    {user.role}
+                  </Link>
+                </div>
+              </div>
+            )}
+            <button
+              onClick={logout}
+              className="flex-1 md:flex-0 p-2 mx-auto hover:bg-primary/20 rounded-lg transition-colors shrink-0 cursor-pointer"
+              title="Log out"
+            >
+              <FaSignOutAlt className="text-primary" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }

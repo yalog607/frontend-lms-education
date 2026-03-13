@@ -15,19 +15,19 @@ export default function TeacherDashboard() {
       title: 'My Courses',
       value: courses.length,
       icon: FaBookOpen,
-      color: 'bg-blue-500',
+      color: 'bg-primary',
     },
     {
       title: 'Total Lessons',
       value: totalLessons,
       icon: FaListOl,
-      color: 'bg-emerald-500',
+      color: 'bg-primary',
     },
     {
       title: 'Published',
       value: publishedCourses,
       icon: FaClock,
-      color: 'bg-orange-500',
+      color: 'bg-primary',
     },
   ];
 

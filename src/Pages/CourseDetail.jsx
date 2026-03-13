@@ -159,7 +159,7 @@ const CourseDetail = () => {
           <div className="flex items-center justify-between gap-4 w-full">
             <div
               className="flex items-center justify-start gap-1 cursor-pointer text-black hover:-translate-x-1 hover:text-rose-500 transition-all duration-200"
-              onClick={() => navigate(-1)}
+              onClick={() => navigate("/home")}
             >
               <IoMdArrowRoundBack />
               Back

@@ -9,6 +9,7 @@ export const createNotification = (data) => {
 };
 
 export const readNotification = (id) => {
+  console.log(id)
   if (id) {
     return axiosClient.post(`/notification/read-notification/${id}`);
   }

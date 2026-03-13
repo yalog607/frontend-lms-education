@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import useAuthStore from '../../store/useAuthStore.js';
@@ -16,12 +16,12 @@ export default function MyCourses() {
   const [keyword, setKeyword] = useState('');
   const [editingCourseId, setEditingCourseId] = useState('');
   const [imageFile, setImageFile] = useState(null);
+  const imageInputRef = useRef(null);
   const [courseForm, setCourseForm] = useState({
     name: '',
     description: '',
     level: 'beginner',
     price: 0,
-    isPublished: true,
   });
 
   const { courses, source, isLoading } = useTeacherCourses(user?._id);
@@ -56,8 +56,10 @@ export default function MyCourses() {
       description: course?.description || '',
       level: course?.level || 'beginner',
       price: Number(course?.price || 0),
-      isPublished: !!course?.isPublished,
     });
+    if (imageInputRef.current) {
+      imageInputRef.current.value = '';
+    }
   };
 
   const resetCourseForm = () => {
@@ -68,8 +70,10 @@ export default function MyCourses() {
       description: '',
       level: 'beginner',
       price: 0,
-      isPublished: true,
     });
+    if (imageInputRef.current) {
+      imageInputRef.current.value = '';
+    }
   };
 
   const buildCourseFormData = () => {
@@ -78,7 +82,6 @@ export default function MyCourses() {
     formData.append('description', courseForm.description.trim());
     formData.append('level', courseForm.level);
     formData.append('price', String(Number(courseForm.price) || 0));
-    formData.append('isPublished', String(courseForm.isPublished));
     if (user?._id) {
       formData.append('teacher_id', user._id);
     }
@@ -123,7 +126,9 @@ export default function MyCourses() {
         <div className="mb-6 bg-linear-to-r from-rose-50 to-pink-50 border border-rose-100 rounded-2xl p-5">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900">My Courses</h1>
           <p className="text-gray-500 mt-1">Manage courses that belong to your teacher account.</p>
+          <p className="text-gray-500 mt-1">Manage courses that belong to your teacher account.</p>
           <p className="text-xs text-gray-400 mt-1">Data source: {source}</p>
+                  <p className="text-xs text-gray-400 mt-1">Data source: {source}</p>
         </div>
 
         <div className="bg-white border border-rose-100 rounded-2xl p-4 mb-4 shadow-sm">
@@ -180,24 +185,15 @@ export default function MyCourses() {
             <input
               type="file"
               accept="image/*"
-              className="file-input file-input-bordered w-full bg-white text-gray-900 border-gray-200"
+              className="file-input file-input-secondary w-full"
+              ref={imageInputRef}
               onChange={(event) => setImageFile(event.target.files?.[0] || null)}
             />
-
-            <label className="label cursor-pointer justify-start gap-3 md:col-span-2">
-              <input
-                type="checkbox"
-                className="checkbox checkbox-sm border-gray-300 bg-white"
-                checked={courseForm.isPublished}
-                onChange={(event) => setCourseForm((prev) => ({ ...prev, isPublished: event.target.checked }))}
-              />
-              <span className="label-text text-gray-700">Published</span>
-            </label>
 
             <div className="md:col-span-2 flex gap-2">
               <button
                 type="submit"
-                className="btn bg-rose-500 hover:bg-rose-600 text-white border-none"
+                className="btn btn-secondary"
                 disabled={isCreatingCourse || isUpdatingCourse}
               >
                 {isCreatingCourse || isUpdatingCourse
@@ -208,7 +204,7 @@ export default function MyCourses() {
               </button>
               <button
                 type="button"
-                className="btn bg-white text-rose-600 border border-rose-200 hover:bg-rose-50 hover:border-rose-300"
+                className="btn btn-outline btn-secondary"
                 onClick={resetCourseForm}
               >
                 Clear

@@ -23,19 +23,15 @@ export function useNotifications() {
 
   const markAsReadMutation = useMutation({
     mutationFn: readNotification,
-    onSuccess: (_, id) => {
-      queryClient.setQueryData(['notifications'], (old) =>
-        old.map((n) => (id === undefined ? { ...n, read: true } : n._id === id ? { ...n, read: true } : n))
-      );
+    onSuccess: () => {
+      queryClient.invalidateQueries(['notifications']);
     },
   });
 
   const deleteMutation = useMutation({
     mutationFn: deleteNotification,
-    onSuccess: (_, id) => {
-      queryClient.setQueryData(['notifications'], (old) =>
-        old.filter((n) => n._id !== id)
-      );
+    onSuccess: () => {
+      queryClient.invalidateQueries(['notifications']);
     },
   });
 
@@ -45,7 +41,7 @@ export function useNotifications() {
   };
 
   // Số lượng chưa đọc
-  const unreadCount = notifications.filter((n) => !n.read).length;
+  const unreadCount = notifications.filter((n) => !n.isRead).length;
 
   return {
     notifications,

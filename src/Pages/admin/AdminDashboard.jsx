@@ -15,19 +15,19 @@ export default function AdminDashboard() {
       label: 'Total Users',
       value: users.length,
       icon: FaUsers,
-      color: 'bg-cyan-500',
+        color: 'bg-primary',
     },
     {
       label: 'Total Courses',
       value: courses.length,
       icon: FaBook,
-      color: 'bg-indigo-500',
+        color: 'bg-primary',
     },
     {
       label: 'Published Courses',
       value: courses.filter((course) => course?.isPublished).length,
       icon: FaChartLine,
-      color: 'bg-emerald-500',
+        color: 'bg-primary',
     },
   ];
 
@@ -69,6 +69,7 @@ export default function AdminDashboard() {
 
             <section className="mt-8 bg-white border border-rose-100 rounded-2xl p-5 shadow-sm">
               <div className="flex items-center justify-between mb-4">
+                <h3 className="font-semibold text-gray-900">Quick Navigation</h3>
                 <h3 className="font-semibold text-gray-900">Quick Navigation</h3>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">

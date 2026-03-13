@@ -99,14 +99,14 @@ const Notification = () => {
                   </tr>
                 ) : (
                   currentItems.map((n, i) => (
-                    <tr key={n._id} className={n.read ? "bg-gray-200" : "bg-blue-100 hover:bg-blue-200"}>
+                    <tr key={n._id} className={n.isRead ? "bg-gray-200" : "bg-blue-100 hover:bg-blue-200"}>
                       <th>{indexOfFirstItem + i + 1}</th>
-                      <td className="font-semibold cursor-pointer" onClick={() => !n.read && markAsRead(n._id)}>{n.title}</td>
-                      <td className="text-sm text-gray-600 cursor-pointer" onClick={() => !n.read && markAsRead(n._id)}>{n.content}</td>
+                      <td className="font-semibold cursor-pointer" onClick={() => !n.isRead && markAsRead(n._id)}>{n.title}</td>
+                      <td className="text-sm text-gray-600 cursor-pointer" onClick={() => !n.isRead && markAsRead(n._id)}>{n.content}</td>
                       <td className="text-xs text-gray-400">{new Date(n.createdAt).toLocaleString()}</td>
-                      <td>{n.read ? <span className="text-success font-bold">Read</span> : <span className="text-error font-bold">Unread</span>}</td>
+                      <td>{n.isRead ? <span className="text-success font-bold">Read</span> : <span className="text-error font-bold">Unread</span>}</td>
                       <td className="flex gap-2">
-                        {!n.read && (
+                        {!n.isRead && (
                           <button
                             className="px-2 py-1 bg-green-500 text-white rounded"
                             onClick={() => markAsRead(n._id)}

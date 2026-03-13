@@ -18,11 +18,6 @@ const Header = () => {
     navigate("/");
   };
 
-  let cssText =
-    "px-4 py-2 font-medium text-neutral rounded-md hover:text-rose-500 transition-colors duration-150";
-  let activeLink =
-    "px-4 py-2 rounded-md font-bold text-gray-900 hover:text-rose-500 transition-colors duration-150";
-
   return (
     <div className="w-full bg-linear-to-r from-pink-50 to-rose-50 py-2 md:py-4 px-4 sm:px-8 md:px-12 lg:px-40 text-gray-800 flex flex-row items-center fixed top-0 z-50 shadow-sm">
       <div className="cursor-pointer px-4 sm:px-6 md:px-8">
@@ -35,28 +30,6 @@ const Header = () => {
       </div>
 
       <div className="hidden lg:flex flex-1 justify-end gap-10">
-        <NavLink
-          end
-          to="/"
-          className={({ isActive }) => (isActive ? activeLink : cssText)}
-        >
-          Home
-        </NavLink>
-        <NavLink
-          end
-          to="/login"
-          className={({ isActive }) => (isActive ? activeLink : cssText)}
-        >
-          About Us
-        </NavLink>
-        <NavLink
-          end
-          to="/login"
-          className={({ isActive }) => (isActive ? activeLink : cssText)}
-        >
-          Contact
-        </NavLink>
-
         <Link
           to={"/login"}
           className="btn px-8 py-1 rounded-lg shadow-none border-2 border-rose-500 bg-transparent text-rose-500 hover:bg-rose-600 hover:text-white transition-colors duration-300 font-bold"
