@@ -102,7 +102,7 @@ const Notification = () => {
                     <tr key={n._id} className={n.isRead ? "bg-gray-200" : "bg-blue-100 hover:bg-blue-200"}>
                       <th>{indexOfFirstItem + i + 1}</th>
                       <td className="font-semibold cursor-pointer" onClick={() => !n.isRead && markAsRead(n._id)}>{n.title}</td>
-                      <td className="text-sm text-gray-600 cursor-pointer" onClick={() => !n.isRead && markAsRead(n._id)}>{n.content}</td>
+                      <td className="text-sm text-gray-600 cursor-pointer" onClick={() => !n.isRead && markAsRead(n._id)}>{n.message}</td>
                       <td className="text-xs text-gray-400">{new Date(n.createdAt).toLocaleString()}</td>
                       <td>{n.isRead ? <span className="text-success font-bold">Read</span> : <span className="text-error font-bold">Unread</span>}</td>
                       <td className="flex gap-2">

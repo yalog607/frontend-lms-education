@@ -115,7 +115,7 @@ const LessonPage = () => {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row h-full w-full bg-white text-black">
+      <div className="flex flex-col md:flex-row h-full w-full bg-white text-black px-4 md:px-8 xl:px-12 2xl:px-18">
         {/* --- LEFT: VIDEO & CONTENT --- */}
         <div className="flex-1 flex flex-col h-full overflow-y-auto border-none">
           {/* Video Container */}

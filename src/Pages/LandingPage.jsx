@@ -42,9 +42,9 @@ const LandingPage = () => {
     <div className="">
       <Helmet>
         <title>Yalina - Learn from anywhere</title>
-        <meta name="description" content="Nền tảng học tập trực tuyến chất lượng cao, học mọi lúc mọi nơi với Yalina." />
+        <meta name="description" content="Discover high-quality courses to advance your career." />
         <meta property="og:title" content="Yalina - Learn from anywhere" />
-        <meta property="og:description" content="Nền tảng học tập trực tuyến chất lượng cao, học mọi lúc mọi nơi với Yalina." />
+        <meta property="og:description" content="Discover high-quality courses to advance your career." />
         <meta property="og:image" content="/banner_bg.jpg" />
       </Helmet>
 
@@ -206,7 +206,7 @@ const LandingPage = () => {
       <div className="w-full flex flex-col px-8 sm:px-16 md:px-18 lg:px-40 py-12 md:py-20 text-lg text-gray-800 justify-center items-center bg-linear-to-tr from-neutral-100 to-neutral-50">
         <div className="flex-1 mb-12 bg-white py-2 md:py-3 lg:px-12 md:px-6 px-4 rounded-full shadow-md hover:shadow-xl transition-shadow duration-250 items-center">
           <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl text-rose-600 text-shadow-sm">
-            What Our Clients Say
+            What Did People Say ?
           </h2>
         </div>
         <div className="flex flex-col md:flex-row gap-4 w-full justify-between items-center">
@@ -281,17 +281,17 @@ const LandingPage = () => {
             Elina
           </h1>
           <p className="text-gray-700">Designer</p>
-          <p className="text-gray-700">UI/UX Designer</p>
           <p className="text-gray-700">Brand Identify</p>
+          <p className="text-gray-700">UI/UX Designer</p>
         </div>
 
         <div className="flex flex-col gap-2 items-center">
           <h1 className="font-bold text-2xl md:text-4xl text-gray-800">
             Yalog
           </h1>
-          <p className="text-gray-700">Developer</p>
-          <p className="text-gray-700">Web Developer</p>
-          <p className="text-gray-700">Mobile & Desktop App</p>
+          <p className="text-gray-700">Website Developer</p>
+          <p className="text-gray-700">Wordpress Developer</p>
+          <p className="text-gray-700">UI/UX Designer</p>
         </div>
 
         <div className="flex flex-col gap-2 flex-1 md:items-end w-full">

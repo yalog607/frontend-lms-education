@@ -56,15 +56,21 @@ const Comment = ({ lessonId }) => {
                     <div className="w-7 rounded-full">
                       <img
                         src={
-                          comment.user_id.avatar ||
+                          (comment.user_id && comment.user_id.avatar) ||
                           "https://img.daisyui.com/images/profile/demo/batperson@192.webp"
                         }
-                        alt={`${comment.user_id.first_name} ${comment.user_id.last_name}`}
+                        alt={
+                          comment.user_id
+                            ? `${comment.user_id.first_name || ''} ${comment.user_id.last_name || ''}`
+                            : "Unknown user"
+                        }
                       />
                     </div>
                   </div>
                   <p>
-                    {comment.user_id.first_name} {comment.user_id.last_name}
+                    {comment.user_id
+                      ? `${comment.user_id.first_name || ''} ${comment.user_id.last_name || ''}`
+                      : "Unknown user"}
                   </p>
                 </div>
                 <p className="text-sm text-neutral-600 mt-1">

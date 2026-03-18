@@ -26,6 +26,11 @@ export const getCourseByIdAPI = async(id) => {
     return await axiosClient.get(`/course/get-course/${id}`);
 }
 
+export const getCourseByIdForTeacherAPI = async(id) => {
+    if (!id) return null;
+    return await axiosClient.get(`/teacher/get-course/${id}`);
+}
+
 export const getCourseOfTeacherAPI = async(id) => {
     if (!id) return null;
     return await axiosClient.get(`/course/get-courses-of-teacher/${id}`);

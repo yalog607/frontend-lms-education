@@ -9,6 +9,7 @@ export const useCreateSection = () => {
     onSuccess: () => {
       toast.success('Create section successfully!');
       queryClient.invalidateQueries({ queryKey: ['course'] });
+      queryClient.invalidateQueries({ queryKey: ['course-for-teacher'] });
     },
     onError: (error) => {
       toast.error(error?.response?.data?.message || 'Create section failed!');
@@ -28,6 +29,7 @@ export const useUpdateSection = () => {
     onSuccess: () => {
       toast.success('Update section successfully!');
       queryClient.invalidateQueries({ queryKey: ['course'] });
+      queryClient.invalidateQueries({ queryKey: ['course-for-teacher'] });
     },
     onError: (error) => {
       toast.error(error?.response?.data?.message || 'Update section failed!');
@@ -47,6 +49,8 @@ export const useDeleteSection = () => {
     onSuccess: () => {
       toast.success('Delete section successfully!');
       queryClient.invalidateQueries({ queryKey: ['course'] });
+      queryClient.invalidateQueries({ queryKey: ['course-for-teacher'] });
+
     },
     onError: (error) => {
       toast.error(error?.response?.data?.message || 'Delete section failed!');

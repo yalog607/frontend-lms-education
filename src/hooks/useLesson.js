@@ -34,6 +34,7 @@ export const useCreateLesson = () => {
         onSuccess: () => {
             toast.success('Create lesson successfully!');
             queryClient.invalidateQueries({ queryKey: ['course'] });
+            queryClient.invalidateQueries({ queryKey: ['course-for-teacher'] });
             queryClient.invalidateQueries({ queryKey: ['recent-lessons-of-teacher'] });
         },
         onError: (error) => {
@@ -54,6 +55,7 @@ export const useUpdateLesson = () => {
         onSuccess: () => {
             toast.success('Update lesson successfully!');
             queryClient.invalidateQueries({ queryKey: ['course'] });
+            queryClient.invalidateQueries({ queryKey: ['course-for-teacher'] });
             queryClient.invalidateQueries({ queryKey: ['recent-lessons-of-teacher'] });
         },
         onError: (error) => {
@@ -74,6 +76,7 @@ export const useDeleteLesson = () => {
         onSuccess: () => {
             toast.success('Delete lesson successfully!');
             queryClient.invalidateQueries({ queryKey: ['course'] });
+            queryClient.invalidateQueries({ queryKey: ['course-for-teacher'] });
             queryClient.invalidateQueries({ queryKey: ['recent-lessons-of-teacher'] });
         },
         onError: (error) => {

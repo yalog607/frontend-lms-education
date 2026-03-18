@@ -19,7 +19,6 @@ const AdminDashboard = React.lazy(() => import("./Pages/admin/AdminDashboard.jsx
 const UserManagement = React.lazy(() => import("./Pages/admin/UserManagement.jsx"));
 const CourseManagement = React.lazy(() => import("./Pages/admin/CourseManagement.jsx"));
 const TeacherDashboard = React.lazy(() => import("./Pages/teacher/TeacherDashboard.jsx"));
-const MyCourses = React.lazy(() => import("./Pages/teacher/MyCourses.jsx"));
 const LessonManager = React.lazy(() => import("./Pages/teacher/LessonManager.jsx"));
 const InstructorNotification = React.lazy(() => import("./Pages/teacher/InstructorNotification.jsx"));
 import {
@@ -65,7 +64,6 @@ function App() {
           <Route path="/admin/courses" element={<AdminRoute user={user}><CourseManagement /></AdminRoute>} />
           <Route path="/teacher" element={<TeacherRoute user={user}><Navigate to="/teacher/dashboard" replace /></TeacherRoute>} />
           <Route path="/teacher/dashboard" element={<TeacherRoute user={user}><TeacherDashboard /></TeacherRoute>} />
-          <Route path="/teacher/my-courses" element={<TeacherRoute user={user}><MyCourses /></TeacherRoute>} />
           <Route path="/teacher/lessons" element={<TeacherRoute user={user}><LessonManager /></TeacherRoute>} />
           <Route path="/teacher/notifications" element={<TeacherRoute user={user}><InstructorNotification /></TeacherRoute>} />
           <Route path="*" element={<NotFound />} />

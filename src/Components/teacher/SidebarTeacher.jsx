@@ -11,13 +11,8 @@ const navItems = [
     icon: FaChalkboardTeacher,
   },
   {
-    to: '/teacher/my-courses',
-    label: 'My Courses',
-    icon: FaBookOpen,
-  },
-  {
     to: '/teacher/lessons',
-    label: 'Lesson Manager',
+    label: 'Course Manager',
     icon: FaListOl,
   },
   {

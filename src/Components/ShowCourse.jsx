@@ -6,13 +6,13 @@ import ShowCourseDetail from "./ShowCourseDetail";
 import { useGetEnrolledCourseIds } from "../hooks/useCourse";
 
 const ShowCourse = ({ title, data, isLoading, none }) => {
-  const [visibleCount, setVisibleCount] = useState(5);
+  const [visibleCount, setVisibleCount] = useState(4);
   const { data: enrolledCourseIds } = useGetEnrolledCourseIds();
 
   return (
     <div className="bg-white w-full rounded transition-all duration-300">
       { title && <h1 className="font-bold text-xl mb-4 text-black">{title}</h1>}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 4xl:grid-cols-5 gap-4 sm:gap-6">
         {isLoading ? (
           <>
             <div className="skeleton w-full h-64 bg-neutral-200"></div>

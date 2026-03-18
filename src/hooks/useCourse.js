@@ -1,7 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getEnrolledCourseIdsAPI, checkOwnCourseAPI, getUserCourseAPI, searchCourseAPI, getLatestCoursesAPI, getAllCoursesAPI, getCourseByIdAPI, getCourseOfTeacherAPI, createCoursesAPI, updateCourseAPI, deleteCourseAPI } from '../api/course';
+import { getCourseByIdForTeacherAPI, getEnrolledCourseIdsAPI, checkOwnCourseAPI, getUserCourseAPI, searchCourseAPI, getLatestCoursesAPI, getAllCoursesAPI, getCourseByIdAPI, getCourseOfTeacherAPI, createCoursesAPI, updateCourseAPI, deleteCourseAPI } from '../api/course';
 import { toast } from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../store/useAuthStore';
 
 export const useGetLatestCourse = () => {
@@ -35,6 +34,15 @@ export const useCourseById = (id) => {
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ['course', id],
         queryFn: () => getCourseByIdAPI(id),
+        enabled: !!id
+    })
+    return { data, isLoading, isError, error };
+}
+
+export const useCourseByIdForTeacher = (id) => {
+    const { data, isLoading, isError, error } = useQuery({
+        queryKey: ['course-for-teacher', id],
+        queryFn: () => getCourseByIdForTeacherAPI(id),
         enabled: !!id
     })
     return { data, isLoading, isError, error };
@@ -89,15 +97,13 @@ export const useTeacherCourses = (teacherId) => {
 }
 
 export const useCreateCourse = () => {
-    const navigate = useNavigate();
     const queryClient = useQueryClient();
 
     const courseMutation = useMutation({
         mutationFn: createCoursesAPI,
         onSuccess: () => {
             toast.success("Create a course successfully!");
-            queryClient.invalidateQueries(['latestCourses', 'courses']);
-            navigate('/home');
+            queryClient.invalidateQueries(['latestCourses', 'courses', 'course-for-teacher']);
         },
         onError: (error) => {
             toast.error('Create a course unsuccessfully');
@@ -112,7 +118,6 @@ export const useCreateCourse = () => {
 }
 
 export const useUpdateCourse = () => {
-    const navigate = useNavigate();
     const queryClient = useQueryClient();
 
     const courseMutation = useMutation({
@@ -120,10 +125,10 @@ export const useUpdateCourse = () => {
         onSuccess: (data, variables) => {
             toast.success("Update a course successfully!");
             queryClient.invalidateQueries(['courses']);
+            queryClient.invalidateQueries(['course-for-teacher']);
             if (variables.id) {
                 queryClient.invalidateQueries({ queryKey: ['course', variables.id] });
             }
-            navigate('/home');
         },
         onError: (error) => {
             toast.error('Update a course unsuccessfully');
@@ -145,6 +150,7 @@ export const useDeleteCourse = () => {
         onSuccess: () => {
             toast.success("Delete a course successfully!");
             queryClient.invalidateQueries(['courses']);
+            queryClient.invalidateQueries(['course-for-teacher']);
             queryClient.invalidateQueries({ queryKey: ['teacher-courses-safe'] });
             queryClient.invalidateQueries({ queryKey: ['teacherCourses'] });
         },
@@ -171,6 +177,7 @@ export const useInstructorCreateCourse = () => {
             queryClient.invalidateQueries({ queryKey: ['latestCourses'] });
             queryClient.invalidateQueries({ queryKey: ['teacher-courses-safe'] });
             queryClient.invalidateQueries({ queryKey: ['teacherCourses'] });
+            queryClient.invalidateQueries({ queryKey: ['course-for-teacher'] });
         },
         onError: (error) => {
             toast.error(error?.response?.data?.message || 'Create course failed!');
@@ -194,6 +201,7 @@ export const useInstructorUpdateCourse = () => {
             queryClient.invalidateQueries({ queryKey: ['latestCourses'] });
             queryClient.invalidateQueries({ queryKey: ['teacher-courses-safe'] });
             queryClient.invalidateQueries({ queryKey: ['teacherCourses'] });
+            queryClient.invalidateQueries({ queryKey: ['course-for-teacher'] });
             if (variables?.id) {
                 queryClient.invalidateQueries({ queryKey: ['course', variables.id] });
             }

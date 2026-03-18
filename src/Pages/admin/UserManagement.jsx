@@ -1,14 +1,15 @@
-import { useMemo, useState } from 'react';
-import SidebarAdmin from '../../Components/admin/SidebarAdmin.jsx';
-import useAuthStore from '../../store/useAuthStore.js';
-import { useAdminUsers, useDeleteUser } from '../../hooks/useAdmin.js';
+import { useMemo, useState } from "react";
+import SidebarAdmin from "../../Components/admin/SidebarAdmin.jsx";
+import useAuthStore from "../../store/useAuthStore.js";
+import { useAdminUsers, useDeleteUser } from "../../hooks/useAdmin.js";
+import { useUpgradeToInstructor } from "../../hooks/useAdmin.js";
 
 export default function UserManagement() {
   const { user: currentUser } = useAuthStore();
   const { users, source, fallbackReason, isLoading } = useAdminUsers();
   const { deleteUser, isDeletingUser } = useDeleteUser();
-  const [keyword, setKeyword] = useState('');
-
+  const [keyword, setKeyword] = useState("");
+  const { upgradeToInstructor, isUpgradingToInstructor } = useUpgradeToInstructor();
   const filteredUsers = useMemo(() => {
     const normalizedKeyword = keyword.trim().toLowerCase();
     if (!normalizedKeyword) {
@@ -16,10 +17,15 @@ export default function UserManagement() {
     }
 
     return users.filter((user) => {
-      const fullName = `${user?.first_name || ''} ${user?.last_name || ''}`.toLowerCase();
-      const email = (user?.email || '').toLowerCase();
-      const role = (user?.role || '').toLowerCase();
-      return fullName.includes(normalizedKeyword) || email.includes(normalizedKeyword) || role.includes(normalizedKeyword);
+      const fullName =
+        `${user?.first_name || ""} ${user?.last_name || ""}`.toLowerCase();
+      const email = (user?.email || "").toLowerCase();
+      const role = (user?.role || "").toLowerCase();
+      return (
+        fullName.includes(normalizedKeyword) ||
+        email.includes(normalizedKeyword) ||
+        role.includes(normalizedKeyword)
+      );
     });
   }, [users, keyword]);
 
@@ -28,21 +34,35 @@ export default function UserManagement() {
       return;
     }
 
-    if (!window.confirm('Are you sure you want to delete this user?')) {
+    if (!window.confirm("Are you sure you want to delete this user?")) {
       return;
     }
 
     deleteUser(userId);
   };
 
+  const onUpgradeToInstructor = (userId) => {
+    if (!userId || userId === currentUser?._id) {
+      return;
+    }
+    if (!window.confirm("Are you sure you want to upgrade this user to an instructor?")) {
+      return;
+    }
+    upgradeToInstructor(userId);
+  };
+
+
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-white">
       <SidebarAdmin />
       <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
         <div className="mb-6 bg-linear-to-r from-rose-50 to-pink-50 border border-rose-100 rounded-2xl p-5">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">User Management</h1>
-          <p className="text-gray-500 mt-1">Search and review learner, teacher, and admin accounts.</p>
-                  <p className="text-gray-500 mt-1">Search and review learner, teacher, and admin accounts.</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+            User Management
+          </h1>
+          <p className="text-gray-500 mt-1">
+            Search and review learner, teacher, and admin accounts.
+          </p>
         </div>
 
         <div className="mb-4 bg-white border border-rose-100 rounded-2xl p-4 shadow-sm flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
@@ -54,7 +74,8 @@ export default function UserManagement() {
             className="input input-bordered w-full md:max-w-sm"
           />
           <div className="text-sm text-gray-500">
-            Source: <span className="font-semibold text-gray-700">{source}</span>
+            Source:{" "}
+            <span className="font-semibold text-gray-700">{source}</span>
           </div>
         </div>
 
@@ -85,23 +106,52 @@ export default function UserManagement() {
                 <tbody>
                   {filteredUsers.length === 0 && (
                     <tr>
-                      <td colSpan="6" className="text-center py-8 text-gray-500">
+                      <td
+                        colSpan="6"
+                        className="text-center py-8 text-gray-500"
+                      >
                         No users found.
                       </td>
                     </tr>
                   )}
 
                   {filteredUsers.map((user, index) => (
-                    <tr key={user?._id || `${user?.email}-${index}`} className="hover">
+                    <tr
+                      key={user?._id || `${user?.email}-${index}`}
+                      className="hover"
+                    >
                       <td>{index + 1}</td>
-                      <td className="font-medium">{user?.first_name || 'N/A'} {user?.last_name || ''}</td>
-                      <td>{user?.email || 'N/A'}</td>
+                      <td className="font-medium">
+                        {user?.first_name || "N/A"} {user?.last_name || ""}
+                      </td>
+                      <td>{user?.email || "N/A"}</td>
                       <td>
-                        <span className="badge badge-outline capitalize">{user?.role || 'user'}</span>
+                        <span className="badge badge-outline capitalize">
+                          {user?.role || "user"}
+                        </span>
                       </td>
                       <td>{user?.coursesCount || 0}</td>
                       <td>
-                        <button className="btn btn-xs btn-error text-white" onClick={() => onDelete(user?._id)} disabled={isDeletingUser || user?._id === currentUser?._id}>Delete</button>
+                        <div className="flex gap-2">
+                          <button
+                            className="btn btn-xs btn-info text-white"
+                            onClick={() => onUpgradeToInstructor(user?._id)}
+                            disabled={
+                              isUpgradingToInstructor || user?._id === currentUser?._id
+                            }
+                          >
+                            Upgrade
+                          </button>
+                          <button
+                            className="btn btn-xs btn-error text-white"
+                            onClick={() => onDelete(user?._id)}
+                            disabled={
+                              isDeletingUser || user?._id === currentUser?._id
+                            }
+                          >
+                            Delete
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}

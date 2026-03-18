@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { deleteUserAPI, getAllUsersAPI } from '../api/auth.js';
 import { getAllCoursesAPI } from '../api/course.js';
+import { upgradeToInstructorAPI } from '../api/admin.js';
 import { toast } from 'react-hot-toast';
 
 const normalizeUsersFromCourses = (coursePayload) => {
@@ -84,3 +85,21 @@ export const useDeleteUser = () => {
     isDeletingUser: mutation.isPending,
   };
 };
+
+export const useUpgradeToInstructor = () => {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: upgradeToInstructorAPI,
+    onSuccess: () => {
+      toast.success('Upgrade user to instructor successfully!');
+      queryClient.invalidateQueries({ queryKey: ['admin-users'] });
+    },
+    onError: (error) => {
+      toast.error(error?.response?.data?.message || 'Upgrade user to instructor failed!');
+    },
+  });
+  return {
+    upgradeToInstructor: mutation.mutate,
+    isUpgradingToInstructor: mutation.isPending,
+  };
+}

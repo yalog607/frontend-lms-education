@@ -144,7 +144,7 @@ const Courses = () => {
                     <div className="join">
                       {/* Nút Previous */}
                       <button
-                        className="join-item btn btn-sm"
+                        className="join-item btn btn-sm bg-neutral-200 text-gray-500"
                         onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 1}
                       >
@@ -164,7 +164,7 @@ const Courses = () => {
 
                       {/* Nút Next */}
                       <button
-                        className="join-item btn btn-sm"
+                        className="join-item btn btn-sm bg-neutral-200 text-gray-500"
                         onClick={() => handlePageChange(currentPage + 1)}
                         disabled={currentPage === totalPages}
                       >
