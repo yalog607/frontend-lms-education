@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ReactPlayer from "react-player";
 import MuxPlayer from "@mux/mux-player-react";
 import { useMuxToken } from "../../hooks/useLesson.js";
@@ -8,7 +8,14 @@ import axiosClient from "../../lib/axiosClient.js";
 const VideoPlayer = ({ lesson, onEnded, isAutoplay, progress }) => {
   const [retryCount, setRetryCount] = useState(0);
   const lastSavedTime = useRef(progress?.last_watched || 0);
-  const [volume, setVolume] = useState(1); // Mặc định volume là 100%
+  // Lưu volume vào localStorage để giữ lại cho lần xem sau
+  const [volume, setVolume] = useState(() => {
+    const v = localStorage.getItem("mux-player-volume");
+    return v !== null ? Number(v) : 1;
+  });
+  useEffect(() => {
+    localStorage.setItem("mux-player-volume", volume);
+  }, [volume]);
 
   const { mutate: updateProgress } = useUpdateProgress();
 
@@ -70,69 +77,83 @@ const VideoPlayer = ({ lesson, onEnded, isAutoplay, progress }) => {
   if (lesson.videoSource === "upload" && lesson.muxPlaybackId) {
     if (isLoading)
       return (
-        <div className="text-white flex items-center justify-center h-full">
-          Đang tải token bảo mật...
+        <div className="flex flex-col items-center justify-center h-full w-full">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rose-500 mb-2"></div>
+          <span className="text-gray-700 dark:text-white">Loading secure token...</span>
         </div>
       );
     if (isError)
       return (
-        <div className="text-red-500 flex items-center justify-center h-full">
-          Lỗi xác thực video!
+        <div className="flex flex-col items-center justify-center h-full w-full">
+          <span className="text-red-500 font-semibold mb-2">Error when authorized!</span>
+          <button className="btn btn-xs btn-warning" onClick={refetch}>Thử lại</button>
         </div>
       );
 
+    // Tối ưu: truyền cả thumbnail token, poster, responsive, fix bug tua lại khi hết video
     return (
-      <MuxPlayer
-        streamType="on-demand"
-        playbackId={lesson.muxPlaybackId}
-        tokens={{ playback: tokenData?.token }}
-        metadata={{
-          video_id: lesson._id,
-          video_title: lesson.title,
-        }}
-        autoPlay={isAutoplay}
-        onEnded={() => {
-          if (lesson.duration > 0) saveProgress(lesson.duration);
-          onEnded();
-        }}
-        className="w-full h-full"
-        onLoadedMetadata={(e) => {
-          const duration = e.target.duration;
-          handleDuration(duration);
-        }}
-        onError={(err) => {
-          console.error("Mux Player error:", err);
-          if (retryCount < 3) {
-            console.log(`Retrying to fetch token... Attempt ${retryCount + 1}`);
-            setRetryCount(retryCount + 1);
-            refetch();
-          }
-        }}
-        onTimeUpdate={handleMuxTimeUpdate}
-        startTime={progress?.last_watched || 0}
-      />
+      <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
+        <MuxPlayer
+          streamType="on-demand"
+          playbackId={lesson.muxPlaybackId}
+          tokens={{ playback: tokenData?.token, thumbnail: tokenData?.token }}
+          poster={`https://image.mux.com/${lesson.muxPlaybackId}/thumbnail.jpg?token=${tokenData?.token}`}
+          metadata={{
+            video_id: lesson._id,
+            video_title: lesson.title,
+          }}
+          autoPlay={isAutoplay}
+          onEnded={() => {
+            // Chỉ gọi onEnded 1 lần duy nhất
+            if (lesson.duration > 0) saveProgress(lesson.duration);
+            if (typeof onEnded === 'function') {
+              setTimeout(() => onEnded(), 100); // delay nhỏ để tránh bug tua lại
+            }
+          }}
+          className="w-full h-full rounded-xl shadow-lg"
+          onLoadedMetadata={(e) => {
+            const duration = e.target.duration;
+            handleDuration(duration);
+          }}
+          onError={(err) => {
+            console.error("Mux Player error:", err);
+            if (retryCount < 3) {
+              setTimeout(() => {
+                setRetryCount(retryCount + 1);
+                refetch();
+              }, 500);
+            }
+          }}
+          onTimeUpdate={handleMuxTimeUpdate}
+          startTime={progress?.last_watched || 0}
+          volume={volume}
+          onVolumeChange={e => setVolume(e.target.volume)}
+        />
+      </div>
     );
   }
 
   if (lesson.videoSource === "youtube") {
     return (
-      <ReactPlayer
-        src={lesson.video_url}
-        width="100%"
-        height="100%"
-        controls={true}
-        playing={isAutoplay}
-        onEnded={() => {
-          if (lesson.duration > 0) saveProgress(lesson.duration);
-          onEnded();
-        }}
-        onTimeUpdate={handleYoutubeTimeUpdate}
-        onStart={handleYoutubeStart}
-        volume={volume}
-        onVolumeChange={(e) => {
-          setVolume(e.target.volume);
-        }}
-      />
+      <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
+        <ReactPlayer
+          src={lesson.video_url}
+          width="100%"
+          height="100%"
+          controls={true}
+          playing={isAutoplay}
+          onEnded={() => {
+            if (lesson.duration > 0) saveProgress(lesson.duration);
+            onEnded();
+          }}
+          onTimeUpdate={handleYoutubeTimeUpdate}
+          onStart={handleYoutubeStart}
+          volume={volume}
+          onVolumeChange={(e) => {
+            setVolume(e.target.volume);
+          }}
+        />
+      </div>
     );
   }
 

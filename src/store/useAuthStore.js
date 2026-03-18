@@ -1,5 +1,7 @@
 import { create } from "zustand";
 import { getMeAPI } from "../api/auth";
+let lastCheckAuth = 0;
+let checkAuthTimeout = null;
 
 const useAuthStore = create((set, get) => ({
     user: JSON.parse(localStorage.getItem('user')) || null,
@@ -17,7 +19,15 @@ const useAuthStore = create((set, get) => ({
         set({user});
     },
 
-    checkAuth: async () => {
+    checkAuth: async (force = false) => {
+        // Debounce: chỉ cho phép gọi 1 lần mỗi 5s, trừ khi force=true
+        const now = Date.now();
+        if (!force && now - lastCheckAuth < 5000) {
+            if (checkAuthTimeout) clearTimeout(checkAuthTimeout);
+            checkAuthTimeout = setTimeout(() => get().checkAuth(true), 5000 - (now - lastCheckAuth));
+            return;
+        }
+        lastCheckAuth = now;
         const token = get().token; 
         if (!token) {
            set({ isCheckingAuth: false, user: null });
